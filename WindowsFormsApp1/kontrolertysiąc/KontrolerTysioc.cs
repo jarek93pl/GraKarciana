@@ -136,7 +136,7 @@ namespace WindowsFormsApp1
         public Task WyslijKarteMeldującAsync(Karta k)
         {
             
-            bool CzyMożnaMeldować = k.PobierzTrefl() == Karta.Dama && IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
+            bool CzyMożnaMeldować = k.PobierzKarte() == Karta.Dama && IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
 
             return WyslijKarteAsync(k,CzyMożnaMeldować);
         }
@@ -157,63 +157,11 @@ namespace WindowsFormsApp1
         public void Twojruch()
         {
             Stan = Stan.TwójRuch;
-            ZaładujDostepneKarty();
+            DostępneKarty = ObsugaTysiąc.ZaładujDostepneKarty(twojeKarty, stół, AktywnaKozera, Kozera).AsReadOnly();
             (DzienikZdarzeń[KeyTwójRuch] as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
 
-        private void ZaładujDostepneKarty()
-        {
-            if (stół.Count==0)
-            {
-                DostępneKarty = twojeKarty.AsReadOnly();
-            }
-            else
-            {
-                List<Karta> KartyDostepneWturze = twojeKarty.Where(X => X.Kolor() == stół.First().Kolor()).ToList();
-                if (KartyDostepneWturze.Count!=0)
-                {
-                    ComparerTysioc cp = new ComparerTysioc(stół.First());
-                    List<Karta> KartyPosotowane = new List<Karta>(stół);
-                    KartyPosotowane.Sort(cp);
-                    Karta Najwiejsze = KartyPosotowane.Last();
-                    var Wieksze = KartyDostepneWturze.Where(X => cp.Compare(stół.First(), X) < 0).ToList();
-                    if (Wieksze.Count!=0)
-                    {
-                        DostępneKarty = Wieksze.AsReadOnly();
-                    }
-                    else
-                    {
-                        DostępneKarty = KartyDostepneWturze.AsReadOnly();
-                    }
-                }
-                else
-                {
-                    if (AktywnaKozera)
-                    {
-                        ComparerTysioc cp = new ComparerTysioc(stół.First(), Kozera);
-                        List<Karta> KartyPosotowane = new List<Karta>(stół);
-                        KartyPosotowane.Sort(cp);
-                        Karta Najwiejsze = KartyPosotowane.Last();
-                        var Wieksze = twojeKarty.Where(X => cp.Compare(stół.First(), X) < 0).ToList();
-                        if (Wieksze.Count==0)
-                        {
-                            DostępneKarty = twojeKarty.AsReadOnly();
-                        }
-                        else
-                        {
-                            DostępneKarty = Wieksze.AsReadOnly();
-                        }
-
-                    }
-                    else
-                    {
-                        DostępneKarty = twojeKarty.AsReadOnly();
-                    }
-                }
-
-            }
-            
-        }
+      
 
         public void OdbierzKarty(Karta[] karty)
         {

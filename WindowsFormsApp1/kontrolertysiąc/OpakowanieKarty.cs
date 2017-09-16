@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
                     nazwa = "pik ";
                     break;
             }
-            switch (k.PobierzTrefl())
+            switch (k.PobierzKarte())
             {
               
                 case GraKarciana.Karta.K2:

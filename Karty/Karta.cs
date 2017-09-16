@@ -11,7 +11,7 @@ namespace GraKarciana
     {
   
         const int MaskaKarty = ~3;
-        public static Karta PobierzTrefl(this Karta k)
+        public static Karta PobierzKarte(this Karta k)
         {
             return (Karta) ((int) k & MaskaKarty);
         }
