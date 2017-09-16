@@ -35,7 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IStateGame.cs" />
+    <Compile Include="BasicTools.cs" />
+    <Compile Include="Iq\IStateGame.cs" />
+    <Compile Include="Iq\RelatingIq.cs" />
     <Compile Include="Tysiąc\ComparerTysioc.cs" />
     <Compile Include="Karta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

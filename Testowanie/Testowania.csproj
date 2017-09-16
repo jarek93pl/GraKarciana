@@ -52,6 +52,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Karty\Karty.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>Karty</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WcfServiceLibrary1\WcfServiceLibrary1.csproj">
       <Project>{e51d49d7-711f-4d0a-954a-12e31273d56f}</Project>
       <Name>WcfServiceLibrary1</Name>
