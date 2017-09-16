@@ -1,0 +1,288 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using WindowsFormsApp1.Tysioc;
+using System.ComponentModel;
+using WindowsFormsApp1.Urzytkownik;
+using System.Collections.ObjectModel;
+using static GraKarciana.ObsugaKart;
+using GraKarciana;
+namespace WindowsFormsApp1
+{
+    public enum Stan {CzekajNaGracza, CzekajNaLicytacje,TwojaLicytacja,WysylanieMusku,CzekanieNaMusek,CzekanieNaRuch,TwójRuch};
+    class KontrolerTysioc:ITysiocCallback
+    {
+        readonly int IlośćGraczy;
+        public ReadOnlyCollection<Karta> Stół { get => stół?.AsReadOnly(); }
+        public ReadOnlyCollection<Karta> TwojeKarty { get => twojeKarty?.AsReadOnly(); }
+        List<Karta> twojeKarty;
+        List<Karta> stół = new List<Karta>();
+        Tysioc.Urzytkownik[] ListaUrzytkowników;
+        Tysioc.TysiocClient tk;
+        #region zdażenia
+
+        static readonly object KeyZmianaStołu = new object();//snipet desing
+        public event EventHandler ZmianaStołu
+        {
+            add => DzienikZdarzeń.AddHandler(KeyZmianaStołu, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyZmianaStołu, value);
+        }
+        EventHandlerList DzienikZdarzeń = new EventHandlerList();
+     
+        static readonly object KeyKtośZalicytował = new object();//snipet desing
+        public event EventHandler<Tuple<Tysioc.Urzytkownik,int>> KtośZalicytował
+        {
+            
+            add => DzienikZdarzeń.AddHandler(KeyKtośZalicytował, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyKtośZalicytował, value);
+        }
+        static readonly object KeyTwójRuch = new object();//snipet desing
+        public event EventHandler TwójRuchEv
+        {
+            add=>DzienikZdarzeń.AddHandler(KeyTwójRuch, value);
+            remove=> DzienikZdarzeń.RemoveHandler(KeyTwójRuch, value);
+        }
+
+        static readonly object KeyTwojaLicytacja = new object();//snipet desing
+        public event EventHandler TwojaLicytacjaEv
+        {
+            add => DzienikZdarzeń.AddHandler(KeyTwojaLicytacja, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyTwojaLicytacja, value);
+        }
+
+        static readonly object KeyOdbieranieKart = new object();//snipet desing
+        public event EventHandler<Karta[]> OdbieranieKart
+        {
+            add => DzienikZdarzeń.AddHandler(KeyOdbieranieKart, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyOdbieranieKart, value);
+        }
+
+        static readonly object KeyOdbierzMusek = new object();//snipet desing
+        public event EventHandler<Karta[]> OdbierzMusek
+        {
+            add => DzienikZdarzeń.AddHandler(KeyOdbierzMusek, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyOdbierzMusek, value);
+        }
+        static readonly object KeyOdbierzKartęOdGracza = new object();//snipet desing
+        public event EventHandler<Karta[]> OdbierzKartęOdGracza
+        {
+            add => DzienikZdarzeń.AddHandler(KeyOdbierzKartęOdGracza, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyOdbierzKartęOdGracza, value);
+        }
+        static readonly object KeyKtośWysłałKarte = new object();//snipet desing
+        public event EventHandler<Tuple<Tysioc.Urzytkownik,Karta>> KtośWysłałKarte
+        {
+            add => DzienikZdarzeń.AddHandler(KeyKtośWysłałKarte, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyKtośWysłałKarte, value);
+        }
+
+        static readonly object KeyZmianaStanu = new object();//snipet desing
+        public event EventHandler ZmianaStanu
+        {
+            add => DzienikZdarzeń.AddHandler(KeyZmianaStanu, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyZmianaStanu, value);
+        }
+        #endregion
+        Stan _stan;
+        public Stan Stan {
+            get
+            {
+                return _stan;
+            }
+            protected set
+            {
+                _stan = value;
+                (DzienikZdarzeń[KeyZmianaStanu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public KontrolerTysioc()
+        {
+
+            IlośćGraczy = 3;
+            Stan = Stan.CzekajNaGracza;
+            tk = new TysiocClient(new System.ServiceModel.InstanceContext(this));
+        }
+
+        public Task CzekajNaGraczaAync(int nr)=>tk.CzekajNaGraczaAsync(nr);
+        
+
+        public Task LicytujAsync(int pk)
+        {
+            if (pk<100)
+            {
+                throw new Exception("wartość nie może być mniejsza od 100");
+            }
+            if (Stan==Stan.TwojaLicytacja)
+            {
+                Stan = Stan.CzekajNaLicytacje;
+                return tk.LicytujAsync(pk);
+
+            }
+            throw new InvalidCastException("teraz nie jest twój ruch");
+        }
+        public Task WyslijKarteAsync(Karta k, bool Melduj)
+        {
+            Stan = Stan.CzekanieNaRuch;
+            twojeKarty.Remove(k);
+            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            return tk.WyslijKarteAsync(k, Melduj);
+        }
+
+
+        public Task WyslijKarteMeldującAsync(Karta k)
+        {
+            
+            bool CzyMożnaMeldować = k.PobierzTrefl() == Karta.Dama && IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
+
+            return WyslijKarteAsync(k,CzyMożnaMeldować);
+        }
+        public Task CzekajNaGraczaAsync(int nr)
+        {
+            return tk.CzekajNaGraczaAsync(nr);
+        }
+
+        public ReadOnlyCollection<Karta> DostępneKarty { get; private set; }
+        public void ZnalezionoNowychGraczy(Tysioc.Urzytkownik[] gracze) => ListaUrzytkowników = gracze;
+
+        public void TwojaLicytacja()
+        {
+            Stan = Stan.TwojaLicytacja;
+            (DzienikZdarzeń[KeyTwojaLicytacja] as EventHandler)?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Twojruch()
+        {
+            Stan = Stan.TwójRuch;
+            ZaładujDostepneKarty();
+            (DzienikZdarzeń[KeyTwójRuch] as EventHandler)?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ZaładujDostepneKarty()
+        {
+            if (stół.Count==0)
+            {
+                DostępneKarty = twojeKarty.AsReadOnly();
+            }
+            else
+            {
+                List<Karta> KartyDostepneWturze = twojeKarty.Where(X => X.Kolor() == stół.First().Kolor()).ToList();
+                if (KartyDostepneWturze.Count!=0)
+                {
+                    ComparerTysioc cp = new ComparerTysioc(stół.First());
+                    List<Karta> KartyPosotowane = new List<Karta>(stół);
+                    KartyPosotowane.Sort(cp);
+                    Karta Najwiejsze = KartyPosotowane.Last();
+                    var Wieksze = KartyDostepneWturze.Where(X => cp.Compare(stół.First(), X) < 0).ToList();
+                    if (Wieksze.Count!=0)
+                    {
+                        DostępneKarty = Wieksze.AsReadOnly();
+                    }
+                    else
+                    {
+                        DostępneKarty = KartyDostepneWturze.AsReadOnly();
+                    }
+                }
+                else
+                {
+                    if (AktywnaKozera)
+                    {
+                        ComparerTysioc cp = new ComparerTysioc(stół.First(), Kozera);
+                        List<Karta> KartyPosotowane = new List<Karta>(stół);
+                        KartyPosotowane.Sort(cp);
+                        Karta Najwiejsze = KartyPosotowane.Last();
+                        var Wieksze = twojeKarty.Where(X => cp.Compare(stół.First(), X) < 0).ToList();
+                        if (Wieksze.Count==0)
+                        {
+                            DostępneKarty = twojeKarty.AsReadOnly();
+                        }
+                        else
+                        {
+                            DostępneKarty = Wieksze.AsReadOnly();
+                        }
+
+                    }
+                    else
+                    {
+                        DostępneKarty = twojeKarty.AsReadOnly();
+                    }
+                }
+
+            }
+            
+        }
+
+        public void OdbierzKarty(Karta[] karty)
+        {
+            if (karty.Length>5)//odbieranie kart
+            {
+                Stan = Stan.CzekajNaLicytacje;
+                twojeKarty = karty.ToList();
+                (DzienikZdarzeń[KeyOdbieranieKart] as EventHandler<Karta[]>)?.Invoke(this, karty);
+            }
+            else if(karty.Length>1)//odbieranie musku
+            {
+                Stan= Stan.WysylanieMusku;
+                twojeKarty.AddRange(karty);
+                (DzienikZdarzeń[KeyOdbierzMusek] as EventHandler<Karta[]>)?.Invoke(this, karty);
+            }
+            else
+            {
+                Stan = Stan.CzekanieNaRuch;
+                twojeKarty.AddRange(karty);
+                (DzienikZdarzeń[KeyOdbierzKartęOdGracza] as EventHandler<Karta[]>)?.Invoke(this, karty);
+            }
+
+            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+        }
+        public int MinimalnaWartośćLicytacji { get; protected set; }
+        public void KtosZalicytowal(string Login, int cena)
+        {
+            MinimalnaWartośćLicytacji = cena;
+            (DzienikZdarzeń[KeyKtośZalicytował] as EventHandler<Tuple<Tysioc.Urzytkownik,int>>)?.Invoke(this, new Tuple<Tysioc.Urzytkownik, int>(WeźUrzytkownika(Login),cena));
+        }
+
+        private Tysioc.Urzytkownik WeźUrzytkownika(string login) => ListaUrzytkowników.First(X => X.Nazwa == login);
+        public Task WysyłanieMuskuAsync(IList<Karta> KartyDoUsuniecia)
+        {
+            Stan = Stan.CzekanieNaRuch;
+            var DoUsunieca = new HashSet<Karta>(KartyDoUsuniecia);
+            twojeKarty.RemoveAll(X => DoUsunieca.Contains(X));
+            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            return tk.WyslijMusekAsync(KartyDoUsuniecia.ToArray());
+        }
+        public Karta Kozera { get; private set; }
+        bool AktywnaKozera;
+        public void KtosWyslalKarte(Karta k, string s,bool Melduj)
+        {
+            stół.Add(k);
+            if (stół.Count==IlośćGraczy)
+            {
+                stół.Clear();
+            }
+            if (Melduj)
+            {
+                Kozera = k.Kolor();
+                AktywnaKozera = true;
+            }
+            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Tysioc.Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Tysioc.Urzytkownik, Karta>(WeźUrzytkownika(s), k));
+        }
+
+        public void KoniecGry(PodsumowanieTysioc pk)
+        {
+            Stan = Stan.CzekajNaLicytacje;
+            //throw new NotImplementedException();
+        }
+
+        public void PodsumowanieRozgrywki(PodsumowanieTysioc pk)
+        {
+            AktywnaKozera = false;
+            stół?.Clear();
+            twojeKarty?.Clear();
+        }
+    }
+}

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>snipevent</Title>
+      <Author>[USERNAME]</Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>eventObj</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>TwójRuch</ID>
+          <ToolTip>TwójRuch</ToolTip>
+          <Default>TwójRuch</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>EventHandler</ID>
+          <ToolTip>EventHandler</ToolTip>
+          <Default>EventHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>DzienikZdarzeń</ID>
+          <ToolTip>DzienikZdarzeń</ToolTip>
+          <Default>DzienikZdarzeń</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Delimiter="$"><![CDATA[ static readonly object Key$TwójRuch$ = new object();//snipet desing
+        public event $EventHandler$ $TwójRuch$
+        {
+            add=>$DzienikZdarzeń$.AddHandler(Key$TwójRuch$, value);
+            remove=> $DzienikZdarzeń$.RemoveHandler(Key$TwójRuch$, value);
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
