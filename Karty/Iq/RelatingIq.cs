@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define IndexRe
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,31 +22,39 @@ namespace Karty
             return Best;
         }
 
-        private Tuple<MoveT, StateT> GetBestState(StateT state,out bool Exist)
+#if IndexRe
+        public static int IndexRecurent = 0;
+#endif
+        private Tuple<MoveT, StateT> GetBestState(StateT state,out bool Exist,int index=0)
         {
+#if IndexRe
+            IndexRecurent++;
+            int CurentIndexRecurent = IndexRecurent;
+#endif
             Exist = false;
             Tuple<MoveT, StateT> BestState = default(Tuple<MoveT, StateT>);
             int RatingBestState = int.MinValue;
-            foreach (var item in state.GetStates())
+            List<Tuple<MoveT, StateT>> tst;
+            foreach (var item in tst= state.GetStates())
             {
                 Exist = true;
-                var TmpState = GetState(item.Item2);
-                int TmpRating = TmpState.RateStates(state.Player);
-                BasicTools.Swap(ref BestState, item, ref RatingBestState, TmpRating);
+                var TmpState = item.Item2.GameOn? GetState(item,index+1):item;
+                int TmpRating = TmpState.Item2.RateStates(state.Player);
+                BasicTools.Swap(ref BestState,new Tuple<MoveT, StateT>(item.Item1 ,TmpState.Item2), ref RatingBestState, TmpRating);
             }
             return BestState;
         }
 
-        public StateT GetState(StateT state,int Index=0)
+        public Tuple<MoveT, StateT> GetState(Tuple<MoveT, StateT> state,int Index)
         {
             if (Index>SteptsToforward)
             {
                 return state;
             }
-            var Best = GetBestState(state,out bool Find);
+            var Best = GetBestState(state.Item2,out bool Find);
             if (Find)
             {
-                return Best.Item2;
+                return Best;
 
             }
             {

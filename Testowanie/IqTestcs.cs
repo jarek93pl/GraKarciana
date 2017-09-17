@@ -42,7 +42,22 @@ namespace ClassLibrary1
             Assert.AreEqual(7, result.Item1);
             Assert.AreEqual(2, resultState.Table[7]);
         }
-
+        [TestMethod]
+        public unsafe void TestIqWin()
+        {
+            TikTacToe tikTacToe = TikTacToe.GetClear();
+            tikTacToe.Table[6] = 2;
+            tikTacToe.Table[8] = 2;
+            tikTacToe.Table[4] = 1;
+            tikTacToe.Table[5] = 1;
+            tikTacToe.PlayerIndex = 2;
+            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10);
+            var result = iq.Run(tikTacToe);
+            var resultState = result.Item2;
+            Show(resultState);
+            Assert.AreEqual(3, result.Item1);
+            Assert.AreEqual(2, resultState.Table[3]);
+        }
         [TestMethod]
         public unsafe void TacToWin()
         {
@@ -66,7 +81,7 @@ namespace ClassLibrary1
             Assert.AreEqual(tikTacToe.Winer(), 0);
         }
 
-        private static unsafe void Show(TikTacToe t)
+        internal static unsafe void Show(TikTacToe t)
         {
             string z = "";
             for (int i = 0; i < 9; i++)

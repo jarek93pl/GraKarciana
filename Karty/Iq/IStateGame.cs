@@ -12,8 +12,9 @@ namespace Karty
         /// w Wielu grach nie może być zwracane gdy jedna ze stron wygrała
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Tuple<Move,T>> GetStates();
+        List<Tuple<Move,T>> GetStates();
         int RateStates(PlayerG p);
         PlayerG Player { get; }
+        bool GameOn { get; }
     }
 }

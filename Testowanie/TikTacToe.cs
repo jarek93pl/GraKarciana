@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    unsafe struct TikTacToe : IStateGame<TikTacToe, int, int>
+     struct TikTacToe : IStateGame<TikTacToe, int, int>
     {
         const int LenghtTable = 9;
         const int LenghtVin = 3;
@@ -24,16 +24,12 @@ namespace ClassLibrary1
         public static TikTacToe GetClear()
         {
             TikTacToe tikTac=new TikTacToe();
-            for (int i = 0; i < LenghtTable; i++)
-            {
-                tikTac.Table[i] = 0;
-
-            }
+            tikTac.Table = new int[9];
             tikTac.PlayerIndex = 1;
             return tikTac;
         }
         public int PlayerIndex;
-        public fixed int Table[9];
+        public int[] Table;
         public int Player => PlayerIndex;
         public int Winer()
         {
@@ -78,6 +74,9 @@ namespace ClassLibrary1
             return true;
         }
         public string Text => ToString();
+
+        public bool GameOn => Winer() == 0;
+
         public override int GetHashCode()
         {
             return 0;
@@ -86,24 +85,23 @@ namespace ClassLibrary1
         {
            return Equals((TikTacToe)obj);
         }
-        public IEnumerable<Tuple<int, TikTacToe>> GetStates()
+        public List<Tuple<int, TikTacToe>> GetStates()
         {
             
             List<Tuple<int, TikTacToe>> zw = new List<Tuple<int, TikTacToe>>();
-            if (Winer()!=0)
+            if (GameOn)
             {
-                return zw;
-            }
-            int Enemy = PlayerIndex == 1 ? 2 : 1;
-            TikTacToe t = this;
-            for (int i = 0; i < 9; i++)
-            {
-                if (t.Table[i]==0)
+                int Enemy = PlayerIndex == 1 ? 2 : 1;
+                TikTacToe t = this;
+                for (int i = 0; i < 9; i++)
                 {
-                    TikTacToe curent =(TikTacToe) this.MemberwiseClone();
-                    curent.Table[i] = Player;
-                    curent.PlayerIndex = Enemy;
-                    zw.Add(new Tuple<int, TikTacToe>(i,curent));
+                    if (t.Table[i] == 0)
+                    {
+                        TikTacToe curent = Copy();
+                        curent.Table[i] = Player;
+                        curent.PlayerIndex = Enemy;
+                        zw.Add(new Tuple<int, TikTacToe>(i, curent));
+                    }
                 }
             }
             return zw;
@@ -119,7 +117,7 @@ namespace ClassLibrary1
             }
             else
             {
-                if (Result==Player)
+                if (Result==p)
                 {
                     return 1;
                 }
@@ -127,6 +125,13 @@ namespace ClassLibrary1
                     return -1;
                 }
             }
+            
+        }
+        public TikTacToe Copy()
+        {
+            TikTacToe z = (TikTacToe)MemberwiseClone();
+            z.Table = (int[])Table.Clone();
+            return z;
         }
         public override string ToString()
         {
