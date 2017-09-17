@@ -1,4 +1,4 @@
-﻿#define IndexRe
+﻿//#define IndexRe
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,6 @@ namespace Karty
     {
         
         int SteptsToforward;
-        //Dictionary<StateT, Tuple<StateT, int>> Cashe = new Dictionary<StateT, Tuple<StateT, int>>();
         public RelatingIq(int steptsToforward)
         {
             SteptsToforward = steptsToforward;
@@ -44,20 +43,36 @@ namespace Karty
             }
             return BestState;
         }
+        Dictionary<StateT, CasheResult> Cashe = new Dictionary<StateT, CasheResult>();
+        struct CasheResult
+        {
+            public int level;
+            public Tuple<MoveT, StateT> tuple;
+            public static explicit operator Tuple<MoveT, StateT>(CasheResult c)=>c.tuple;
 
+
+        }
         public Tuple<MoveT, StateT> GetState(Tuple<MoveT, StateT> state,int Index)
         {
             if (Index>SteptsToforward)
             {
                 return state;
             }
+            CasheResult casheRow;
+            if (Cashe.ContainsKey(state.Item2)&& (casheRow=Cashe[state.Item2]).level<=Index)
+            {
+                return (Tuple<MoveT, StateT>)casheRow;
+            }
             var Best = GetBestState(state.Item2,out bool Find);
             if (Find)
-            {
+            { 
+                Cashe.Add(state.Item2, new CasheResult() {level=Index,tuple=Best });
                 return Best;
 
             }
+            else
             {
+                Cashe.Add(state.Item2, new CasheResult() { level = Index, tuple = state });
                 return state;
             }
         }
