@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Karty
 {
-    class RelatingIq<StateT,MoveT,PlayerT> where StateT:struct, IStateGame<StateT,PlayerT,MoveT>
+    public class RelatingIq<StateT,MoveT,PlayerT> where StateT:struct, IStateGame<StateT,PlayerT,MoveT>
     {
         
         int SteptsToforward;

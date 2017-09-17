@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Gra.cs" />
     <Compile Include="IService1.cs" />
-    <Compile Include="Rozszeżenia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerwisObsugiKont.cs" />
     <Compile Include="Tysioc\Gra1000.cs" />
@@ -91,7 +90,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
         <WcfProjectProperties>
-          <AutoStart>True</AutoStart>
+          <AutoStart>False</AutoStart>
         </WcfProjectProperties>
       </FlavorProperties>
     </VisualStudio>
