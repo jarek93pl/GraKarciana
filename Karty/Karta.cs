@@ -6,7 +6,7 @@ namespace GraKarciana
 {
     
     [Flags]
-    public enum Karta { trelf = 0, karo = 1, kier = 2, pik = 3, K2 = 0, K3 = 4, K4 = 8, K5 = 12, K6 = 16, K7 = 20, K8 = 24, K9 = 28, K10 = 32, Dupek = 36, Dama = 40, Król = 44, As = 48 };
+    public enum Karta : byte { trelf = 0, karo = 1, kier = 2, pik = 3, K2 = 0, K3 = 4, K4 = 8, K5 = 12, K6 = 16, K7 = 20, K8 = 24, K9 = 28, K10 = 32, Dupek = 36, Dama = 40, Król = 44, As = 48 };
     public static class ObsugaKart
     {
   

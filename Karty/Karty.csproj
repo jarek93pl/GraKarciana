@@ -42,6 +42,9 @@
     <Compile Include="Tysiąc\ComparerTysioc.cs" />
     <Compile Include="Karta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tysiąc\Move1000.cs" />
+    <Compile Include="Tysiąc\PlayerGame1000.cs" />
+    <Compile Include="Tysiąc\StateGame1000.cs" />
     <Compile Include="Tysiąc\Tysiąc.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

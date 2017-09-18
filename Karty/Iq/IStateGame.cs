@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Karty
 {
-    public interface IStateGame<T,PlayerG,Move>: IEquatable<T>, IComparable<T> where T: struct,IStateGame<T, PlayerG, Move> 
+    public interface IStateGame<T,PlayerG,Move>: IEquatable<T> where T:IStateGame<T, PlayerG, Move> 
     {
         /// <summary>
         /// w Wielu grach nie może być zwracane gdy jedna ze stron wygrała
