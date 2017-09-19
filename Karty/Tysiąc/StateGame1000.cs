@@ -6,6 +6,7 @@ namespace Karty
 {
     public class StateGame1000 :  IStateGame<StateGame1000, int, Move1000>
     {
+        int HashValue = 0;
         public Karta Kozera;
         public bool EnebleKozera;
         public int[] scoreInCurentGame;
@@ -23,6 +24,7 @@ namespace Karty
             scoreInCurentGame = new int[amountPlayer];
             cardInTable = new Karta[amountPlayer];
             cards = new List<Karta>[amountPlayer];
+            players=new PlayerGame1000[3];
             for (int i = 0; i < amountPlayer; i++)
             {
                 cards[i] = new List<Karta>();
@@ -61,10 +63,21 @@ namespace Karty
         {
             return Equals((StateGame1000)obj);
         }
+        public StateGame1000 SetTable(IEnumerable<Karta> kartas)
+        {
+            var zw = DeapCopy();
+            int tmp = 0;
+            foreach (var item in kartas)
+            {
+                zw.cardInTable[tmp++] = item;
+            }
+            zw.NumberCardInTable = kartas.Count();
+            return zw;
+        }
         public List<Tuple<Move1000, StateGame1000>> GetStates()
         {
             List<Tuple<Move1000, StateGame1000>> zw = new List<Tuple<Move1000, StateGame1000>>();
-            if (GameOn)
+            if (!GameOn)
             {
                 return zw;
             }
@@ -94,7 +107,7 @@ namespace Karty
             int returned = 0;
             for (int i = 0; i < amountPlayer; i++)
             {
-                returned += players[i].ExpectedResult(scoreInCurentGame[i]) * p == i ? 1 : -1;
+                returned += players[i].ExpectedResult(scoreInCurentGame[i]) *( p == i ? 1 : -1);
             }
             return returned;
         }
@@ -112,6 +125,7 @@ namespace Karty
 
         private Move1000 LoadMove(Karta card)
         {
+            cards[Player].Remove(card);
             bool wontMarriage = true;// później będzie można dodać decyzje
             //czy inteligencja chce kozery
             bool marriage = false;
@@ -135,7 +149,6 @@ namespace Karty
             LazyTableToCheckEquality = new Lazy<long[]>(DetermineComareArrey);
             LazyGameOne = new Lazy<bool>(gameOnLazyM);
         }
-        int HashValue = 0;
         const int CardsInOneLong = 10;
         const int OfsetCard = 6;
         private long[] DetermineComareArrey()
@@ -156,6 +169,7 @@ namespace Karty
             {
                 date +=scoreInCurentGame[i]<< (amountPlayer * 10 + 12);
             }
+            zw[zw.Length - 1] = date;
         }
 
         private long[] GetArrey()
@@ -165,17 +179,21 @@ namespace Karty
             // jeden it jest dodany z powodu zaokrągleń a drugi na resze danych
             long[] zw = new long[LenghtLongArrey];
             List<Karta> list = new List<Karta>();
+
+            //operacje związane ze stołem
             cards.Forech(X => list.AddRange(X.OrderBy(Y => (int)Y)));
+            AmountCard += NumberCardInTable;
+
+             
             list.AddRange(GetCardInTable());
             int NrLong = 0;
-            AmountCard--;
             while (true)
             {
                 checked
                 {
                     for (int i = 0; i < CardsInOneLong; i++)
                     {
-                        zw[NrLong] += ((int)zw[AmountCard--]) << OfsetCard * i;
+                        zw[NrLong] += ((int)list[--AmountCard]) << OfsetCard * i;
                         if (AmountCard == 0)
                         {
                             return zw;
