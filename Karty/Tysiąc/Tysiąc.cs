@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraKarciana
 {
@@ -12,7 +10,36 @@ namespace GraKarciana
         static int[] PunktyMeldunków= {60,80,100,40 };
         public static int WartościMeldunków(Karta k)
         {
-            return PunktyMeldunków[(int)k];
+            return PunktyMeldunków[(int)k.Kolor()];
+        }
+        public static int ScoreInTable(Karta[] stół)=> stół.Sum(X => ObsugaTysiąc.PunktacjaTysiąca(X));
+        
+        public static int FindWinner(bool enebleTrump,Karta trumpSuit,int indexPlayer,Karta[] Table)
+        {
+            ComparerTysioc porówjnaj = null;
+            if (enebleTrump)
+            {
+                porówjnaj = new ComparerTysioc(Table[indexPlayer], trumpSuit);
+            }
+            else
+            {
+                porówjnaj = new ComparerTysioc(Table[indexPlayer]);
+            }
+            var Kopiastołu = (Karta[])Table.Clone();
+            Array.Sort(Kopiastołu, porówjnaj);
+            var maxkarta = Kopiastołu.Last();
+            return Table.FindIndex(maxkarta);
+
+        }
+        public static bool IstniejeMeldunek(Karta Dama, IEnumerable<Karta> kw)
+        {
+            if (Dama.PobierzKarte()!=Karta.Dama)
+            {
+                return false;
+            }
+            Karta król = (Karta)((Karta.pik & Dama) + (int)Karta.Król);
+            return kw.Any(X => król == X);
+
         }
         public static int PunktacjaTysiąca(Karta k)
         {

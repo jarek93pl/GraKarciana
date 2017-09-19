@@ -115,7 +115,7 @@ namespace GraKarciana
         {
             if (Melduj)
             {
-                if (ObsugaKart.IstniejeMeldunek(k, KartyGracza[v])&&IlośćKartNaStole==0)
+                if (ObsugaTysiąc.IstniejeMeldunek(k, KartyGracza[v])&&IlośćKartNaStole==0)
                 {
                     Kozera = k.Kolor();
                     Podsumowanie.OdznaczMeldunek(Kozera,v);
@@ -133,8 +133,8 @@ namespace GraKarciana
             Nr++;
             if (IlośćKartNaStole==IlośćGraczy)
             {
-                Nr = PobierzZwyciensce();
-                Podsumowanie.PrzydzielPunkty(Nr, stół);
+                Nr = ObsugaTysiąc.FindWinner(KozeraAktywna, Kozera, NRGrającego, stół);
+                Podsumowanie.Punkty[Nr] += ObsugaTysiąc.ScoreInTable(stół);
                 if (SprawdźCzyKoniec())
                 {
                     Podsumowanie.Koniec(NajwyżejLicytujący, WartośćWylicytowana);
@@ -159,23 +159,7 @@ namespace GraKarciana
 
         private int NRGrającego { get => Nr % IlośćGraczy; }
 
-        private int PobierzZwyciensce()
-        {
-            ComparerTysioc porówjnaj = null;
-            if (KozeraAktywna)
-            {
-                porówjnaj = new ComparerTysioc(stół[NRGrającego],Kozera);
-            }
-            else
-            {
-                porówjnaj = new ComparerTysioc(stół[NRGrającego]);
-            }
-            var Kopiastołu = (Karta[])stół.Clone();
-            Array.Sort(Kopiastołu, porówjnaj);
-            var maxkarta = Kopiastołu.Last();
-            return stół.FindIndex( maxkarta);
-
-        }
+   
 
         private bool SprawdźCzyKoniec()
         {

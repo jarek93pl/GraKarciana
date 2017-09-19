@@ -136,7 +136,7 @@ namespace WindowsFormsApp1
         public Task WyslijKarteMeldującAsync(Karta k)
         {
             
-            bool CzyMożnaMeldować = k.PobierzKarte() == Karta.Dama && IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
+            bool CzyMożnaMeldować = k.PobierzKarte() == Karta.Dama &&ObsugaTysiąc.IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
 
             return WyslijKarteAsync(k,CzyMożnaMeldować);
         }

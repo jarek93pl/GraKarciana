@@ -23,12 +23,6 @@ namespace GraKarciana
         {
             return (k & Karta.pik);
         }
-        public static bool IstniejeMeldunek(Karta Dama,IEnumerable<Karta> kw)
-        {
-            Karta król =(Karta) ((Karta.pik & Dama) +(int) Karta.Król);
-            return kw.Any(X => król == X);
-           
-        }
         public static List<Karta> WylousjMałąTalie()
         {
             List<Karta> zw = new List<Karta>();

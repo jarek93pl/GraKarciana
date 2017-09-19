@@ -24,11 +24,7 @@ namespace GraKarciana
         {
             PunktyWTurze = new int[PunktyWTurze.Length];
         }
-
-        internal void PrzydzielPunkty(int nrGraczaRuszającegoSie, Karta[] stół)
-        {
-            PunktyWTurze[nrGraczaRuszającegoSie] += stół.Sum(X => ObsugaTysiąc.PunktacjaTysiąca(X));
-        }
+       
         internal void OdznaczMeldunek(Karta kozera, int v)
         {
             PunktyWTurze[v] += ObsugaTysiąc.WartościMeldunków(kozera.Kolor());
