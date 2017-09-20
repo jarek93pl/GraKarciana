@@ -66,5 +66,38 @@ namespace ClassLibrary1
                 Assert.AreEqual(b.First().Item2.cards.First().Count, 2);
             }
         }
+
+        [TestMethod]
+        public void LoadMove_CaseFirstCard()
+        {
+            StateGame1000 a = new StateGame1000(3);
+            a.cards.First().AddRange(new GraKarciana.Karta[] { GraKarciana.Karta.As, GraKarciana.Karta.Dupek, GraKarciana.Karta.Dama });
+            var z = a.GetMove(GraKarciana.Karta.As);
+            Assert.IsFalse(z.Item2.cards.First().Contains(GraKarciana.Karta.As));
+            Assert.IsFalse(z.Item1.Marriage);
+        }
+        [TestMethod]
+        public void LoadMove_CaseMariage()
+        {
+            StateGame1000 a = new StateGame1000(3);
+            a.cards.First().AddRange(new GraKarciana.Karta[] { GraKarciana.Karta.Dama, GraKarciana.Karta.As, GraKarciana.Karta.Król });
+            var z = a.GetMove(GraKarciana.Karta.Dama);
+            Assert.IsFalse(z.Item2.cards.First().Contains(GraKarciana.Karta.Dama));
+            Assert.IsTrue(z.Item1.Marriage);
+            Assert.AreEqual(z.Item2.scoreInCurentGame[0], 60);
+        }
+        [TestMethod]
+        public void LoadMove_CaseClearTable()
+        {
+            StateGame1000 a = new StateGame1000(3);
+            a.Player = 2;
+            a.cards.First().AddRange(new GraKarciana.Karta[] { GraKarciana.Karta.Dama, GraKarciana.Karta.As, GraKarciana.Karta.Król });
+            a=a.SetTable(new GraKarciana.Karta[] { GraKarciana.Karta.K9, GraKarciana.Karta.K10 });
+            var z = a.GetMove(GraKarciana.Karta.As);
+            Assert.AreEqual(z.Item2.Player, 2);
+            Assert.AreEqual(z.Item2.scoreInCurentGame[2], 21);
+            Assert.AreEqual(z.Item2.NumberCardInTable, 0);
+
+        }
     }
 }

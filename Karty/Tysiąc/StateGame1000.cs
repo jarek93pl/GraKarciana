@@ -107,7 +107,7 @@ namespace Karty
             int returned = 0;
             for (int i = 0; i < amountPlayer; i++)
             {
-                returned += players[i].ExpectedResult(scoreInCurentGame[i]) *( p == i ? players.Length : -1);
+                returned += players[i].ExpectedResult(scoreInCurentGame[i]) *( p == i ? (players.Length-1) : -1);
             }
             return returned;
         }
@@ -129,7 +129,7 @@ namespace Karty
             bool wontMarriage = true;// później będzie można dodać decyzje
             //czy inteligencja chce kozery
             bool marriage = false;
-            if (ObsugaTysiąc.IstniejeMeldunek(card, cards[Player])||wontMarriage)
+            if (ObsugaTysiąc.IstniejeMeldunek(card, cards[Player])&&wontMarriage)
             {
                 marriage = true;
                 scoreInCurentGame[Player] += ObsugaTysiąc.WartościMeldunków(card);
