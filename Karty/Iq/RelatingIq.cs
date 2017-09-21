@@ -39,7 +39,7 @@ namespace Karty
                 Exist = true;
                 var TmpState = item.Item2.GameOn? GetState(item,index+1):item;
                 int TmpRating = TmpState.Item2.RateStates(state.Player);
-                BasicTools.Swap(ref BestState,new Tuple<MoveT, StateT>(item.Item1 ,TmpState.Item2), ref RatingBestState, TmpRating);
+                BasicTools.SetMax(ref BestState,new Tuple<MoveT, StateT>(item.Item1 ,TmpState.Item2), ref RatingBestState, TmpRating);
             }
             return BestState;
         }
