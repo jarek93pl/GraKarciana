@@ -11,6 +11,10 @@ namespace GraKarciana
     {
   
         const int MaskaKarty = ~3;
+        public static Karta StwórzKarte (Karta figura,Karta kolor)
+        {
+            return figura | kolor;
+        }
         public static Karta PobierzKarte(this Karta k)
         {
             return (Karta) ((int) k & MaskaKarty);

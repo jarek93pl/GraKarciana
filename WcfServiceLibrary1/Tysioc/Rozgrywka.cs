@@ -57,10 +57,10 @@ namespace GraKarciana
         private void Losuj()
         {
             var TaliaKart = ObsugaKart.WylousjMałąTalie();
-            Musek = TaliaKart.Wylosuje(3).ToArray();
+            Musek = TaliaKart.RandAndDelete(3).ToArray();
             for (int i = 0; i < 3; i++)
             {
-                KartyGracza[i] = TaliaKart.Wylosuje(7);
+                KartyGracza[i] = TaliaKart.RandAndDelete(7);
             }
         }
 

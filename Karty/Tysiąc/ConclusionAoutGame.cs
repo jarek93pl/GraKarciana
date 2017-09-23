@@ -3,28 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Karty.Tysiąc
+using GraKarciana;
+namespace Karty
 {
-    public class ConclusionAoutGame
+    public class ConclusionAboutGame
     {
-        List<ConclusionAboutPlayerBehavior> PlayerConclusion = new List<ConclusionAboutPlayerBehavior>();
-        public ConclusionAoutGame(int AmountPlayers, int NumberOfCards)
+        List<Karta> AvilibeCards;
+        const int maxSwap = 10;
+        const int maxRandom = 10;
+        static readonly Swaper<ConclusionAbouttUserBehavior, Karta> swaper = new Swaper<ConclusionAbouttUserBehavior, Karta>(X => X.UserCards, (X, Y) => X.ValidateCard(Y), maxSwap, maxRandom);
+        List<ConclusionAbouttUserBehavior> PlayerConclusion = new List<ConclusionAbouttUserBehavior>();
+        public ConclusionAboutGame(int AmountPlayers,int PlaeyrNumber,IEnumerable<GraKarciana.Karta> cardsPlayer)
         {
+            AvilibeCards = ObsugaKart.WylousjMałąTalie();
+            AvilibeCards.RemoveAll(cardsPlayer);
             for (int i = 0; i < AmountPlayers; i++)
             {
-                ConclusionAboutPlayerBehavior conclusion = new ConclusionAboutPlayerBehavior();
-                conclusion.AmountCards = NumberOfCards;
+                ConclusionAbouttUserBehavior conclusion;
+                if (PlaeyrNumber==i)
+                {
+                    conclusion = new PlayerConclusion(AmountPlayers, cardsPlayer);
+                    conclusion.ItAuction = true;
+                }
+                else
+                {
+
+                    conclusion = new ConclusionAbouttUserBehavior(AmountPlayers);
+                }
                 PlayerConclusion.Add(conclusion);
             }
         }
-        public ConclusionAoutGame(List<ConclusionAboutPlayerBehavior> z)
+        public ConclusionAboutGame(List<ConclusionAbouttUserBehavior> z)
         {
             PlayerConclusion = z;
         }
-        public StateGame1000 GetState()
+        public void SetEndAction()
         {
-            throw new NotImplementedException();
+            foreach (var item in PlayerConclusion)
+            {
+                item.ItAuction = false;
+
+            }
+        }
+        public StateGame1000 GetStates()
+        {
+            StateGame1000 state = new StateGame1000(PlayerConclusion.Count);
+            BindConclusionWitchState(state);
+            RandCards();
+            return state;
+        }
+
+        private void RandCards()
+        {
+            List<Karta> dontRandomCards = AvilibeCards.Select(X => X).ToList();
+            PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards));
+            swaper.Run(PlayerConclusion);
+        }
+
+        private void BindConclusionWitchState(StateGame1000 state)
+        {
+            for (int i = 0; i < state.cardOnTable.Length; i++)
+            {
+                PlayerConclusion[i].UserCards = state.cards[i];
+            }
         }
     }
 }

@@ -11,21 +11,21 @@ namespace Karty
         public bool EnebleKozera;
         public int[] scoreInCurentGame;
         public int NumberCardInTable = 0;
-        public Karta[] cardInTable;
+        public Karta[] cardOnTable;
         public List<Karta>[] cards;
         public PlayerGame1000[] players;//nie musi być tworzona głeboka kopia
 
         Lazy<bool> LazyGameOne;
         Lazy<long[]> LazyTableToCheckEquality;
         readonly int amountPlayer;
-        public StateGame1000(int Index):this()
+        public StateGame1000(int amountPlayer):this()
         {
-            amountPlayer = Index;
-            scoreInCurentGame = new int[amountPlayer];
-            cardInTable = new Karta[amountPlayer];
-            cards = new List<Karta>[amountPlayer];
+            this.amountPlayer = amountPlayer;
+            scoreInCurentGame = new int[this.amountPlayer];
+            cardOnTable = new Karta[this.amountPlayer];
+            cards = new List<Karta>[this.amountPlayer];
             players=new PlayerGame1000[3];
-            for (int i = 0; i < amountPlayer; i++)
+            for (int i = 0; i < this.amountPlayer; i++)
             {
                 cards[i] = new List<Karta>();
                 players[i] = new PlayerGame1000();
@@ -44,7 +44,7 @@ namespace Karty
             zw.Initialize();
             zw.scoreInCurentGame = (int[])zw.scoreInCurentGame.Clone();
             zw.cards = (List<Karta>[])zw.cards.Clone();
-            zw.cardInTable = (Karta[])zw.cardInTable.Clone();
+            zw.cardOnTable = (Karta[])zw.cardOnTable.Clone();
             for (int i = 0; i < amountPlayer; i++)
             {
                 zw.cards[i] = zw.cards[i].Select(X => X).ToList();
@@ -69,7 +69,7 @@ namespace Karty
             int tmp = 0;
             foreach (var item in kartas)
             {
-                zw.cardInTable[tmp++] = item;
+                zw.cardOnTable[tmp++] = item;
             }
             zw.NumberCardInTable = kartas.Count();
             return zw;
@@ -81,7 +81,7 @@ namespace Karty
             {
                 return zw;
             }
-            List<Karta> availableCard = ObsugaTysiąc.ZaładujDostepneKarty(cards[Player], cardInTable.Take(NumberCardInTable).ToList(), EnebleKozera, Kozera);
+            List<Karta> availableCard = ObsugaTysiąc.ZaładujDostepneKarty(cards[Player], cardOnTable.Take(NumberCardInTable).ToList(), EnebleKozera, Kozera);
             for (int i = 0; i < availableCard.Count; i++)
             {
                 zw.Add( GetMove(availableCard[i]));
@@ -134,11 +134,11 @@ namespace Karty
                 marriage = true;
                 scoreInCurentGame[Player] += ObsugaTysiąc.WartościMeldunków(card);
             }
-            cardInTable[NumberCardInTable++] = card;
+            cardOnTable[NumberCardInTable++] = card;
             if (NumberCardInTable == amountPlayer)
             {
-                int IndexWiner= ObsugaTysiąc.FindWinner(EnebleKozera, Kozera, Player, cardInTable);
-                scoreInCurentGame[IndexWiner] = ObsugaTysiąc.ScoreInTable(cardInTable);
+                int IndexWiner= ObsugaTysiąc.FindWinner(EnebleKozera, Kozera, Player, cardOnTable);
+                scoreInCurentGame[IndexWiner] = ObsugaTysiąc.ScoreInTable(cardOnTable);
                 NumberCardInTable = 0;
                 Player = IndexWiner;
             }
@@ -209,7 +209,7 @@ namespace Karty
         {
             for (int i = 0; i < NumberCardInTable; i++)
             {
-                yield return cardInTable[i];
+                yield return cardOnTable[i];
             }
         }
 

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Collections;
 namespace GraKarciana
 {
-    public static class Losowanie
+    public static class RandCards
     {
         [ThreadStatic]
         static Random rw;
-        public static Random r
+        public static Random Random
         {
             get
             {
@@ -17,12 +17,12 @@ namespace GraKarciana
                 
             }
         }
-        public static List<T> Wylosuje<T>(this IList<T> wejście,int IloścElementów)
+        public static List<T> RandAndDelete<T>(this IList<T> wejście,int IloścElementów)
         {
             List<T> zk = new List<T>(IloścElementów);
             for (int i = 0; i < IloścElementów; i++)
             {
-                int nr = r.Next(wejście.Count);
+                int nr = Random.Next(wejście.Count);
                 T z = wejście[nr];
                 zk.Add(z);
                 wejście.RemoveAt(nr);

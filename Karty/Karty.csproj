@@ -36,16 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BasicTools.cs" />
-    <Compile Include="Tysiąc\ConclusionAboutPlayerBehavior.cs" />
-    <Compile Include="Iq\IQ1000Game.cs" />
+    <Compile Include="Iq\MultiList.cs" />
+    <Compile Include="Iq\Swaper.cs" />
+    <Compile Include="Tysiąc\ConclusionAboutUserBehavior.cs" />
+    <Compile Include="Tysiąc\IQ1000Game.cs" />
     <Compile Include="Iq\IStateGame.cs" />
     <Compile Include="Iq\RelatingIq.cs" />
-    <Compile Include="Rozszeżenia.cs" />
+    <Compile Include="RandCards.cs" />
     <Compile Include="Tysiąc\ComparerTysioc.cs" />
     <Compile Include="Karta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tysiąc\ConclusionAoutGame.cs" />
     <Compile Include="Tysiąc\Move1000.cs" />
+    <Compile Include="Tysiąc\PlayerConclusion.cs" />
     <Compile Include="Tysiąc\PlayerGame1000.cs" />
     <Compile Include="Tysiąc\StateGame1000.cs" />
     <Compile Include="Tysiąc\Tysiąc.cs" />

@@ -16,5 +16,9 @@ namespace Karty
             this.stepsForowad = stepsForowad;
             this.usedCards = usedCards;
         }
+        public int CalculateBidAmount()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

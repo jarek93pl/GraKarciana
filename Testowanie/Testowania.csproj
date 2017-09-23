@@ -47,12 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Iq1000Game.cs" />
-    <Compile Include="IqTestcs.cs" />
+    <Compile Include="Game1000\ConclusionIq1000.cs" />
+    <Compile Include="Game1000\Iq1000Game.cs" />
+    <Compile Include="Iq\IqTestcs.cs" />
+    <Compile Include="Iq\MargeList.cs" />
+    <Compile Include="Iq\MockRestrycion.cs" />
+    <Compile Include="Iq\TestingSwaper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TikTacToe.cs" />
-    <Compile Include="TikTacToeTest.cs" />
+    <Compile Include="TickRacTOe\TikTacToe.cs" />
+    <Compile Include="TickRacTOe\TikTacToeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
