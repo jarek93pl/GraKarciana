@@ -12,27 +12,27 @@ namespace Karty
         readonly int PlayerInGame;
         public int AmountCards;
         public List<Karta> UserCards;
-        public Karta[] TheMostCardsInColor = new Karta[4];
+        public Karta[] TheMostFigureInColor = new Karta[4];
 
         public bool ItAuction { get; set; } = true;
 
         public ConclusionAbouttUserBehavior(int PlayerInGame)
         {
             this.PlayerInGame = PlayerInGame;
-            for (int i = 0; i < TheMostCardsInColor.Length; i++)
+            for (int i = 0; i < TheMostFigureInColor.Length; i++)
             {
-                TheMostCardsInColor[i] = Karta.As + 4;
+                TheMostFigureInColor[i] = Karta.As + 4;
             }
         }
         public void ConclusionAbotBehavior(Karta k)
         {
             int Suit = (int)k.Kolor();
-            int tmp =(int) TheMostCardsInColor[Suit];
+            int tmp =(int) TheMostFigureInColor[Suit];
             BasicTools.SetMax(ref tmp,(int) k);
-            TheMostCardsInColor[Suit] =(Karta) tmp;
+            TheMostFigureInColor[Suit] =(Karta) tmp;
 
 
-        }        internal bool ValidateCard(Karta karta) => TheMostCardsInColor[(int)karta.Kolor()] > karta;
+        }        internal bool ValidateCard(Karta karta) => TheMostFigureInColor[(int)karta.Kolor()] > karta;
         /// <summary>
         /// te losowanie nie zwraca uwagi na ilość kart ponieważ one jest uwzglednianie w 
         /// klasie conclusion about game 
@@ -77,7 +77,7 @@ namespace Karty
             }
             else
             {
-                UserCards.AddRange(dontRandCards.RandAndDelete(10));
+                UserCards.AddRange(dontRandCards.RandAndDelete(8));
             }
         }
     }

@@ -12,9 +12,11 @@ namespace Karty
         const int maxSwap = 10;
         const int maxRandom = 10;
         static readonly Swaper<ConclusionAbouttUserBehavior, Karta> swaper = new Swaper<ConclusionAbouttUserBehavior, Karta>(X => X.UserCards, (X, Y) => X.ValidateCard(Y), maxSwap, maxRandom);
-        List<ConclusionAbouttUserBehavior> PlayerConclusion = new List<ConclusionAbouttUserBehavior>();
+        readonly int playerIndex;
+        public List<ConclusionAbouttUserBehavior> PlayerConclusion = new List<ConclusionAbouttUserBehavior>();
         public ConclusionAboutGame(int AmountPlayers,int PlaeyrNumber,IEnumerable<GraKarciana.Karta> cardsPlayer)
         {
+            playerIndex = PlaeyrNumber;
             AvilibeCards = ObsugaKart.WylousjMałąTalie();
             AvilibeCards.RemoveAll(cardsPlayer);
             for (int i = 0; i < AmountPlayers; i++)
@@ -33,6 +35,12 @@ namespace Karty
                 PlayerConclusion.Add(conclusion);
             }
         }
+
+        internal int RatingState(StateGame1000 state)
+        {
+            throw new NotImplementedException();
+        }
+
         public ConclusionAboutGame(List<ConclusionAbouttUserBehavior> z)
         {
             PlayerConclusion = z;

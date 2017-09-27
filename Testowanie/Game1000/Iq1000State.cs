@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ClassLibrary1
 {
     [TestClass]
-    public class Iq1000Game
+    public class Iq1000State
     {
         [TestMethod]
         public void TestEquals()

@@ -65,8 +65,13 @@ namespace Karty
             }
             var Best = GetBestState(state.Item2,out bool Find);
             if (Find)
-            { 
-                Cashe.Add(state.Item2, new CasheResult() {level=Index,tuple=Best });
+            {
+                if (Cashe.ContainsKey(state.Item2))
+                {
+                    Cashe.Remove(state.Item2);//nie tszeba sprawdzać bo miedzy wcze
+                }
+                Cashe.Add(state.Item2, new CasheResult() { level = Index, tuple = Best });
+                
                 return Best;
 
             }

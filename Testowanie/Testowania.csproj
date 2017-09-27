@@ -47,8 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Date.cs" />
     <Compile Include="Game1000\ConclusionIq1000.cs" />
-    <Compile Include="Game1000\Iq1000Game.cs" />
+    <Compile Include="Game1000\Iq1000.cs" />
+    <Compile Include="Game1000\Iq1000State.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Iq\IqTestcs.cs" />
     <Compile Include="Iq\MargeList.cs" />
     <Compile Include="Iq\MockRestrycion.cs" />
