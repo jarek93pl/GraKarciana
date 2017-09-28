@@ -1,4 +1,5 @@
-﻿//#define IndexRe
+﻿#define performance
+//#define IndexRe
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,14 @@ namespace Karty
 {
     public class RelatingIq<StateT,MoveT,PlayerT> where StateT: IStateGame<StateT,PlayerT,MoveT>
     {
-        
+        bool UsingCashe;
         int SteptsToforward;
-        public RelatingIq(int steptsToforward)
+        public RelatingIq(int steptsToforward,bool UsingCashe=false)
         {
+#if performance
+            ExecutionInLevel = new int[steptsToforward+2];
+#endif
+            this.UsingCashe = UsingCashe;
             SteptsToforward = steptsToforward;
         }
         public Tuple<MoveT,StateT> Run(StateT state)
@@ -20,16 +25,26 @@ namespace Karty
             var Best= GetBestState(state, out var z);
             return Best;
         }
-
+        #region ToDiagnostic
 #if IndexRe
         public static int IndexRecurent = 0;
 #endif
+#if performance
+        int UsedCashCount = 0;
+        int[] ExecutionInLevel;
+#endif
+#endregion
         private Tuple<MoveT, StateT> GetBestState(StateT state,out bool Exist,int index=0)
         {
+            #region ToDiagnostic
 #if IndexRe
             IndexRecurent++;
             int CurentIndexRecurent = IndexRecurent;
 #endif
+#if performance
+            ExecutionInLevel[index]++;
+#endif
+            #endregion
             Exist = false;
             Tuple<MoveT, StateT> BestState = default(Tuple<MoveT, StateT>);
             int RatingBestState = int.MinValue;
@@ -54,16 +69,45 @@ namespace Karty
         }
         public Tuple<MoveT, StateT> GetState(Tuple<MoveT, StateT> state,int Index)
         {
-            if (Index>SteptsToforward)
+            if (Index > SteptsToforward)
             {
                 return state;
             }
-            CasheResult casheRow;
-            if (Cashe.ContainsKey(state.Item2)&& (casheRow=Cashe[state.Item2]).level<=Index)
+            if (UsingCashe)
             {
+                return GetCasheValue(state, Index);
+            }
+            else
+            {
+                return DontUsingCashe(state,Index);
+            }
+        
+        }
+
+        private Tuple<MoveT, StateT> DontUsingCashe(Tuple<MoveT, StateT> state,int Index)
+        {
+            var Best = GetBestState(state.Item2, out bool Find, Index);
+            if (Find)
+            {
+                return Best;
+            }
+            else
+            {
+                return state;
+            }
+        }
+
+        private Tuple<MoveT, StateT> GetCasheValue(Tuple<MoveT, StateT> state, int Index)
+        {
+            CasheResult casheRow;
+            if (Cashe.ContainsKey(state.Item2) && (casheRow = Cashe[state.Item2]).level <= Index)
+            {
+#if performance
+                UsedCashCount++;
+#endif
                 return (Tuple<MoveT, StateT>)casheRow;
             }
-            var Best = GetBestState(state.Item2,out bool Find);
+            var Best = GetBestState(state.Item2, out bool Find, Index);
             if (Find)
             {
                 if (Cashe.ContainsKey(state.Item2))
@@ -71,7 +115,7 @@ namespace Karty
                     Cashe.Remove(state.Item2);//nie tszeba sprawdzać bo miedzy wcze
                 }
                 Cashe.Add(state.Item2, new CasheResult() { level = Index, tuple = Best });
-                
+
                 return Best;
 
             }
@@ -81,6 +125,5 @@ namespace Karty
                 return state;
             }
         }
-
     }
 }
