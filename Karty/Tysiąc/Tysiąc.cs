@@ -48,10 +48,16 @@ namespace GraKarciana
             karta /= 4;
             return PunktyKart1000[karta];
         }
-        public static List<Karta> ZaładujDostepneKarty(List<Karta> twojeKarty, List<Karta> stół,bool AktywnaKozera, Karta Kozera)
+        public static List<Karta> ZaładujDostepneKarty(List<Karta> twojeKarty, List<Karta> stół, bool AktywnaKozera, Karta Kozera)
         {
+            return ZaładujDostepneKartyWitchResult(twojeKarty, stół, AktywnaKozera, Kozera,out ResultMoveGame _);
+        }
+        public static List<Karta> ZaładujDostepneKartyWitchResult(List<Karta> twojeKarty, List<Karta> stół,bool AktywnaKozera, Karta Kozera,out ResultMoveGame resultMove)
+        {
+
             if (stół.Count == 0)
             {
+                resultMove = ResultMoveGame.EmptyTable;
                 return twojeKarty;
             }
             else
@@ -66,10 +72,12 @@ namespace GraKarciana
                     var Wieksze = KartyDostepneWturze.Where(X => cp.Compare(Najwiejsze, X) < 0).ToList();
                     if (Wieksze.Count != 0)
                     {
+                        resultMove = ResultMoveGame.Win;
                         return  Wieksze;
                     }
                     else
                     {
+                        resultMove = ResultMoveGame.Lose;
                         return KartyDostepneWturze;
                     }
                 }
@@ -84,16 +92,19 @@ namespace GraKarciana
                         var Wieksze = twojeKarty.Where(X => cp.Compare(Najwiejsze, X) < 0).ToList();
                         if (Wieksze.Count == 0)
                         {
+                            resultMove = ResultMoveGame.Lose;
                             return twojeKarty;
                         }
                         else
                         {
+                            resultMove = ResultMoveGame.Win;
                             return  Wieksze;
                         }
 
                     }
                     else
                     {
+                        resultMove = ResultMoveGame.Lose;
                         return twojeKarty;
                     }
                 }

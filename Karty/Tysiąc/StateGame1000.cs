@@ -16,6 +16,7 @@ namespace Karty
         public PlayerGame1000[] players;//nie musi być tworzona głeboka kopia
 
         Lazy<bool> LazyGameOne;
+        Lazy<int[]> LazyTheHighetCardInColor;
         Lazy<long[]> LazyTableToCheckEquality;
         readonly int amountPlayer;
         public StateGame1000(int amountPlayer):this()
@@ -148,7 +149,20 @@ namespace Karty
         {
             LazyTableToCheckEquality = new Lazy<long[]>(DetermineComareArrey);
             LazyGameOne = new Lazy<bool>(gameOnLazyM);
+            LazyTheHighetCardInColor = new Lazy<int[]>(GetHightCards);
         }
+
+        private int[] GetHightCards()
+        {
+            int[] zw = new int[4];
+            foreach (var item in cards.SelectMany(X=>X))
+            {
+                int IndexColor = (int)item.Kolor();
+                BasicTools.SetMax(ref zw[IndexColor],(int)item);
+            }
+            return zw;
+        }
+
         const int CardsInOneLong = 10;
         const int OfsetCard = 6;
         private long[] DetermineComareArrey()

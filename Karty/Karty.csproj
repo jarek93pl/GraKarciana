@@ -36,9 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BasicTools.cs" />
+    <Compile Include="Tysiąc\IqDefineRole\IDefineRole.cs" />
     <Compile Include="Iq\MultiList.cs" />
     <Compile Include="Iq\Swaper.cs" />
-    <Compile Include="Tysiąc\ConclusionAboutUserBehavior.cs" />
+    <Compile Include="Tysiąc\Conclusion\ConclusionAboutUserBehavior.cs" />
     <Compile Include="Tysiąc\IQ1000Game.cs" />
     <Compile Include="Iq\IStateGame.cs" />
     <Compile Include="Iq\RelatingIq.cs" />
@@ -46,13 +47,14 @@
     <Compile Include="Tysiąc\ComparerTysioc.cs" />
     <Compile Include="Karta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tysiąc\ConclusionAoutGame.cs" />
+    <Compile Include="Tysiąc\Conclusion\ConclusionAoutGame.cs" />
     <Compile Include="Tysiąc\Move1000.cs" />
-    <Compile Include="Tysiąc\PlayerConclusion.cs" />
+    <Compile Include="Tysiąc\Conclusion\PlayerConclusion.cs" />
     <Compile Include="Tysiąc\PlayerGame1000.cs" />
     <Compile Include="Tysiąc\StateGame1000.cs" />
     <Compile Include="Tysiąc\Tysiąc.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.224\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.224\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
