@@ -41,6 +41,17 @@ namespace GraKarciana
             return kw.Any(X => król == X);
 
         }
+
+        internal static bool LastWin(List<Karta> table, bool enebleAtute, Karta atute, out bool usingAtute, out bool usingColor)
+        {
+            Karta last = table.Last();
+            List<Karta> tablec = table.Select(X=>X).ToList();
+            tablec.Sort(enebleAtute? new ComparerTysioc(table.First(),atute): new ComparerTysioc(table.First()));
+            usingAtute = last.Kolor() == atute&&enebleAtute;
+            usingColor = last.Kolor() == table.First().Kolor();
+            return last == table.Last();
+        }
+
         public static int PunktacjaTysiąca(Karta k)
         {
             int karta = (int)k;

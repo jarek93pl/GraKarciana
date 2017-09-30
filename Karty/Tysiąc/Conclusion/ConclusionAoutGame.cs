@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using GraKarciana;
 namespace Karty
 {
+    public enum MoveContext1000 { Action,ChoseCards,Game};
     public class ConclusionAboutGame
     {
+        public MoveContext1000 MoveContext;
         List<Karta> AvilibeCards;
         const int maxSwap = 10;
         const int maxRandom = 10;
@@ -25,7 +27,6 @@ namespace Karty
                 if (PlaeyrNumber==i)
                 {
                     conclusion = new PlayerConclusion(AmountPlayers, cardsPlayer);
-                    conclusion.ItAuction = true;
                 }
                 else
                 {
@@ -38,21 +39,14 @@ namespace Karty
 
         internal int RatingState(StateGame1000 state)
         {
-            throw new NotImplementedException();
+            return state.RateStates(playerIndex);
         }
 
         public ConclusionAboutGame(List<ConclusionAbouttUserBehavior> z)
         {
             PlayerConclusion = z;
         }
-        public void SetEndAction()
-        {
-            foreach (var item in PlayerConclusion)
-            {
-                item.ItAuction = false;
-
-            }
-        }
+    
         public StateGame1000 GetStates()
         {
             StateGame1000 state = new StateGame1000(PlayerConclusion.Count);
@@ -64,7 +58,7 @@ namespace Karty
         private void RandCards()
         {
             List<Karta> dontRandomCards = AvilibeCards.Select(X => X).ToList();
-            PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards));
+            PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards, MoveContext));
             swaper.Run(PlayerConclusion);
         }
 

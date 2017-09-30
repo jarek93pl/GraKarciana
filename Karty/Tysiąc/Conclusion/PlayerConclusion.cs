@@ -14,13 +14,20 @@ namespace Karty
         {
             this.haveCards = haveCards;
         }
-        protected override void RandomCards3Cards(List<Karta> dontRandCards)
+        protected override void RandomCards3Cards(List<Karta> dontRandCards,MoveContext1000 mp)
         {
-
-            UserCards.AddRange(haveCards);
-            if (ItAuction)
+            switch (mp)
             {
-                UserCards.AddRange(dontRandCards.RandAndDelete(3));
+                case MoveContext1000.Action:
+                case MoveContext1000.ChoseCards:
+                    UserCards.AddRange(dontRandCards.RandAndDelete(1));
+                    UserCards.AddRange(haveCards);
+                    break;
+                case MoveContext1000.Game:
+                    UserCards.AddRange(haveCards);
+                    break;
+                default:
+                    break;
             }
         }
     }

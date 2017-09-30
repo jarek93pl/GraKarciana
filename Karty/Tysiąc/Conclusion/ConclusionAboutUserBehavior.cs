@@ -13,9 +13,8 @@ namespace Karty
         public int AmountCards;
         public List<Karta> UserCards;
         public Karta[] TheMostFigureInColor = new Karta[4];
-
-        public bool ItAuction { get; set; } = true;
-
+        public Karta transferred;
+        bool usedTransferedCard;
         public ConclusionAbouttUserBehavior(int PlayerInGame)
         {
             this.PlayerInGame = PlayerInGame;
@@ -24,34 +23,67 @@ namespace Karty
                 TheMostFigureInColor[i] = Karta.As + 4;
             }
         }
-        public void ConclusionAbotBehavior(Karta k)
+        public void ConclusionAboutBehavior(List<Karta> Table,bool enebleAtute,Karta atute)
         {
-            int Suit = (int)k.Kolor();
-            int tmp =(int) TheMostFigureInColor[Suit];
-            BasicTools.SetMax(ref tmp,(int) k);
-            TheMostFigureInColor[Suit] =(Karta) tmp;
+            ConclusionAboutTransferedCard(Table);
+            ConclusionAboutMaxCards(Table,enebleAtute,atute);
 
+        }
 
-        }        internal bool ValidateCard(Karta karta) => TheMostFigureInColor[(int)karta.Kolor()] > karta;
+        private void ConclusionAboutMaxCards(List<Karta> table, bool enebleAtute, Karta atute)
+        {
+            if (table.Count>1&&!ObsugaTysiąc.LastWin(table,enebleAtute,atute, out bool usingAtute, out bool usingSuit))
+            {
+                Karta last = table.Last();
+                Karta first = table.First();
+                if (!usingSuit)
+                {
+                    TheMostFigureInColor[(int)last.Kolor()] = Karta.trelf;//trefl to wartość 0
+                    if (!usingAtute&&enebleAtute)
+                    {
+                        TheMostFigureInColor[(int)atute.Kolor()] = Karta.trelf;
+                    }
+                }
+                else
+                {
+                    TheMostFigureInColor[(int)first.Kolor()] = first;
+                }
+
+            }
+        }
+
+        private void ConclusionAboutTransferedCard(List<Karta> Table)
+        {
+            if (Table.Any(X => X == transferred))
+            {
+                usedTransferedCard = true;
+            }
+        }
+        public void TransferCards(Karta karta)
+        {
+            transferred = karta;
+            usedTransferedCard = false;
+        }
+        internal bool ValidateCard(Karta karta) => TheMostFigureInColor[(int)karta.Kolor()] > karta;
         /// <summary>
         /// te losowanie nie zwraca uwagi na ilość kart ponieważ one jest uwzglednianie w 
         /// klasie conclusion about game 
         /// 
         /// </summary>
         /// <param name="dontRandCards"></param>
-        public void RandomCards(List<Karta> dontRandCards)
+        public void RandomCards(List<Karta> dontRandCards, MoveContext1000 stateGame)
         {
             UserCards.Clear();
             switch (PlayerInGame)
             {
                 case 2:
-                    RandomCards2Cards(dontRandCards);
+                    RandomCards2Cards(dontRandCards,stateGame);
                     break;
                 case 3:
-                    RandomCards3Cards(dontRandCards);
+                    RandomCards3Cards(dontRandCards, stateGame);
                     break;
                 case 4:
-                    RandomCards4Cards(dontRandCards);
+                    RandomCards4Cards(dontRandCards, stateGame);
                     break;
                 default:
                     break;
@@ -59,25 +91,55 @@ namespace Karty
             }
         }
 
-        private void RandomCards4Cards(List<Karta> dontRandCards)
+        protected virtual void RandomCards4Cards(List<Karta> dontRandCards, MoveContext1000 stateGame)
         {
             throw new NotImplementedException();
         }
 
-        private void RandomCards2Cards(List<Karta> dontRandCards)
+        protected virtual void RandomCards2Cards(List<Karta> dontRandCards, MoveContext1000 stateGame)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual void RandomCards3Cards(List<Karta> dontRandCards)
+        protected virtual void RandomCards3Cards(List<Karta> dontRandCards, MoveContext1000 stateGame)
         {
-            if (ItAuction)
+            switch (stateGame)
             {
-                UserCards.AddRange(dontRandCards.RandAndDelete(7));
+                case MoveContext1000.Action:
+                    RandomCards3CardsAction(dontRandCards);
+                    break;
+                case MoveContext1000.ChoseCards:
+                    RandomCards3CardsChoseCards(dontRandCards);
+                    break;
+                case MoveContext1000.Game:
+                    RandomCards3CardsGame(dontRandCards);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void RandomCards3CardsAction(List<Karta> dontRandCards)
+        {
+            UserCards.AddRange(dontRandCards.RandAndDelete(8));
+        }
+
+        private void RandomCards3CardsChoseCards(List<Karta> dontRandCards)
+        {
+            UserCards.Add(transferred);
+            UserCards.AddRange(dontRandCards.RandAndDelete(7));
+        }
+
+        private void RandomCards3CardsGame(List<Karta> dontRandCards)
+        {
+            if (usedTransferedCard)
+            {
+                UserCards.AddRange(dontRandCards.RandAndDelete(AmountCards));
             }
             else
             {
-                UserCards.AddRange(dontRandCards.RandAndDelete(8));
+                UserCards.Add(transferred);
+                UserCards.AddRange(dontRandCards.RandAndDelete(AmountCards-1));
             }
         }
     }
