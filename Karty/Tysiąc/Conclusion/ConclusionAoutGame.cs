@@ -41,7 +41,18 @@ namespace Karty
         {
             return state.RateStates(playerIndex);
         }
-
+        public void TransferedCard(Karta karta,int numberPlayer)
+        {
+            if (PlayerConclusion[numberPlayer] is ConclusionAbouttUserBehavior c)
+            {
+                AvilibeCards.Remove(karta);
+                c.TransferCards(karta);
+            }
+            if (PlayerConclusion[numberPlayer] is PlayerConclusion cd)
+            {
+                throw new InvalidOperationException("nie można przeksazać karty samemu sobie");
+            }
+        }
         public ConclusionAboutGame(List<ConclusionAbouttUserBehavior> z)
         {
             PlayerConclusion = z;

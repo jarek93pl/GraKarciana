@@ -8,7 +8,8 @@ namespace Karty
 {
     interface IDefineRole
     {
-        bool IsContext(StateGame1000 s);
-        List<Karta> GetValidCards(List<StateGame1000> ls);
+        bool IsContext(StateGame1000 s, ResultMoveGame mk);
+        List<Karta> GetValidCards(List<Karta> ls);
     }
+    
 }

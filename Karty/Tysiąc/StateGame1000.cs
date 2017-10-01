@@ -6,6 +6,12 @@ namespace Karty
 {
     public class StateGame1000 :  IStateGame<StateGame1000, int, Move1000>
     {
+        static readonly IReadOnlyCollection<IDefineRole> defineRoleconst;
+        static StateGame1000()
+        {
+            List<IDefineRole> list = new List<IDefineRole>();
+            defineRoleconst = list;
+        }
         int HashValue = 0;
         public Karta Kozera;
         public bool EnebleKozera;
@@ -82,12 +88,26 @@ namespace Karty
             {
                 return zw;
             }
-            List<Karta> availableCard = ObsugaTysiąc.ZaładujDostepneKarty(cards[Player], cardOnTable.Take(NumberCardInTable).ToList(), EnebleKozera, Kozera);
+            List<Karta> availableCard = GetAvilibleCards();
             for (int i = 0; i < availableCard.Count; i++)
             {
                 zw.Add( GetMove(availableCard[i]));
             }
             return zw;
+        }
+
+        private List<Karta> GetAvilibleCards()
+        {
+            ResultMoveGame resultMove;
+            var avilibleCards= ObsugaTysiąc.ZaładujDostepneKartyWitchResult(cards[Player], cardOnTable.Take(NumberCardInTable).ToList(), EnebleKozera, Kozera,out resultMove);
+            foreach (var item in defineRoleconst)
+            {
+                if (item.IsContext(this, resultMove));
+                {
+                    avilibleCards= item.GetValidCards(avilibleCards);
+                }
+            }
+            return avilibleCards;
         }
 
         public Tuple<Move1000, StateGame1000> GetMove(Karta card)
