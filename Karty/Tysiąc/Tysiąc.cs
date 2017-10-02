@@ -31,6 +31,25 @@ namespace GraKarciana
             return Table.FindIndex(maxkarta);
 
         }
+        public static IEnumerable<Karta> GetAllQueenIfMariage(IEnumerable<Karta> kw)
+        {
+            int[] CountMariageCard = new int[4];
+            foreach (var item in kw)
+            {
+                var k = item.PobierzKarte();
+                if (k==Karta.Król||k==Karta.Dama)
+                {
+                    CountMariageCard[(int) item.Kolor()]++;
+                }
+            }
+            for (int i = 0; i < CountMariageCard.Length; i++)
+            {
+                if (CountMariageCard[i]==2)
+                {
+                    yield return ObsugaKart.StwórzKarte(Karta.Dama,(Karta) i);
+                }
+            }
+        }
         public static bool IstniejeMeldunek(Karta Dama, IEnumerable<Karta> kw)
         {
             if (Dama.PobierzKarte()!=Karta.Dama)
@@ -65,7 +84,6 @@ namespace GraKarciana
         }
         public static List<Karta> ZaładujDostepneKartyWitchResult(List<Karta> twojeKarty, List<Karta> stół,bool AktywnaKozera, Karta Kozera,out ResultMoveGame resultMove)
         {
-
             if (stół.Count == 0)
             {
                 resultMove = ResultMoveGame.EmptyTable;

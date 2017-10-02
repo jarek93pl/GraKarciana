@@ -37,6 +37,17 @@ namespace GraKarciana
             }
             return zw;
         }
+        public static Lazy<HashSet<Karta>> Card24LazyHash = new Lazy<HashSet<Karta>>(() => new HashSet<Karta>(WylousjMałąTalie()));
+        public static void ValidMałąTalie(IEnumerable<Karta> cards)
+        {
+            foreach (var item in cards)
+            {
+                if (!Card24LazyHash.Value.Contains(item))
+                {
+                    throw new InvalidOperationException("występuje karta z dużej tali");
+                }
+            }
+        }
         public static List<Karta> WylousjTalie()
         {
             List<Karta> zw = new List<Karta>();

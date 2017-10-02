@@ -39,9 +39,9 @@ namespace Karty
                 if (!usingSuit)
                 {
                     TheMostFigureInColor[(int)last.Kolor()] = Karta.trelf;//trefl to wartość 0
-                    if (!usingAtute&&enebleAtute)
+                    if (enebleAtute)
                     {
-                        TheMostFigureInColor[(int)atute.Kolor()] = Karta.trelf;
+                        TheMostFigureInColor[(int)atute.Kolor()] = MaxAtutInTable(table,atute);
                     }
                 }
                 else
@@ -51,6 +51,8 @@ namespace Karty
 
             }
         }
+
+        private Karta MaxAtutInTable(List<Karta> table, Karta atute) => (Karta)table.Where(X => X.Kolor() == atute).DefaultIfEmpty(Karta.trelf).Max(X => (int)X);
 
         private void ConclusionAboutTransferedCard(List<Karta> Table)
         {

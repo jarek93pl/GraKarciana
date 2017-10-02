@@ -6,10 +6,11 @@ namespace Karty
 {
     public class StateGame1000 :  IStateGame<StateGame1000, int, Move1000>
     {
-        static readonly IReadOnlyCollection<IDefineRole> defineRoleconst;
+        public static readonly IReadOnlyCollection<IDefineRole> defineRoleconst;
         static StateGame1000()
         {
             List<IDefineRole> list = new List<IDefineRole>();
+            list.Add(new Karty.Tysiąc.IqDefineRole.RoleFirstCardIsMax());
             defineRoleconst = list;
         }
         int HashValue = 0;
@@ -102,9 +103,13 @@ namespace Karty
             var avilibleCards= ObsugaTysiąc.ZaładujDostepneKartyWitchResult(cards[Player], cardOnTable.Take(NumberCardInTable).ToList(), EnebleKozera, Kozera,out resultMove);
             foreach (var item in defineRoleconst)
             {
-                if (item.IsContext(this, resultMove));
+                if (item.IsContext(this, resultMove))
                 {
                     avilibleCards= item.GetValidCards(avilibleCards);
+                    if (item.IsEnded)
+                    {
+                        break;
+                    }
                 }
             }
             return avilibleCards;

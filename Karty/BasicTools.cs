@@ -32,5 +32,14 @@ namespace Karty
         {
             SetMin(ref a, b, ref a, b);
         }
+        public static T[] InitializeTable<T>(int count, T value) where T : IComparable<T>
+        {
+            T[] z = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                z[i] = value;
+            }
+            return z;
+        }
     }
 }

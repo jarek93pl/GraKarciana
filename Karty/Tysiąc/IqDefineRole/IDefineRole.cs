@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using GraKarciana;
 namespace Karty
 {
-    interface IDefineRole
+    public interface IDefineRole
     {
         bool IsContext(StateGame1000 s, ResultMoveGame mk);
         List<Karta> GetValidCards(List<Karta> ls);
+        bool IsEnded { get; }
     }
     
 }

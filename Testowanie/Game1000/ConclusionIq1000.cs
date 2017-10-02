@@ -60,6 +60,7 @@ namespace ClassLibrary1.Game1000
             ConclusionAboutGame conclusionAboutGame = new ConclusionAboutGame(3, 1,Date.simpleCards8);
             conclusionAboutGame.PlayerConclusion[0].TheMostFigureInColor[0] = Karta.K2;
             conclusionAboutGame.PlayerConclusion[2].TheMostFigureInColor[3] = Karta.K2;
+            conclusionAboutGame.MoveContext = MoveContext1000.ChoseCards;
             var tmp = conclusionAboutGame.GetStates();
             Assert.IsFalse(tmp.cards[0].Any(X => ObsugaKart.Kolor(X) == Karta.trelf));
             Assert.IsFalse(tmp.cards[2].Any(X => ObsugaKart.Kolor(X) == Karta.pik));

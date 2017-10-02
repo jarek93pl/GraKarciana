@@ -55,15 +55,24 @@ namespace ClassLibrary1
             {
                 a.cards.First().AddRange(new GraKarciana.Karta[] { GraKarciana.Karta.As, GraKarciana.Karta.Dupek, GraKarciana.Karta.Król });
                 var z = a.GetStates();
-                Assert.AreEqual(z.Count, 3);
-                Assert.AreEqual(z.First().Item2.cards.First().Count, 2);
+
+                if (StateGame1000.defineRoleconst.Any(X=>(X  is Karty.Tysiąc.IqDefineRole.RoleFirstCardIsMax)))
+                {
+
+                    Assert.AreEqual(1, z.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(3, z.Count);
+                }
+                Assert.AreEqual(2,z.First().Item2.cards.First().Count);
             }
             {
                 a = a.SetTable(new GraKarciana.Karta[] { GraKarciana.Karta.Dama });
               
                 var b = a.GetStates();
-                Assert.AreEqual(b.Count, 2);
-                Assert.AreEqual(b.First().Item2.cards.First().Count, 2);
+                Assert.AreEqual(2,b.Count);
+                Assert.AreEqual(2,b.First().Item2.cards.First().Count);
             }
         }
 

@@ -19,10 +19,10 @@ namespace Karty
             switch (mp)
             {
                 case MoveContext1000.Action:
-                case MoveContext1000.ChoseCards:
                     UserCards.AddRange(dontRandCards.RandAndDelete(1));
                     UserCards.AddRange(haveCards);
                     break;
+                case MoveContext1000.ChoseCards:
                 case MoveContext1000.Game:
                     UserCards.AddRange(haveCards);
                     break;

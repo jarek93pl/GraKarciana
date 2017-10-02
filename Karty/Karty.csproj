@@ -48,6 +48,7 @@
     <Compile Include="Karta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tysiąc\Conclusion\ConclusionAoutGame.cs" />
+    <Compile Include="Tysiąc\IqDefineRole\RoleFirstCardIsMax.cs" />
     <Compile Include="Tysiąc\Move1000.cs" />
     <Compile Include="Tysiąc\Conclusion\PlayerConclusion.cs" />
     <Compile Include="Tysiąc\PlayerGame1000.cs" />
