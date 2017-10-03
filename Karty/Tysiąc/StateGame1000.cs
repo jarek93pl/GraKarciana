@@ -10,6 +10,7 @@ namespace Karty
         static StateGame1000()
         {
             List<IDefineRole> list = new List<IDefineRole>();
+            list.Add(new Karty.Tysiąc.IqDefineRole.RoleSetCardIdWin());
             list.Add(new Karty.Tysiąc.IqDefineRole.RoleFirstCardIsMax());
             list.Add(new Karty.Tysiąc.IqDefineRole.RoleMinCardIfLose());
             defineRoleconst = list;
@@ -19,14 +20,14 @@ namespace Karty
         public bool EnebleKozera;
         public int[] scoreInCurentGame;
         public int NumberCardInTable = 0;
-        public Karta[] cardOnTable;
+        public Karta[] cardOnTable;//zawsze długośc tablicy jest stała, metoda która zwraca karty na stole to GetCardInTable
         public List<Karta>[] cards;
         public PlayerGame1000[] players;//nie musi być tworzona głeboka kopia
 
         Lazy<bool> LazyGameOne;
         Lazy<int[]> LazyTheHighetCardInColor;
         Lazy<long[]> LazyTableToCheckEquality;
-        readonly int amountPlayer;
+         internal readonly int amountPlayer;
         public StateGame1000(int amountPlayer):this()
         {
             this.amountPlayer = amountPlayer;
@@ -106,7 +107,7 @@ namespace Karty
             {
                 if (item.IsContext(this, resultMove))
                 {
-                    avilibleCards= item.GetValidCards(avilibleCards);
+                    avilibleCards= item.GetValidCards(avilibleCards,this);
                     if (item.IsEnded)
                     {
                         break;
@@ -257,7 +258,7 @@ namespace Karty
             
         }
 
-        private IEnumerable<Karta> GetCardInTable()
+        public IEnumerable<Karta> GetCardInTable()
         {
             for (int i = 0; i < NumberCardInTable; i++)
             {

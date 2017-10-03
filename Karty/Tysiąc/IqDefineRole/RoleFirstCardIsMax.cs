@@ -12,7 +12,7 @@ namespace Karty.Tysiąc.IqDefineRole
         const int ValueIfCardsDontExist = -1;
         public bool IsEnded => true;
 
-        public List<Karta> GetValidCards(List<Karta> ls)
+        public List<Karta> GetValidCards(List<Karta> ls, StateGame1000 s)
         {
             int[] max = BasicTools.InitializeTable(4, ValueIfCardsDontExist);
             List<Karta> zw = new List<Karta>(ls.Count);

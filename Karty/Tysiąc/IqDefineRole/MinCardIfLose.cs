@@ -13,7 +13,7 @@ namespace Karty.Tysiąc.IqDefineRole
         const int ValueIfCardsDontExist =int.MaxValue;
         public bool IsEnded => false;
 
-        public List<Karta> GetValidCards(List<Karta> ls)
+        public List<Karta> GetValidCards(List<Karta> ls, StateGame1000 s)
         {
             int[] max = BasicTools.InitializeTable(4, ValueIfCardsDontExist);
             List<Karta> zw = new List<Karta>(ls.Count);
@@ -40,6 +40,6 @@ namespace Karty.Tysiąc.IqDefineRole
                 BasicTools.SetMin(ref max[(int)car.Kolor()], (int)car);
             }
         }
-        public bool IsContext(StateGame1000 s, ResultMoveGame mk) => (s.NumberCardInTable != 0)&&mk==ResultMoveGame.Lose;
+        public bool IsContext(StateGame1000 s, ResultMoveGame mk) => ((s.NumberCardInTable != 0)&&mk==ResultMoveGame.Lose||(mk== ResultMoveGame.Win&&(s.NumberCardInTable+1==s.amountPlayer)));
     }
 }

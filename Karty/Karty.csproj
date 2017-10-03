@@ -50,6 +50,7 @@
     <Compile Include="Tysiąc\Conclusion\ConclusionAoutGame.cs" />
     <Compile Include="Tysiąc\IqDefineRole\MinCardIfLose.cs" />
     <Compile Include="Tysiąc\IqDefineRole\RoleFirstCardIsMax.cs" />
+    <Compile Include="Tysiąc\IqDefineRole\SetCardIdWin.cs" />
     <Compile Include="Tysiąc\Move1000.cs" />
     <Compile Include="Tysiąc\Conclusion\PlayerConclusion.cs" />
     <Compile Include="Tysiąc\PlayerGame1000.cs" />

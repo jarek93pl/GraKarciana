@@ -70,7 +70,7 @@ namespace Karty
         public static Tuple<Move1000, StateGame1000> GetIqState(ConclusionAboutGame game)
         {
             var state = game.GetStates();
-            RelatingIq<StateGame1000, Move1000, int> iq = new RelatingIq<StateGame1000, Move1000, int>(30,true,true);
+            RelatingIq<StateGame1000, Move1000, int> iq = new RelatingIq<StateGame1000, Move1000, int>(30);
             var zw= iq.Run(state);
             return zw;
         }

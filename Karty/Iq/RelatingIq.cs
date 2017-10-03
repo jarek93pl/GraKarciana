@@ -10,7 +10,7 @@ namespace Karty
 {
     public class RelatingIq<StateT,MoveT,PlayerT> where StateT: IStateGame<StateT,PlayerT,MoveT>
     {
-        const int sizeCashe = 1000000;
+        const int sizeCashe = 100000;
         bool UsingCashe;
         bool IgnoreLevel;
         int SteptsToforward;

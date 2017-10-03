@@ -67,13 +67,6 @@ namespace ClassLibrary1
                 }
                 Assert.AreEqual(2,z.First().Item2.cards.First().Count);
             }
-            {
-                a = a.SetTable(new GraKarciana.Karta[] { GraKarciana.Karta.Dama });
-              
-                var b = a.GetStates();
-                Assert.AreEqual(2,b.Count);
-                Assert.AreEqual(2,b.First().Item2.cards.First().Count);
-            }
         }
 
         [TestMethod]

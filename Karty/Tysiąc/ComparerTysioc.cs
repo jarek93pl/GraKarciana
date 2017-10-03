@@ -42,5 +42,17 @@ namespace GraKarciana
             }
             return K;
         }
-    }
+        public static IComparer<GraKarciana.Karta> GetComparer(Karta firstCardInTable,bool enebleAtute,Karta atutesuit)
+        {
+            if (enebleAtute)
+            {
+                return new ComparerTysioc(firstCardInTable,atutesuit);
+            }
+            else
+            {
+                return new ComparerTysioc(firstCardInTable);
+            }
+
+        }
+    } 
 }

@@ -30,7 +30,7 @@ namespace ClassLibrary1
         public unsafe void TestIqCash()
         {
             TikTacToe tikTacToe = TikTacToe.GetClear();
-            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10, true);
+            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10,true,true);
             var result = iq.Run(tikTacToe);
             var resultState = result.Item2;
             Show(resultState);
@@ -43,7 +43,7 @@ namespace ClassLibrary1
             tikTacToe.Table[8] = 1;
             tikTacToe.Table[4] = 2;
             tikTacToe.PlayerIndex = 2;
-            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10);
+            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10,true);
             var result = iq.Run(tikTacToe);
             var resultState = result.Item2;
             Show(resultState);

@@ -52,26 +52,11 @@ namespace ClassLibrary1
             }
             return 0;
         }
-        public int CompareTo(TikTacToe other)
-        {
-            return RateStates(PlayerIndex) - other.RateStates(PlayerIndex);
-        }
 
         public bool Equals(TikTacToe other)
         {
-            if (other.Player!=Player)
-            {
-                return false;
-            }
-            TikTacToe z = this;
-            for (int i = 0; i < LenghtTable; i++)
-            {
-                if (other.Table[i]!=z.Table[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            bool b= Hash == other.Hash;
+            return b;
         }
         public string Text => ToString();
 
@@ -79,11 +64,28 @@ namespace ClassLibrary1
 
         public override int GetHashCode()
         {
-            return 0;
+            return Hash;
         }
+        int Hash;
         public override bool Equals(object obj)
         {
            return Equals((TikTacToe)obj);
+        }
+        public bool Test(TikTacToe other)
+        {
+            if (other.Player != Player)
+            {
+                return false;
+            }
+            TikTacToe z = this;
+            for (int i = 0; i < LenghtTable; i++)
+            {
+                if (other.Table[i] != z.Table[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public List<Tuple<int, TikTacToe>> GetStates()
         {
@@ -100,6 +102,7 @@ namespace ClassLibrary1
                         TikTacToe curent = Copy();
                         curent.Table[i] = Player;
                         curent.PlayerIndex = Enemy;
+                        curent.Hash = curent.GetHash();
                         zw.Add(new Tuple<int, TikTacToe>(i, curent));
                     }
                 }
@@ -107,7 +110,16 @@ namespace ClassLibrary1
             return zw;
             
         }
-
+        public int GetHash()
+        {
+            int zw = Player * 3;
+            foreach (var item in Table)
+            {
+                zw *= 3;
+                zw += item;
+            }
+            return zw;
+        }
         public int RateStates(int p)
         {
             int Result = Winer();
