@@ -19,14 +19,22 @@ namespace ClassLibrary1
             tikTacToe.Table[2] = 1;
             tikTacToe.Table[4] = 2;
             tikTacToe.PlayerIndex = 2;
-            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10);
+            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10,true);
             var result = iq.Run(tikTacToe);
             var resultState = result.Item2;
             Show(resultState);
             Assert.AreEqual(1, result.Item1);
             Assert.AreEqual(2, resultState.Table[1]);
         }
-
+        [TestMethod]
+        public unsafe void TestIqCash()
+        {
+            TikTacToe tikTacToe = TikTacToe.GetClear();
+            RelatingIq<TikTacToe, int, int> iq = new RelatingIq<TikTacToe, int, int>(10, true);
+            var result = iq.Run(tikTacToe);
+            var resultState = result.Item2;
+            Show(resultState);
+        }
         [TestMethod]
         public unsafe void TestIqDown()
         {

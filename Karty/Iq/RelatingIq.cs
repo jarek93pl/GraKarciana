@@ -10,14 +10,16 @@ namespace Karty
 {
     public class RelatingIq<StateT,MoveT,PlayerT> where StateT: IStateGame<StateT,PlayerT,MoveT>
     {
-        const int sizeCashe = 10000000;
+        const int sizeCashe = 1000000;
         bool UsingCashe;
+        bool IgnoreLevel;
         int SteptsToforward;
-        public RelatingIq(int steptsToforward,bool UsingCashe=false)
+        public RelatingIq(int steptsToforward,bool UsingCashe=false,bool ignoreLevel=false)
         {
 #if performance
             ExecutionInLevel = new int[steptsToforward+2];
 #endif
+            IgnoreLevel = ignoreLevel;
             this.UsingCashe = UsingCashe;
             SteptsToforward = steptsToforward;
         }
@@ -31,7 +33,7 @@ namespace Karty
         public static int IndexRecurent = 0;
 #endif
 #if performance
-        int UsedCashCount = 0;
+         public int UsedCashCount = 0;
         int[] ExecutionInLevel;
 #endif
 #endregion
@@ -101,7 +103,7 @@ namespace Karty
         private Tuple<MoveT, StateT> GetCasheValue(Tuple<MoveT, StateT> state, int Index)
         {
             CasheResult casheRow;
-            if (Cashe.ContainsKey(state.Item2) && (casheRow = Cashe[state.Item2]).level <= Index)
+            if (Cashe.ContainsKey(state.Item2) && ((casheRow = Cashe[state.Item2]).level <= Index||IgnoreLevel))
             {
 #if performance
                 UsedCashCount++;
