@@ -169,6 +169,7 @@ namespace Karty
                 NumberCardInTable = 0;
                 Player = IndexWiner;
             }
+            else
             {
                 NextPlaeyr();
             }

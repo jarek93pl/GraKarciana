@@ -34,7 +34,7 @@ namespace ClassLibrary1.Game1000
         {
             Karta transfer0 = ObsugaKart.StwórzKarte(Karta.Dama, Karta.karo);
             Karta transfer2 = ObsugaKart.StwórzKarte(Karta.Król, Karta.karo);
-            ConclusionAboutGame conclusionAboutGame = new ConclusionAboutGame(3, 1, Date.simpleCards);
+            ConclusionAboutGame conclusionAboutGame = new ConclusionAboutGame(3, 1, Date.simpleCards8);
             conclusionAboutGame.TransferedCard(transfer0, 0);
             conclusionAboutGame.TransferedCard(transfer2, 2);
             conclusionAboutGame.MoveContext = MoveContext1000.ChoseCards;
