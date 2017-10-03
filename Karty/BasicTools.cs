@@ -28,7 +28,7 @@ namespace Karty
         {
             SetMax(ref a, b, ref a, b);
         }
-        public static void Setmin<T>(ref T a, T b) where T : IComparable<T>
+        public static void SetMin<T>(ref T a, T b) where T : IComparable<T>
         {
             SetMin(ref a, b, ref a, b);
         }

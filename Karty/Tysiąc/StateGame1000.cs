@@ -11,6 +11,7 @@ namespace Karty
         {
             List<IDefineRole> list = new List<IDefineRole>();
             list.Add(new Karty.Tysiąc.IqDefineRole.RoleFirstCardIsMax());
+            list.Add(new Karty.Tysiąc.IqDefineRole.RoleMinCardIfLose());
             defineRoleconst = list;
         }
         int HashValue = 0;

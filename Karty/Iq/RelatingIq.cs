@@ -10,6 +10,7 @@ namespace Karty
 {
     public class RelatingIq<StateT,MoveT,PlayerT> where StateT: IStateGame<StateT,PlayerT,MoveT>
     {
+        const int sizeCashe = 10000000;
         bool UsingCashe;
         int SteptsToforward;
         public RelatingIq(int steptsToforward,bool UsingCashe=false)
@@ -58,7 +59,7 @@ namespace Karty
             }
             return BestState;
         }
-        Dictionary<StateT, CasheResult> Cashe = new Dictionary<StateT, CasheResult>();
+        Dictionary<StateT, CasheResult> Cashe = new Dictionary<StateT, CasheResult>(sizeCashe);
         struct CasheResult
         {
             public int level;
