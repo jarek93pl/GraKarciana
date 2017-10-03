@@ -9,6 +9,7 @@ namespace Karty
     public enum MoveContext1000 { Action,ChoseCards,Game};
     public class ConclusionAboutGame
     {
+        public int WhoMove;
         public MoveContext1000 MoveContext;
         List<Karta> AvilibeCards;
         const int maxSwap = 10;
@@ -37,7 +38,7 @@ namespace Karty
             }
         }
 
-        internal int RatingState(StateGame1000 state)
+        internal int RelateReating(StateGame1000 state)
         {
             return state.RateStates(playerIndex);
         }
@@ -53,6 +54,9 @@ namespace Karty
                 throw new InvalidOperationException("nie można przeksazać karty samemu sobie");
             }
         }
+
+        internal int ReatingState(StateGame1000 item2) => item2.ScorePlayer(playerIndex);
+
         public ConclusionAboutGame(List<ConclusionAbouttUserBehavior> z)
         {
             PlayerConclusion = z;
@@ -63,7 +67,22 @@ namespace Karty
             StateGame1000 state = new StateGame1000(PlayerConclusion.Count);
             BindConclusionWitchState(state);
             RandCards();
+            state.Player = GetUserWhoMove();
             return state;
+        }
+
+        private int GetUserWhoMove()
+        {
+            switch (MoveContext)
+            {
+                case MoveContext1000.Action:
+                case MoveContext1000.ChoseCards:
+                    return playerIndex;
+                case MoveContext1000.Game:
+                    return WhoMove;
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         private void RandCards()

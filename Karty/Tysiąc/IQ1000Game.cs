@@ -52,7 +52,8 @@ namespace Karty
             for (int i = 0; i < Tick; i++)
             {
                 var state = GetIqState(game);
-                hist[game.RatingState(state.Item2)]++;
+                int tmp;
+                hist[MaxScore+(tmp= game.ReatingState(state.Item2))]++;
             }
             return hist;
         }
@@ -66,7 +67,7 @@ namespace Karty
             }
             return hist;
         }
-        static Tuple<Move1000, StateGame1000> GetIqState(ConclusionAboutGame game)
+        public static Tuple<Move1000, StateGame1000> GetIqState(ConclusionAboutGame game)
         {
             var state = game.GetStates();
             RelatingIq<StateGame1000, Move1000, int> iq = new RelatingIq<StateGame1000, Move1000, int>(30);

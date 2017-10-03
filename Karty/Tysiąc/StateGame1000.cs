@@ -137,6 +137,7 @@ namespace Karty
             }
             return returned;
         }
+        public int ScorePlayer(int nr) => players[nr].ExpectedResult(scoreInCurentGame[nr]);
         private bool gameOnLazyM()
         {
             for (int i = 0; i < amountPlayer; i++)
@@ -157,19 +158,29 @@ namespace Karty
             bool marriage = false;
             if (ObsugaTysiąc.IstniejeMeldunek(card, cards[Player])&&wontMarriage)
             {
-                marriage = true;
+                EnebleKozera = marriage= true;
                 scoreInCurentGame[Player] += ObsugaTysiąc.WartościMeldunków(card);
             }
             cardOnTable[NumberCardInTable++] = card;
             if (NumberCardInTable == amountPlayer)
             {
                 int IndexWiner= ObsugaTysiąc.FindWinner(EnebleKozera, Kozera, Player, cardOnTable);
-                scoreInCurentGame[IndexWiner] = ObsugaTysiąc.ScoreInTable(cardOnTable);
+                scoreInCurentGame[IndexWiner] += ObsugaTysiąc.ScoreInTable(cardOnTable);
                 NumberCardInTable = 0;
                 Player = IndexWiner;
             }
+            {
+                NextPlaeyr();
+            }
             return new Move1000() { card = card, Marriage = marriage };
         }
+
+        private void NextPlaeyr()
+        {
+            Player++;
+            Player %= amountPlayer;
+        }
+
         private void Initialize()
         {
             LazyTableToCheckEquality = new Lazy<long[]>(DetermineComareArrey);
@@ -258,6 +269,15 @@ namespace Karty
             {
                 HashValue ^= item.GetHashCode();
             }
+        }
+        public override string ToString()
+        {
+            string zw = $"M:{Player}";
+            for (int i = 0; i < amountPlayer; i++)
+            {
+                zw += $"[P:{scoreInCurentGame[i]}|C:{cards[i].Count}]";
+            }
+            return zw;
         }
 
     }
