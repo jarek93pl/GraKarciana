@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testowania", "Testowanie\Testowania.csproj", "{511313F4-5A45-4E73-8F93-CF7C0D19975B}"
 EndProject
@@ -13,7 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "klientwindowsforms", "Windo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serwer", "Serwer\Serwer.csproj", "{CA822E50-FA60-4BF4-A581-FF0A8B891501}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAplication", "TestAplication\TestAplication.csproj", "{BF980179-9B99-402E-B249-CC31C5462711}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -39,8 +44,15 @@ Global
 		{CA822E50-FA60-4BF4-A581-FF0A8B891501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA822E50-FA60-4BF4-A581-FF0A8B891501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA822E50-FA60-4BF4-A581-FF0A8B891501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF980179-9B99-402E-B249-CC31C5462711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF980179-9B99-402E-B249-CC31C5462711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF980179-9B99-402E-B249-CC31C5462711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF980179-9B99-402E-B249-CC31C5462711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D68A013-BE2D-46EB-AA42-C277AF6C9FC9}
 	EndGlobalSection
 EndGlobal

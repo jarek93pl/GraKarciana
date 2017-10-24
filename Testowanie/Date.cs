@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    internal class Date
+    public class Date
     {
 
         public static Karta[] simpleCards = new Karta[] { Karta.K9, Karta.Dupek, Karta.Dama, Karta.K10, Karta.Król, Karta.As, ObsugaKart.StwórzKarte(Karta.K9, Karta.karo) };
