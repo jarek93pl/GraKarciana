@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Karty;
+using System.Collections;
 using GraKarciana;
 namespace Karty
 {
@@ -49,29 +50,42 @@ namespace Karty
         private int[] donwloadHistogram(ConclusionAboutGame game)
         {
             int[] hist = new int[MaxScore * 2];
-            for (int i = 0; i < Tick; i++)
+            List<StateGame1000> state = GetState(game);
+            var cmp = ComputeMove(state);
+
+            foreach (var item in cmp)
             {
-                var state = GetIqState(game);
-                int tmp;
-                hist[MaxScore+(tmp= game.ReatingState(state.Item2))]++;
+                hist[MaxScore + ( game.ReatingState(item.Item2))]++;
             }
             return hist;
         }
         private int[] donwloadHistogramFigure(ConclusionAboutGame game)
         {
             int[] hist = new int[104];//104 czyl dwie talie, miejsce na zapisanie meldunku
-            for (int i = 0; i < Tick; i++)
+            List<StateGame1000> state = GetState(game);
+            var cmp= ComputeMove(state);
+
+            foreach (var item in cmp)
             {
-                var state = GetIqState(game);
-                hist[(int) state.Item1.card+(state.Item1.Marriage?52:0)]++;
+                hist[(int)item.Item1.card + (item.Item1.Marriage ? 52 : 0)]++;
             }
             return hist;
         }
-        public static Tuple<Move1000, StateGame1000> GetIqState(ConclusionAboutGame game)
+
+        private static List<Tuple<Move1000, StateGame1000>> ComputeMove(List<StateGame1000> state)
         {
-            var state = game.GetStates();
+            return state.AsParallel().Select(X => GetIqState(X)).ToList();
+        }
+
+        private List<StateGame1000> GetState(ConclusionAboutGame game)
+        {
+           return Enumerable.Range(0, Tick).Select(X => game.GetStates()).ToList();
+        }
+
+        public static Tuple<Move1000, StateGame1000> GetIqState(StateGame1000 game)
+        {
             RelatingIq<StateGame1000, Move1000, int> iq = new RelatingIq<StateGame1000, Move1000, int>(30);
-            var zw= iq.Run(state);
+            var zw= iq.Run(game);
             return zw;
         }
     }

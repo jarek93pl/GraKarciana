@@ -21,7 +21,7 @@ namespace TestAplication
             cm.TransferedCard(ObsugaKart.StwórzKarte(Karta.Dama, Karta.kier), 0);
             cm.TransferedCard(ObsugaKart.StwórzKarte(Karta.Król, Karta.kier), 2);
             cm.MoveContext = MoveContext1000.ChoseCards;
-            var a = IQ1000Game.GetIqState(cm);
+            var a = IQ1000Game.GetIqState(cm.GetStates());
         }
     }
 }
