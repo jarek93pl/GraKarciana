@@ -41,7 +41,7 @@ namespace Karty
                 sum += hist[i];
                 if (sum>=minPositywe)
                 {
-                    return sum - MaxScore;
+                    return i - MaxScore;
                 }
             }
             throw new NotImplementedException("współczynik percentCertainty musi być wartością miedzy 0 a 1");
@@ -52,10 +52,12 @@ namespace Karty
             int[] hist = new int[MaxScore * 2];
             List<StateGame1000> state = GetState(game);
             var cmp = ComputeMove(state);
-
+            
             foreach (var item in cmp)
             {
-                hist[MaxScore + ( game.ReatingState(item.Item2))]++;
+                int tmp;
+                hist[MaxScore + (tmp= game.ReatingState(item.Item2))]++;
+                System.Diagnostics.Debug.WriteLine($"wartość kalkulowana to {tmp}");
             }
             return hist;
         }
