@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormsApp1</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,24 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\Tysioc\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\Urzytkownik\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ConvertData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="kontrolertysiąc\KontrolerTysioc.cs" />
-    <Compile Include="kontrolertysiąc\OpakowanieKarty.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -78,20 +73,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Connected Services\Tysioc\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Tysioc\GraKarciana.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Tysioc\service.wsdl" />
-    <None Include="Connected Services\Tysioc\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Tysioc\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\Urzytkownik\GraKarciana.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -123,20 +106,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\Tysioc\" />
     <WCFMetadataStorage Include="Connected Services\Urzytkownik\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Tysioc\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Tysioc\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Tysioc\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\Urzytkownik\configuration91.svcinfo" />
@@ -151,6 +121,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClientSerwis\ClientSerwis.csproj">
+      <Project>{b925f2ef-c8fc-4b54-8931-ce5392303992}</Project>
+      <Name>ClientSerwis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Karty\Karty.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>Karty</Name>

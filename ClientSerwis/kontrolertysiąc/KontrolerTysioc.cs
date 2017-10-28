@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindowsFormsApp1.Tysioc;
 using System.ComponentModel;
-using WindowsFormsApp1.Urzytkownik;
 using System.Collections.ObjectModel;
 using static GraKarciana.ObsugaKart;
 using GraKarciana;
-namespace WindowsFormsApp1
+namespace ClientSerwis
 {
     public enum Stan {CzekajNaGracza, CzekajNaLicytacje,TwojaLicytacja,WysylanieMusku,CzekanieNaMusek,CzekanieNaRuch,TwójRuch};
-    class KontrolerTysioc:ITysiocCallback
+    public class KontrolerTysioc: ITysiocCalback
     {
         readonly int IlośćGraczy;
         public ReadOnlyCollection<Karta> Stół { get => stół?.AsReadOnly(); }
         public ReadOnlyCollection<Karta> TwojeKarty { get => twojeKarty?.AsReadOnly(); }
         List<Karta> twojeKarty;
         List<Karta> stół = new List<Karta>();
-        Tysioc.Urzytkownik[] ListaUrzytkowników;
-        Tysioc.TysiocClient tk;
+        Urzytkownik[] ListaUrzytkowników;
+        ITysioc tk;
         #region zdażenia
 
         static readonly object KeyZmianaStołu = new object();//snipet desing
@@ -33,7 +30,7 @@ namespace WindowsFormsApp1
         EventHandlerList DzienikZdarzeń = new EventHandlerList();
      
         static readonly object KeyKtośZalicytował = new object();//snipet desing
-        public event EventHandler<Tuple<Tysioc.Urzytkownik,int>> KtośZalicytował
+        public event EventHandler<Tuple<Urzytkownik,int>> KtośZalicytował
         {
             
             add => DzienikZdarzeń.AddHandler(KeyKtośZalicytował, value);
@@ -73,7 +70,7 @@ namespace WindowsFormsApp1
             remove => DzienikZdarzeń.RemoveHandler(KeyOdbierzKartęOdGracza, value);
         }
         static readonly object KeyKtośWysłałKarte = new object();//snipet desing
-        public event EventHandler<Tuple<Tysioc.Urzytkownik,Karta>> KtośWysłałKarte
+        public event EventHandler<Tuple<Urzytkownik,Karta>> KtośWysłałKarte
         {
             add => DzienikZdarzeń.AddHandler(KeyKtośWysłałKarte, value);
             remove => DzienikZdarzeń.RemoveHandler(KeyKtośWysłałKarte, value);
@@ -104,9 +101,11 @@ namespace WindowsFormsApp1
 
             IlośćGraczy = 3;
             Stan = Stan.CzekajNaGracza;
-            tk = new TysiocClient(new System.ServiceModel.InstanceContext(this));
         }
-
+        public void Initialize(ITysioc tk)
+        {
+            this.tk = tk;
+        }
         public Task CzekajNaGraczaAync(int nr)=>tk.CzekajNaGraczaAsync(nr);
         
 
@@ -140,13 +139,8 @@ namespace WindowsFormsApp1
 
             return WyslijKarteAsync(k,CzyMożnaMeldować);
         }
-        public Task CzekajNaGraczaAsync(int nr)
-        {
-            return tk.CzekajNaGraczaAsync(nr);
-        }
-
         public ReadOnlyCollection<Karta> DostępneKarty { get; private set; }
-        public void ZnalezionoNowychGraczy(Tysioc.Urzytkownik[] gracze) => ListaUrzytkowników = gracze;
+        public void ZnalezionoNowychGraczy(Urzytkownik[] gracze) => ListaUrzytkowników = gracze;
 
         public void TwojaLicytacja()
         {
@@ -163,8 +157,9 @@ namespace WindowsFormsApp1
 
       
 
-        public void OdbierzKarty(Karta[] karty)
+        public void OdbierzKarty(List<Karta> k)
         {
+            var karty = k.ToArray();
             if (karty.Length>5)//odbieranie kart
             {
                 Stan = Stan.CzekajNaLicytacje;
@@ -190,10 +185,10 @@ namespace WindowsFormsApp1
         public void KtosZalicytowal(string Login, int cena)
         {
             MinimalnaWartośćLicytacji = cena;
-            (DzienikZdarzeń[KeyKtośZalicytował] as EventHandler<Tuple<Tysioc.Urzytkownik,int>>)?.Invoke(this, new Tuple<Tysioc.Urzytkownik, int>(WeźUrzytkownika(Login),cena));
+            (DzienikZdarzeń[KeyKtośZalicytował] as EventHandler<Tuple<Urzytkownik,int>>)?.Invoke(this, new Tuple<Urzytkownik, int>(WeźUrzytkownika(Login),cena));
         }
 
-        private Tysioc.Urzytkownik WeźUrzytkownika(string login) => ListaUrzytkowników.First(X => X.Nazwa == login);
+        private Urzytkownik WeźUrzytkownika(string login) => ListaUrzytkowników.First(X => X.Nazwa == login);
         public Task WysyłanieMuskuAsync(IList<Karta> KartyDoUsuniecia)
         {
             Stan = Stan.CzekanieNaRuch;
@@ -217,7 +212,7 @@ namespace WindowsFormsApp1
                 AktywnaKozera = true;
             }
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
-            (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Tysioc.Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Tysioc.Urzytkownik, Karta>(WeźUrzytkownika(s), k));
+            (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Urzytkownik, Karta>(WeźUrzytkownika(s), k));
         }
 
         public void KoniecGry(PodsumowanieTysioc pk)
@@ -232,5 +227,6 @@ namespace WindowsFormsApp1
             stół?.Clear();
             twojeKarty?.Clear();
         }
+        
     }
 }

@@ -8,20 +8,25 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Tysioc;
 using GraKarciana;
+using ClientSerwis;
+
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        KontrolerTysioc kontroler = new KontrolerTysioc();
-
+        KontrolerTysioc kontroler;
+        TysiocClient client;
         public string Nazwa { get; internal set; }
 
         public Form1()
         {
+            kontroler = new KontrolerTysioc();
+            InstanceContext instance = new InstanceContext(kontroler);
+            kontroler.Initialize(client= new TysiocClient(instance));
             InitializeComponent();
         }
+        
         protected async override void OnLoad(EventArgs e)
         {
             Urzytkownik.DoKontaClient uk = new Urzytkownik.DoKontaClient();
@@ -29,7 +34,8 @@ namespace WindowsFormsApp1
             kontroler.ZmianaStanu += (o, ee) => Text = Nazwa + kontroler.Stan.ToString();
             kontroler.ZmianaStołu += Kontroler_ZmianaStołu;
             kontroler.TwójRuchEv += Kontroler_TwójRuchEv;
-            await kontroler.CzekajNaGraczaAsync(uk.Rejestruj(new Tysioc.Urzytkownik() { Nazwa=Guid.NewGuid().ToString()}));
+            int playerIndex = uk.Rejestruj(new ClientSerwis. Urzytkownik() {Nazwa = Guid.NewGuid().ToString() ,Haslo="bardzo trudne"});
+            await client.CzekajNaGraczaAsync(playerIndex);
             base.OnLoad(e);
         }
 
@@ -106,5 +112,6 @@ namespace WindowsFormsApp1
         {
 
         }
+
     }
 }

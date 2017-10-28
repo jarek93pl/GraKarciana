@@ -15,10 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serwer", "Serwer\Serwer.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAplication", "TestAplication\TestAplication.csproj", "{BF980179-9B99-402E-B249-CC31C5462711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientSerwis", "ClientSerwis\ClientSerwis.csproj", "{B925F2EF-C8FC-4B54-8931-CE5392303992}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -48,12 +47,19 @@ Global
 		{BF980179-9B99-402E-B249-CC31C5462711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF980179-9B99-402E-B249-CC31C5462711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF980179-9B99-402E-B249-CC31C5462711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B925F2EF-C8FC-4B54-8931-CE5392303992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B925F2EF-C8FC-4B54-8931-CE5392303992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B925F2EF-C8FC-4B54-8931-CE5392303992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B925F2EF-C8FC-4B54-8931-CE5392303992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D68A013-BE2D-46EB-AA42-C277AF6C9FC9}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

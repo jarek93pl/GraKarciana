@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static GraKarciana.ObsugaKart;
 using static GraKarciana.ObsugaTysiąc;
-namespace WindowsFormsApp1
+namespace ClientSerwis
 {
-    class OpakowanieKarty:IComparable
+    public class OpakowanieKarty:IComparable
     {
         int DoSortowania = 0;
         string nazwa;

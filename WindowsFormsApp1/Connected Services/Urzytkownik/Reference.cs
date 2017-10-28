@@ -20,28 +20,28 @@ namespace WindowsFormsApp1.Urzytkownik {
     public interface DoKonta {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Loguj", ReplyAction="http://tempuri.org/DoKonta/LogujResponse")]
-        int Loguj(WindowsFormsApp1.Tysioc.Urzytkownik uk);
+        int Loguj(ClientSerwis.Urzytkownik uk);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Loguj", ReplyAction="http://tempuri.org/DoKonta/LogujResponse")]
-        System.Threading.Tasks.Task<int> LogujAsync(WindowsFormsApp1.Tysioc.Urzytkownik uk);
+        System.Threading.Tasks.Task<int> LogujAsync(ClientSerwis.Urzytkownik uk);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/DoKonta/Odświerz")]
-        void Odświerz(WindowsFormsApp1.Tysioc.Urzytkownik ul);
+        void Odświerz(ClientSerwis.Urzytkownik ul);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/DoKonta/Odświerz")]
-        System.Threading.Tasks.Task OdświerzAsync(WindowsFormsApp1.Tysioc.Urzytkownik ul);
+        System.Threading.Tasks.Task OdświerzAsync(ClientSerwis.Urzytkownik ul);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Pobierz", ReplyAction="http://tempuri.org/DoKonta/PobierzResponse")]
-        WindowsFormsApp1.Tysioc.Urzytkownik Pobierz(int k);
+        ClientSerwis.Urzytkownik Pobierz(int k);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Pobierz", ReplyAction="http://tempuri.org/DoKonta/PobierzResponse")]
-        System.Threading.Tasks.Task<WindowsFormsApp1.Tysioc.Urzytkownik> PobierzAsync(int k);
+        System.Threading.Tasks.Task<ClientSerwis.Urzytkownik> PobierzAsync(int k);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Rejestruj", ReplyAction="http://tempuri.org/DoKonta/RejestrujResponse")]
-        int Rejestruj(WindowsFormsApp1.Tysioc.Urzytkownik uk);
+        int Rejestruj(ClientSerwis.Urzytkownik uk);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoKonta/Rejestruj", ReplyAction="http://tempuri.org/DoKonta/RejestrujResponse")]
-        System.Threading.Tasks.Task<int> RejestrujAsync(WindowsFormsApp1.Tysioc.Urzytkownik uk);
+        System.Threading.Tasks.Task<int> RejestrujAsync(ClientSerwis.Urzytkownik uk);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -71,35 +71,35 @@ namespace WindowsFormsApp1.Urzytkownik {
                 base(binding, remoteAddress) {
         }
         
-        public int Loguj(WindowsFormsApp1.Tysioc.Urzytkownik uk) {
+        public int Loguj(ClientSerwis.Urzytkownik uk) {
             return base.Channel.Loguj(uk);
         }
         
-        public System.Threading.Tasks.Task<int> LogujAsync(WindowsFormsApp1.Tysioc.Urzytkownik uk) {
+        public System.Threading.Tasks.Task<int> LogujAsync(ClientSerwis.Urzytkownik uk) {
             return base.Channel.LogujAsync(uk);
         }
         
-        public void Odświerz(WindowsFormsApp1.Tysioc.Urzytkownik ul) {
+        public void Odświerz(ClientSerwis.Urzytkownik ul) {
             base.Channel.Odświerz(ul);
         }
         
-        public System.Threading.Tasks.Task OdświerzAsync(WindowsFormsApp1.Tysioc.Urzytkownik ul) {
+        public System.Threading.Tasks.Task OdświerzAsync(ClientSerwis.Urzytkownik ul) {
             return base.Channel.OdświerzAsync(ul);
         }
         
-        public WindowsFormsApp1.Tysioc.Urzytkownik Pobierz(int k) {
+        public ClientSerwis.Urzytkownik Pobierz(int k) {
             return base.Channel.Pobierz(k);
         }
         
-        public System.Threading.Tasks.Task<WindowsFormsApp1.Tysioc.Urzytkownik> PobierzAsync(int k) {
+        public System.Threading.Tasks.Task<ClientSerwis.Urzytkownik> PobierzAsync(int k) {
             return base.Channel.PobierzAsync(k);
         }
         
-        public int Rejestruj(WindowsFormsApp1.Tysioc.Urzytkownik uk) {
+        public int Rejestruj(ClientSerwis.Urzytkownik uk) {
             return base.Channel.Rejestruj(uk);
         }
         
-        public System.Threading.Tasks.Task<int> RejestrujAsync(WindowsFormsApp1.Tysioc.Urzytkownik uk) {
+        public System.Threading.Tasks.Task<int> RejestrujAsync(ClientSerwis.Urzytkownik uk) {
             return base.Channel.RejestrujAsync(uk);
         }
     }
