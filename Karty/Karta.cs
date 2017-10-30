@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Karty;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +55,26 @@ namespace GraKarciana
             for (int i = 0; i < 52; i++)
             {
                 zw.Add((Karta)i);
+            }
+            return zw;
+        }
+
+        public static int[] GetHightCards(IEnumerable<Karta> cards)
+        {
+            int[] zw = BasicTools.InitializeTable<int>(4, -1);
+            foreach (var item in cards)
+            {
+                int IndexColor = (int)item.Kolor();
+                BasicTools.SetMax(ref zw[IndexColor], (int)item);
+            }
+            return zw;
+        }
+        public static int[] GetAmountInColor(IEnumerable<Karta> cards)
+        {
+            int[] zw = new int[4];
+            foreach (var item in cards)
+            {
+                zw[(int)item.Kolor()]++;
             }
             return zw;
         }

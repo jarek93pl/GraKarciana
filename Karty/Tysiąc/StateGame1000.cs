@@ -188,18 +188,12 @@ namespace Karty
         {
             LazyTableToCheckEquality = new Lazy<long[]>(DetermineComareArrey);
             LazyGameOne = new Lazy<bool>(gameOnLazyM);
-            LazyTheHighetCardInColor = new Lazy<int[]>(GetHightCards);
+            LazyTheHighetCardInColor = new Lazy<int[]>(GetHightCardsPacage);
         }
 
-        private int[] GetHightCards()
+        private int[] GetHightCardsPacage()
         {
-            int[] zw = new int[4];
-            foreach (var item in cards.SelectMany(X=>X))
-            {
-                int IndexColor = (int)item.Kolor();
-                BasicTools.SetMax(ref zw[IndexColor],(int)item);
-            }
-            return zw;
+            return ObsugaKart.GetHightCards(cards.SelectMany(X => X));
         }
 
         const int CardsInOneLong = 10;

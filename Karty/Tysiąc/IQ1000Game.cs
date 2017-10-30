@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using Karty;
-using System.Collections;
 using GraKarciana;
 namespace Karty
 {
@@ -23,13 +23,60 @@ namespace Karty
             var hist = donwloadHistogram(game);
             return getScore(hist);
         }
+        public List<Karta> GetWorstCard(ConclusionAboutGame game,List<Karta> Wined,int Amount)
+        {
+            List<Karta> list = game.PlayerObjectConclusion.haveCards.Select(X => X).ToList();
+            list.AddRange(Wined);
+            SortedDictionary<int, List<Karta>> retuned = new SortedDictionary<int, List<Karta>>();
+            foreach (var item in GetAllCombinateList(list,Amount))
+            {
+                int Rate = RatingStateWorstCard(game, item.Item1);
+                if (!retuned.ContainsKey(Rate))
+                {
+                    retuned.Add(Rate, item.Item2.ToList());
+                }
+            }
+            return retuned.Last().Value;
+            
+        }
+
+        private int RatingStateWorstCard(ConclusionAboutGame game, List<Karta> cards)
+        {
+            int Rating = 0;
+            var table= ObsugaKart.GetAmountInColor(cards);
+            foreach (var item2 in cards)
+            {
+                int intvalueCard = (int)item2.PobierzKarte();
+                int ivcto2 = intvalueCard * intvalueCard;
+                Rating += table[(int)item2.Kolor()] * ivcto2;
+            }
+                return Rating;
+        }
+
+        private IEnumerable<Tuple< List<Karta>, HashSet<Karta>>> GetAllCombinateList(List<Karta> list,int Amount)
+        {
+            foreach (var item in Matematyka.Wariancja.WarjancjaJakaśTam(Amount,list.Count))
+            {
+                HashSet<Karta> RandomedDontUse = new HashSet<Karta>(item.Select(X => list[X]));
+                List<Karta> zw = new List<Karta>(list.Where(X=>!RandomedDontUse.Contains(X)));
+                yield return new Tuple<List<Karta>, HashSet<Karta>>(zw, RandomedDontUse);
+
+            }
+        }
+
         public Move1000 CalculateMove(ConclusionAboutGame game)
         {
             var hist = donwloadHistogramFigure(game);
             int MaxIndex = hist.FindMaxIndex();
+            Move1000 m = GetMove(MaxIndex);
+            return m;
+        }
+
+        private static Move1000 GetMove(int MaxIndex)
+        {
             Move1000 m = new Move1000();
-            m.Marriage =1==(MaxIndex/ 52);
-            m.card =(Karta) (MaxIndex % 52);
+            m.Marriage = 1 == (MaxIndex / 52);
+            m.card = (Karta)(MaxIndex % 52);
             return m;
         }
 

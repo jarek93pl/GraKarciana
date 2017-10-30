@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BasicTools.cs" />
+    <Compile Include="Matematyka\Wariancja.cs" />
     <Compile Include="Tysiąc\IqDefineRole\IDefineRole.cs" />
     <Compile Include="Iq\MultiList.cs" />
     <Compile Include="Iq\Swaper.cs" />

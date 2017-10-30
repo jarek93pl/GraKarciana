@@ -37,7 +37,7 @@ namespace Karty
                 PlayerConclusion.Add(conclusion);
             }
         }
-
+        public PlayerConclusion PlayerObjectConclusion =>(PlayerConclusion) PlayerConclusion.First(X => X is PlayerConclusion);
         internal int RelateReating(StateGame1000 state)
         {
             return state.RateStates(playerIndex);

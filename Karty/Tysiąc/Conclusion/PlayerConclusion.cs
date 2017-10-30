@@ -7,9 +7,9 @@ using GraKarciana;
 
 namespace Karty
 {
-    class PlayerConclusion : ConclusionAbouttUserBehavior
+    public class PlayerConclusion : ConclusionAbouttUserBehavior
     {
-        IEnumerable<Karta> haveCards;
+        public IEnumerable<Karta> haveCards;
         public PlayerConclusion(int PlayerInGame,IEnumerable<Karta> haveCards) : base(PlayerInGame)
         {
             this.haveCards = haveCards;

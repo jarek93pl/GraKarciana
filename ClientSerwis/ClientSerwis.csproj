@@ -46,6 +46,7 @@
     <Compile Include="ClientSerwisAndContract.cs" />
     <Compile Include="Date\PodsumowanieTysioc.cs" />
     <Compile Include="Date\Urzytkownik.cs" />
+    <Compile Include="Iq1000Klient.cs" />
     <Compile Include="ITysioc.cs" />
     <Compile Include="kontrolertysiąc\KontrolerTysioc.cs" />
     <Compile Include="kontrolertysiąc\OpakowanieKarty.cs" />

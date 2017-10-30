@@ -10,6 +10,22 @@ namespace Karty
 {
     public class RelatingIq<StateT,MoveT,PlayerT> where StateT: IStateGame<StateT,PlayerT,MoveT>
     {
+        public class Result:IComparable, IComparable<Result>
+        {
+            public StateT State;
+            public MoveT Move;
+            public int Reating;
+
+            public int CompareTo(object obj)
+            {
+               return CompareTo(obj as Result);
+            }
+
+            public int CompareTo(Result other)
+            {
+                return Reating.CompareTo(other.Reating);
+            }
+        }
         const int sizeCashe = 100000;
         bool UsingCashe;
         bool IgnoreLevel;
@@ -60,6 +76,20 @@ namespace Karty
                 BasicTools.SetMax(ref BestState,new Tuple<MoveT, StateT>(item.Item1 ,TmpState.Item2), ref RatingBestState, TmpRating);
             }
             return BestState;
+        }
+
+        private List<Result> GetStateList(StateT state,int index=0)
+        {
+
+            List<Result> returned = new List<Result>();
+            List<Tuple<MoveT, StateT>> tst;
+            foreach (var item in tst= state.GetStates())
+            {
+                var TmpState = item.Item2.GameOn? GetState(item,index+1):item;
+                int TmpRating = TmpState.Item2.RateStates(state.Player);
+                returned.Add(new Result() {Reating=TmpRating,Move= TmpState.Item1,State= TmpState.Item2 });
+            }
+            return returned;
         }
         Dictionary<StateT, CasheResult> Cashe = new Dictionary<StateT, CasheResult>(sizeCashe);
         struct CasheResult
