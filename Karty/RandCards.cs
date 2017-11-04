@@ -36,7 +36,7 @@ namespace GraKarciana
                 a(item);
             }
         }
-        public static int FindIndex<T>(this IEnumerable<T> obj, T szukany)
+       public static int FindIndex<T>(this IEnumerable<T> obj, T szukany)
         {
             int Nr = 0;
             foreach (var item in obj)
@@ -49,7 +49,21 @@ namespace GraKarciana
             }
             return -1;
         }
-        public static int FindMaxIndex<T>(this IEnumerable<T> obj)where T:IComparable<T>
+    
+    public static int FindIndex<T>(this IEnumerable<T> obj, Func<T,bool> szukany)
+    {
+        int Nr = 0;
+        foreach (var item in obj)
+        {
+            if (szukany(item))
+            {
+                return Nr;
+            }
+            Nr++;
+        }
+        return -1;
+    }
+    public static int FindMaxIndex<T>(this IEnumerable<T> obj)where T:IComparable<T>
         {
             int n = 0, z = 0;
             T Nr = obj.First();

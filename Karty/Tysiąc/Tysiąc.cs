@@ -61,7 +61,7 @@ namespace GraKarciana
 
         }
 
-        internal static bool LastWin(List<Karta> table, bool enebleAtute, Karta atute, out bool usingAtute, out bool usingColor)
+        internal static bool LastWin(IList<Karta> table, bool enebleAtute, Karta atute, out bool usingAtute, out bool usingColor)
         {
             Karta last = table.Last();
             List<Karta> tablec = table.Select(X=>X).ToList();

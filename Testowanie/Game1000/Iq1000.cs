@@ -32,7 +32,7 @@ namespace ClassLibrary1.Game1000
             ConclusionAboutGame cm = new ConclusionAboutGame(3, 1, Date.simpleCards8);
             cm.MoveContext = MoveContext1000.ChoseCards;
             
-            List<Karta> z= iq.GetWorstCard(cm, new List<Karta>() { ObsugaKart.StwórzKarte(Karta.As, Karta.kier), ObsugaKart.StwórzKarte(Karta.K10, Karta.kier) },2);
+            List<Karta> z= iq.GetWorstCard( new List<Karta>() { ObsugaKart.StwórzKarte(Karta.As, Karta.kier), ObsugaKart.StwórzKarte(Karta.K10, Karta.kier) },2);
         }
         [TestMethod, Timeout(500000)]
         public void UsingIq()

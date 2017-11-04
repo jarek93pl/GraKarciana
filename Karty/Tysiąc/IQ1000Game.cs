@@ -20,17 +20,17 @@ namespace Karty
         }
         public int CalculateBidAmount(ConclusionAboutGame game)
         {
+            game.MoveContext = MoveContext1000.Action;
             var hist = donwloadHistogram(game);
             return getScore(hist);
         }
-        public List<Karta> GetWorstCard(ConclusionAboutGame game,List<Karta> Wined,int Amount)
+        public List<Karta> GetWorstCard(IEnumerable<Karta> AllCard,int Amount)
         {
-            List<Karta> list = game.PlayerObjectConclusion.haveCards.Select(X => X).ToList();
-            list.AddRange(Wined);
             SortedDictionary<int, List<Karta>> retuned = new SortedDictionary<int, List<Karta>>();
-            foreach (var item in GetAllCombinateList(list,Amount))
+            var List = AllCard.ToList();
+            foreach (var item in GetAllCombinateList(List,Amount))
             {
-                int Rate = RatingStateWorstCard(game, item.Item1);
+                int Rate = RatingStateWorstCard( item.Item1);
                 if (!retuned.ContainsKey(Rate))
                 {
                     retuned.Add(Rate, item.Item2.ToList());
@@ -40,7 +40,7 @@ namespace Karty
             
         }
 
-        private int RatingStateWorstCard(ConclusionAboutGame game, List<Karta> cards)
+        private int RatingStateWorstCard(List<Karta> cards)
         {
             int Rating = 0;
             var table= ObsugaKart.GetAmountInColor(cards);
@@ -66,6 +66,7 @@ namespace Karty
 
         public Move1000 CalculateMove(ConclusionAboutGame game)
         {
+            game.MoveContext = MoveContext1000.Game;
             var hist = donwloadHistogramFigure(game);
             int MaxIndex = hist.FindMaxIndex();
             Move1000 m = GetMove(MaxIndex);

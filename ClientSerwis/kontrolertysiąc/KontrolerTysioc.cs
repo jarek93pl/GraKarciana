@@ -17,10 +17,10 @@ namespace ClientSerwis
         public ReadOnlyCollection<Karta> TwojeKarty { get => twojeKarty?.AsReadOnly(); }
         List<Karta> twojeKarty;
         List<Karta> stół = new List<Karta>();
-        Urzytkownik[] ListaUrzytkowników;
+        public Urzytkownik[] ListaUrzytkowników;
         ITysioc tk;
         #region zdażenia
-
+        public int IndexPlayer(string u) => ListaUrzytkowników.FindIndex(X => X.Nazwa == u);
         static readonly object KeyZmianaStołu = new object();//snipet desing
         public event EventHandler ZmianaStołu
         {
@@ -151,7 +151,7 @@ namespace ClientSerwis
         public void Twojruch()
         {
             Stan = Stan.TwójRuch;
-            DostępneKarty = ObsugaTysiąc.ZaładujDostepneKarty(twojeKarty, stół, AktywnaKozera, Kozera).AsReadOnly();
+            DostępneKarty = ObsugaTysiąc.ZaładujDostepneKarty(twojeKarty, stół, aktywnaKozera, Kozera).AsReadOnly();
             (DzienikZdarzeń[KeyTwójRuch] as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
 
@@ -198,7 +198,9 @@ namespace ClientSerwis
             return tk.WyslijMusekAsync(KartyDoUsuniecia.ToArray());
         }
         public Karta Kozera { get; private set; }
-        bool AktywnaKozera;
+        public bool AktywnaKozera { get => aktywnaKozera;  }
+
+        bool aktywnaKozera;
         public void KtosWyslalKarte(Karta k, string s,bool Melduj)
         {
             stół.Add(k);
@@ -209,7 +211,7 @@ namespace ClientSerwis
             if (Melduj)
             {
                 Kozera = k.Kolor();
-                AktywnaKozera = true;
+                aktywnaKozera = true;
             }
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
             (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Urzytkownik, Karta>(WeźUrzytkownika(s), k));
@@ -223,7 +225,7 @@ namespace ClientSerwis
 
         public void PodsumowanieRozgrywki(PodsumowanieTysioc pk)
         {
-            AktywnaKozera = false;
+            aktywnaKozera = false;
             stół?.Clear();
             twojeKarty?.Clear();
         }

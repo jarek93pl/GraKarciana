@@ -23,14 +23,15 @@ namespace Karty
                 TheMostFigureInColor[i] = Karta.As + 4;
             }
         }
-        public void ConclusionAboutBehavior(List<Karta> Table,bool enebleAtute,Karta atute)
+        public void ConclusionAboutBehavior(IList<Karta> Table,bool enebleAtute,Karta atute)
         {
+            AmountCards--;
             ConclusionAboutTransferedCard(Table);
             ConclusionAboutMaxCards(Table,enebleAtute,atute);
 
         }
 
-        private void ConclusionAboutMaxCards(List<Karta> table, bool enebleAtute, Karta atute)
+        private void ConclusionAboutMaxCards(IList<Karta> table, bool enebleAtute, Karta atute)
         {
             if (table.Count>1&&!ObsugaTysiąc.LastWin(table,enebleAtute,atute, out bool usingAtute, out bool usingSuit))
             {
@@ -52,9 +53,9 @@ namespace Karty
             }
         }
 
-        private Karta MaxAtutInTable(List<Karta> table, Karta atute) => (Karta)table.Where(X => X.Kolor() == atute).DefaultIfEmpty(Karta.trelf).Max(X => (int)X);
+        private Karta MaxAtutInTable(IList<Karta> table, Karta atute) => (Karta)table.Where(X => X.Kolor() == atute).DefaultIfEmpty(Karta.trelf).Max(X => (int)X);
 
-        private void ConclusionAboutTransferedCard(List<Karta> Table)
+        private void ConclusionAboutTransferedCard(IList<Karta> Table)
         {
             if (Table.Any(X => X == transferred))
             {
