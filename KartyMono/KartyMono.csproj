@@ -88,7 +88,9 @@
     <Compile Include="Bibloteka\Wyszukiwarka\KolekcjaWyszukiwarek.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\Przeglądacz.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\WyszykiwarkaEnum.cs" />
+    <Compile Include="ContentHelper.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Menu\Menu1000Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -100,12 +102,92 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\card\10_of_clubs.png" />
+    <Content Include="Content\card\10_of_diamonds.png" />
+    <Content Include="Content\card\10_of_hearts.png" />
+    <Content Include="Content\card\10_of_spades.png" />
+    <Content Include="Content\card\2_of_clubs.png" />
+    <Content Include="Content\card\2_of_diamonds.png" />
+    <Content Include="Content\card\2_of_hearts.png" />
+    <Content Include="Content\card\2_of_spades.png" />
+    <Content Include="Content\card\3_of_clubs.png" />
+    <Content Include="Content\card\3_of_diamonds.png" />
+    <Content Include="Content\card\3_of_hearts.png" />
+    <Content Include="Content\card\3_of_spades.png" />
+    <Content Include="Content\card\4_of_clubs.png" />
+    <Content Include="Content\card\4_of_diamonds.png" />
+    <Content Include="Content\card\4_of_hearts.png" />
+    <Content Include="Content\card\4_of_spades.png" />
+    <Content Include="Content\card\5_of_clubs.png" />
+    <Content Include="Content\card\5_of_diamonds.png" />
+    <Content Include="Content\card\5_of_hearts.png" />
+    <Content Include="Content\card\5_of_spades.png" />
+    <Content Include="Content\card\6_of_clubs.png" />
+    <Content Include="Content\card\6_of_diamonds.png" />
+    <Content Include="Content\card\6_of_hearts.png" />
+    <Content Include="Content\card\6_of_spades.png" />
+    <Content Include="Content\card\7_of_clubs.png" />
+    <Content Include="Content\card\7_of_diamonds.png" />
+    <Content Include="Content\card\7_of_hearts.png" />
+    <Content Include="Content\card\7_of_spades.png" />
+    <Content Include="Content\card\8_of_clubs.png" />
+    <Content Include="Content\card\8_of_diamonds.png" />
+    <Content Include="Content\card\8_of_hearts.png" />
+    <Content Include="Content\card\8_of_spades.png" />
+    <Content Include="Content\card\9_of_clubs.png" />
+    <Content Include="Content\card\9_of_diamonds.png" />
+    <Content Include="Content\card\9_of_hearts.png" />
+    <Content Include="Content\card\9_of_spades.png" />
+    <Content Include="Content\card\ace_of_clubs.png" />
+    <Content Include="Content\card\ace_of_diamonds.png" />
+    <Content Include="Content\card\ace_of_hearts.png" />
+    <Content Include="Content\card\ace_of_spades.png" />
+    <Content Include="Content\card\ace_of_spades2.png" />
+    <Content Include="Content\card\black_joker.png" />
+    <Content Include="Content\card\jack_of_clubs.png" />
+    <Content Include="Content\card\jack_of_clubs2.png" />
+    <Content Include="Content\card\jack_of_diamonds.png" />
+    <Content Include="Content\card\jack_of_diamonds2.png" />
+    <Content Include="Content\card\jack_of_hearts.png" />
+    <Content Include="Content\card\jack_of_hearts2.png" />
+    <Content Include="Content\card\jack_of_spades.png" />
+    <Content Include="Content\card\jack_of_spades2.png" />
+    <Content Include="Content\card\king_of_clubs.png" />
+    <Content Include="Content\card\king_of_clubs2.png" />
+    <Content Include="Content\card\king_of_diamonds.png" />
+    <Content Include="Content\card\king_of_diamonds2.png" />
+    <Content Include="Content\card\king_of_hearts.png" />
+    <Content Include="Content\card\king_of_hearts2.png" />
+    <Content Include="Content\card\king_of_spades.png" />
+    <Content Include="Content\card\king_of_spades2.png" />
+    <Content Include="Content\card\queen_of_clubs.png" />
+    <Content Include="Content\card\queen_of_clubs2.png" />
+    <Content Include="Content\card\queen_of_diamonds.png" />
+    <Content Include="Content\card\queen_of_diamonds2.png" />
+    <Content Include="Content\card\queen_of_hearts.png" />
+    <Content Include="Content\card\queen_of_hearts2.png" />
+    <Content Include="Content\card\queen_of_spades.png" />
+    <Content Include="Content\card\queen_of_spades2.png" />
+    <Content Include="Content\card\red_joker.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.config" />
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game1000\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClientSerwis\ClientSerwis.csproj">
+      <Project>{b925f2ef-c8fc-4b54-8931-ce5392303992}</Project>
+      <Name>ClientSerwis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Karty\Karty.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>Karty</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

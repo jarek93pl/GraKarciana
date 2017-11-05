@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Komputer.Xna.Menu;
+using KartyMono.Menu;
 namespace KartyMono
 {
     /// <summary>
@@ -9,12 +10,15 @@ namespace KartyMono
     /// </summary>
     public class Game1 : Game
     {
+        public static Game game;
+        MenuPodstawa menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            game = this;
             Content.RootDirectory = "Content";
         }
 
@@ -39,8 +43,9 @@ namespace KartyMono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
+            menu = new Menu1000Game(Content);
         }
 
         /// <summary>
@@ -63,7 +68,7 @@ namespace KartyMono
                 Exit();
 
             // TODO: Add your update logic here
-
+            menu?.UpDate(gameTime);
             base.Update(gameTime);
         }
 
@@ -76,7 +81,9 @@ namespace KartyMono
             GraphicsDevice.Clear(Color.Pink);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            menu.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
