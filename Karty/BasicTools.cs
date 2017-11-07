@@ -32,7 +32,7 @@ namespace Karty
         {
             SetMin(ref a, b, ref a, b);
         }
-        public static T[] InitializeTable<T>(int count, T value) where T : IComparable<T>
+        public static T[] InitializeTable<T>(int count, T value)
         {
             T[] z = new T[count];
             for (int i = 0; i < count; i++)
@@ -40,6 +40,22 @@ namespace Karty
                 z[i] = value;
             }
             return z;
+        }
+        public static T GetMin<T,K>(this IEnumerable<T> t,Func<T,K> func) where K : IComparable<K>
+        {
+            K minKey = func(t.First());
+            T returned = t.First();
+            foreach (var item in t)
+            {
+                K tmpK = func(item);
+                if (minKey.CompareTo(tmpK)>0)
+                {
+                    minKey = tmpK;
+                    returned = item;
+                    
+                }
+            }
+            return returned;
         }
     }
 }

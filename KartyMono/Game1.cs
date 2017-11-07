@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Komputer.Xna.Menu;
 using KartyMono.Menu;
+using Microsoft.Xna.Framework.Content;
+
 namespace KartyMono
 {
     /// <summary>
@@ -14,10 +16,13 @@ namespace KartyMono
         MenuPodstawa menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        public static ContentManager ContentStatic;
+        public static Texture2D Cursor;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 800;
             game = this;
             Content.RootDirectory = "Content";
         }
@@ -43,7 +48,8 @@ namespace KartyMono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            ContentStatic = this.Content;
+            Cursor = Content.Load<Texture2D>("table/m");
             // TODO: use this.Content to load your game content here
             menu = new Menu1000Game(Content);
         }

@@ -90,6 +90,9 @@
     <Compile Include="Bibloteka\Wyszukiwarka\WyszykiwarkaEnum.cs" />
     <Compile Include="ContentHelper.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Game1000\CardSocketUI.cs" />
+    <Compile Include="Game1000\CardUI.cs" />
+    <Compile Include="Game1000\PrepareTable.cs" />
     <Compile Include="Menu\Menu1000Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,6 +172,8 @@
     <Content Include="Content\card\queen_of_spades.png" />
     <Content Include="Content\card\queen_of_spades2.png" />
     <Content Include="Content\card\red_joker.png" />
+    <Content Include="Content\table\m.png" />
+    <Content Include="Content\table\slot.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +181,7 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game1000\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ClientSerwis\ClientSerwis.csproj">
       <Project>{b925f2ef-c8fc-4b54-8931-ce5392303992}</Project>
