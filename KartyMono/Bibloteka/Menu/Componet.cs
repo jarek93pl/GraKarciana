@@ -9,7 +9,7 @@ namespace Komputer.Xna.Menu
     public interface IComponet
     {
         void Draw(SpriteBatch sp);
-        // dla false komponet jest usuwany
+        // dla true komponet jest usuwany
         bool UpDate(GameTime gt);
     }
 }

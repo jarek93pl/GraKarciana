@@ -1,4 +1,5 @@
-﻿using KartyMono.Menu;
+﻿using KartyMono.Common;
+using KartyMono.Menu;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace KartyMono.Game1000
+namespace KartyMono.Common
 {
     class CardSocketUI : XnaKontrolka
     {

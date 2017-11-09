@@ -15,7 +15,7 @@ namespace Komputer.Xna.Menu
     /// <summary>
     /// Klasa Powina być właczana ~ 20/sek
     /// </summary>
-    public  class MenuPodstawa :IXnaPrzedmiot
+    public  class MenuPodstawa 
     {
         public event EventHandler KoniecZlecenia;
         public Vector2 MiejsceDodanejPrzycisku;

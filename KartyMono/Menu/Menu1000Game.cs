@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Content;
 using Karty;
 using GraKarciana;
 using KartyMono.Game1000;
+using KartyMono.Common;
 
 namespace KartyMono.Menu
 {
@@ -21,12 +22,22 @@ namespace KartyMono.Menu
         List<CardSocketUI> ListSocket = new List<CardSocketUI>();
         List<CardSocketUI> ListSocketUser = new List<CardSocketUI>();
         List<CardSocketUI> ListSocketTable = new List<CardSocketUI>();
+        MonitorDropAndDrag<CardUI> monitorDropAndDrag;
         Texture2D tx;
         public Menu1000Game(ContentManager content):base(Game1.Cursor)
         {
             PrepareTable.GetTable(this);
             AddCard(new CardUI(Karta.Dama, ListSocket));
+            monitorDropAndDrag = new MonitorDropAndDrag<CardUI>(ListCard, AceptanceGet);
+            AddKomponet(monitorDropAndDrag);
+            AddKomponet(new GameState());
         }
+
+        private bool AceptanceGet(CardUI arg)
+        {
+            return (arg.socketUI == null || !arg.socketUI.BlockedGetCard);
+        }
+
         public void AddCard(CardUI card)
         {
             Add(card);
@@ -54,9 +65,9 @@ namespace KartyMono.Menu
         }
         public override void UpDate(GameTime GT)
         {
-
             //Game1.game.Window.Title=Mouse.GetState().Position.ToString();
             base.UpDate(GT);
         }
+ 
     }
 }

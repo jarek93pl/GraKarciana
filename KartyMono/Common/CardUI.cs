@@ -9,9 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using GraKarciana;
 using Karty;
-namespace KartyMono.Game1000
+using KartyMono.Common;
+namespace KartyMono.Common
 {
-    class CardUI : XnaKontrolka
+    class CardUI : XnaKontrolka, IDropAndDrag
     {
         const float MaxDystans = 100;
         public static float Speed = 4;
@@ -21,8 +22,7 @@ namespace KartyMono.Game1000
         {
             listSocket = list;
             GetShowDate(k);
-            this.Zaznaczony += CardUI_Zaznaczony;
-            this.Puszczony += CardUI_Puszczony;
+            CzyUżywaUpdate = true;
 
         }
 
@@ -34,12 +34,20 @@ namespace KartyMono.Game1000
 
         Vector2? StartPointMouse;
         Vector2 StartPointObject;
-        private void CardUI_Puszczony(object snder, EventKlikniety e)
+        public void Drag(Vector2 vector)
+        {
+            if (socketUI == null || socketUI.BlockedGetCard)
+            {
+                StartPointMouse = vector;
+                StartPointObject = Miejsce;
+            }
+        }
+        public void Drop(Vector2 vector)
         {
             if (StartPointMouse.HasValue)
             {
-                CardSocketUI cardSocketUI = listSocket.Where(X => !X.BlockedSetCard&&X.InnerCard==null).GetMin(X => (X.Miejsce - Miejsce).Length());
-                if ((cardSocketUI.Miejsce - Miejsce).Length()<MaxDystans)
+                CardSocketUI cardSocketUI = listSocket.Where(X => !X.BlockedSetCard && X.InnerCard == null).GetMin(X => (X.Miejsce - Miejsce).Length());
+                if ((cardSocketUI.Miejsce - Miejsce).Length() < MaxDystans)
                 {
                     BindCardToSocket(cardSocketUI, this);
                 }
@@ -53,14 +61,7 @@ namespace KartyMono.Game1000
             socketUI.InnerCard = card;
         }
 
-        private void CardUI_Zaznaczony(object snder, EventKlikniety e)
-        {
-            if (socketUI ==null|| socketUI.BlockedGetCard)
-            {
-                StartPointMouse = e.Miejsce;
-                StartPointObject = Miejsce;
-            }
-        }
+
         public override void UżycieUpdate(GameTime gt)
         {
             if (socketUI != null && !StartPointMouse.HasValue)
@@ -69,19 +70,25 @@ namespace KartyMono.Game1000
                 float lenght = delta.Length();
                 delta.Normalize();
                 delta *= Speed > lenght ? lenght : Speed;
-                Miejsce += delta;
+                if (!float.IsNaN(delta.X)|| !float.IsNaN(delta.Y))
+                {
+                    Miejsce += delta;
+                }
 
             }
-
+            if (StartPointMouse.HasValue)
+            {
+                Miejsce = StartPointObject + GameState.Instance.MouseLocation - StartPointMouse.Value;
+            }
             base.UżycieUpdate(gt);
         }
         public override bool UpDate(EventArgs e)
         {
-            if (e is EventPrzesuniecie p&& StartPointMouse.HasValue)
-            {
-                Miejsce = StartPointObject+ p.Miejsce- StartPointMouse.Value;
-            }
             return true;
+        }
+        public override void Draw(SpriteBatch pezel)
+        {
+            base.Draw(pezel);
         }
     }
 }

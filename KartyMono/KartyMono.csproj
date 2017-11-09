@@ -61,7 +61,6 @@
     <Compile Include="Bibloteka\Menu\Componet.cs" />
     <Compile Include="Bibloteka\Menu\EventWysłanieDotchniecia.cs" />
     <Compile Include="Bibloteka\Menu\IXnaKontrolka.cs" />
-    <Compile Include="Bibloteka\Menu\IXnaPrzedmiot.cs" />
     <Compile Include="Bibloteka\Menu\ListaWyborów.cs" />
     <Compile Include="Bibloteka\Menu\MapaZaznaczen.cs" />
     <Compile Include="Bibloteka\Menu\Menu.cs" />
@@ -88,10 +87,13 @@
     <Compile Include="Bibloteka\Wyszukiwarka\KolekcjaWyszukiwarek.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\Przeglądacz.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\WyszykiwarkaEnum.cs" />
+    <Compile Include="Common\IDropAndDrag.cs" />
+    <Compile Include="Common\MonitorPopPush.cs" />
+    <Compile Include="Common\StateGame.cs" />
     <Compile Include="ContentHelper.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Game1000\CardSocketUI.cs" />
-    <Compile Include="Game1000\CardUI.cs" />
+    <Compile Include="Common\CardSocketUI.cs" />
+    <Compile Include="Common\CardUI.cs" />
     <Compile Include="Game1000\PrepareTable.cs" />
     <Compile Include="Menu\Menu1000Game.cs" />
     <Compile Include="Program.cs" />
