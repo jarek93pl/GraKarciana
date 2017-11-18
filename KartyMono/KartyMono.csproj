@@ -87,6 +87,7 @@
     <Compile Include="Bibloteka\Wyszukiwarka\KolekcjaWyszukiwarek.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\Przeglądacz.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\WyszykiwarkaEnum.cs" />
+    <Compile Include="Common\ComparerList.cs" />
     <Compile Include="Common\IDropAndDrag.cs" />
     <Compile Include="Common\MonitorPopPush.cs" />
     <Compile Include="Common\StateGame.cs" />
