@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace KartyMono.Common
+namespace KartyMono.Common.UI.Activity
 {
     class MonitorDropAndDrag<T>: IComponet where T: XnaKontrolka, IDropAndDrag
     {

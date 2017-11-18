@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using GraKarciana;
 using Karty;
-using KartyMono.Common;
-namespace KartyMono.Common
+using KartyMono.Common.UI.Activity;
+namespace KartyMono.Common.UI
 {
     class CardUI : XnaKontrolka, IDropAndDrag
     {

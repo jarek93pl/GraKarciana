@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace KartyMono.Common
+namespace KartyMono.Common.UI.Activity
 {
     class GameState : IComponet
     {

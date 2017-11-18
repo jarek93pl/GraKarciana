@@ -11,7 +11,8 @@ using Microsoft.Xna.Framework.Content;
 using Karty;
 using GraKarciana;
 using KartyMono.Game1000;
-using KartyMono.Common;
+using KartyMono.Common.UI;
+using KartyMono.Common.UI.Activity;
 
 namespace KartyMono.Menu
 {
@@ -26,11 +27,17 @@ namespace KartyMono.Menu
         Texture2D tx;
         public Menu1000Game(ContentManager content):base(Game1.Cursor)
         {
-            PrepareTable.GetTable(this);
+            PreperTableM();
             AddCard(new CardUI(Karta.Dama, ListSocket));
             monitorDropAndDrag = new MonitorDropAndDrag<CardUI>(ListCard, AceptanceGet);
             AddKomponet(monitorDropAndDrag);
             AddKomponet(new GameState());
+        }
+
+        private void PreperTableM()
+        {
+            PrepareTable prepare = new PrepareTable(this);
+            prepare.GetTable();
         }
 
         private bool AceptanceGet(CardUI arg)

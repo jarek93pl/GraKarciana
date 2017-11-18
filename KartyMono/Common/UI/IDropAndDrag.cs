@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace KartyMono.Common
+namespace KartyMono.Common.UI
 {
     interface IDropAndDrag
     {
