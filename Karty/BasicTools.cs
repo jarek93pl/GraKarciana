@@ -43,8 +43,8 @@ namespace Karty
         }
         public static T GetMin<T,K>(this IEnumerable<T> t,Func<T,K> func) where K : IComparable<K>
         {
-            K minKey = func(t.First());
-            T returned = t.First();
+            K minKey = func(t.FirstOrDefault());
+            T returned = t.FirstOrDefault();
             foreach (var item in t)
             {
                 K tmpK = func(item);

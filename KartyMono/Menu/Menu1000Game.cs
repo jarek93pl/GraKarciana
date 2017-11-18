@@ -42,7 +42,12 @@ namespace KartyMono.Menu
 
         private bool AceptanceGet(CardUI arg)
         {
-            return (arg.socketUI == null || !arg.socketUI.BlockedGetCard);
+            if (arg.socketUI == null)
+            {
+                return true;
+            }
+
+            return !arg.socketUI.BlockedGetCard;
         }
 
         public void AddCard(CardUI card)

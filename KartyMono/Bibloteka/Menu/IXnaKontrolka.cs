@@ -156,5 +156,10 @@ namespace Komputer.Xna.Menu
         public virtual void Usówanie()
         {
         }
+
+        public float LenghtToObject(XnaKontrolka X)
+        {
+            return (X.Miejsce - Miejsce).Length();
+        }
     }
 }

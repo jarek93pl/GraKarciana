@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using GraKarciana;
 using Karty;
 using KartyMono.Common.UI.Activity;
+using System.Diagnostics;
 namespace KartyMono.Common.UI
 {
     class CardUI : XnaKontrolka, IDropAndDrag
@@ -36,7 +37,7 @@ namespace KartyMono.Common.UI
         Vector2 StartPointObject;
         public void Drag(Vector2 vector)
         {
-            if (socketUI == null || socketUI.BlockedGetCard)
+            if (socketUI == null || !socketUI.BlockedGetCard)
             {
                 StartPointMouse = vector;
                 StartPointObject = Miejsce;
@@ -44,10 +45,12 @@ namespace KartyMono.Common.UI
         }
         public void Drop(Vector2 vector)
         {
+            
             if (StartPointMouse.HasValue)
             {
-                CardSocketUI cardSocketUI = listSocket.Where(X => !X.BlockedSetCard && X.InnerCard == null).GetMin(X => (X.Miejsce - Miejsce).Length());
-                if ((cardSocketUI.Miejsce - Miejsce).Length() < MaxDystans)
+                var AvilibleSocket = listSocket.Where(X => AceptanceSocket(X));
+                CardSocketUI cardSocketUI = AvilibleSocket.GetMin(X =>X!=null? X.LenghtToObject(this):0);
+                if (cardSocketUI!=null)
                 {
                     BindCardToSocket(cardSocketUI, this);
                 }
@@ -55,9 +58,25 @@ namespace KartyMono.Common.UI
             }
         }
 
+        private bool AceptanceSocket(CardSocketUI X)
+        {
+            return !X.BlockedSetCard && (X.InnerCard == null)//carta może być odłożona i soket nie jest pusty
+                && (LenghtToObject(X) < MaxDystans) &&//nie przekracza maksymalnego dystansu
+                X.AceptanceSet(this);//soket może przyjąć tą krte
+        }
+
+
         private static void BindCardToSocket(CardSocketUI socketUI, CardUI card)
         {
+            if (card.socketUI!=null)
+            {
+                card.socketUI.InnerCard = null;
+            }
             card.socketUI = socketUI;
+            if (socketUI.InnerCard!=null)
+            {
+                throw new InvalidOperationException();
+            }
             socketUI.InnerCard = card;
         }
 

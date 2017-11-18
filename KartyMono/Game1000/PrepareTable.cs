@@ -41,29 +41,34 @@ namespace KartyMono.Game1000
 
         public static CardSocketUI GetCardSlot(Vector2 v, Menu1000Game.KindSlot typeslot)
         {
-            CardSocketUI cd = new CardSocketUI();
-            cd.Miejsce = v;
+            CardSocketUI cd = null;
             switch (typeslot)
             {
                 case Menu1000Game.KindSlot.Table:
-                    CardTable(cd);
+                   cd= CardTable();
                     break;
                 case Menu1000Game.KindSlot.UserCard:
-                    CardUser(cd);
+                    cd= CardUser();
                     break;
                 default:
                     break;
             }
+
+            cd.Miejsce = v;
             return cd;
         }
 
-        private static void CardUser(CardSocketUI cd)
+        private static CardSocketUI CardUser()
         {
+            CardSocketUI cd = new CardSocketUI(X=>true);
             cd.BlockedGetCard = false;
+            return cd;
         }
 
-        private static void CardTable(CardSocketUI cd)
+        private static CardSocketUI CardTable()
         {
+            CardSocketUI cd = new CardSocketUI(X=>true);
+            return cd;
         }
     }
 }

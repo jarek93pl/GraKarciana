@@ -170,7 +170,6 @@ namespace Komputer.Xna.Menu
                 ZdażeniaDoNatepnegoUpdate[0](this, EventArgs.Empty);
                 ZdażeniaDoNatepnegoUpdate.RemoveAt(0);
             }
-            System.Diagnostics.Debug.WriteLine("U1");
             if (!WyświetlanieMyszki)
             {
                 MouseState s = Mouse.GetState();
@@ -208,8 +207,7 @@ namespace Komputer.Xna.Menu
                 if (!Lista[i].Ukryty && Lista[i].CzyUżywaUpdate)
                     Lista[i].UżycieUpdate(GT);
 			}
-
-            System.Diagnostics.Debug.WriteLine("U2");
+            
 
             for (int i = 0; i < ListaKomponetów.Count; i++)
             {
@@ -235,7 +233,6 @@ namespace Komputer.Xna.Menu
 
                 }
             }
-            System.Diagnostics.Debug.WriteLine("U3");
         }
         void Zleć()
         {

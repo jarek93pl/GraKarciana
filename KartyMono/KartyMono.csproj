@@ -78,7 +78,6 @@
     <Compile Include="Bibloteka\Navigator\ISzkieletZPozycja.cs" />
     <Compile Include="Bibloteka\Navigator\TworzenieGrafu.cs" />
     <Compile Include="Bibloteka\Navigator\WrażliwośćKolizji.cs" />
-    <Compile Include="Bibloteka\Rozsrzeżenia\Rozszeżenia.cs" />
     <Compile Include="Bibloteka\Szyfr\szyfr.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\DoSortowania.cs" />
     <Compile Include="Bibloteka\Wyszukiwarka\ExceptionPrzekroczonaDługość.cs" />
