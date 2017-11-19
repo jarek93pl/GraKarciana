@@ -39,7 +39,7 @@ namespace KartyMono.Game1000
             menu1000.AddCardSlot(GetCardSlot(v, type), type);
         }
 
-        public static CardSocketUI GetCardSlot(Vector2 v, Menu1000Game.KindSlot typeslot)
+        public CardSocketUI GetCardSlot(Vector2 v, Menu1000Game.KindSlot typeslot)
         {
             CardSocketUI cd = null;
             switch (typeslot)
@@ -58,16 +58,16 @@ namespace KartyMono.Game1000
             return cd;
         }
 
-        private static CardSocketUI CardUser()
+        private CardSocketUI CardUser()
         {
-            CardSocketUI cd = new CardSocketUI(X=>true);
+            CardSocketUI cd = new CardSocketUI();
             cd.BlockedGetCard = false;
             return cd;
         }
 
-        private static CardSocketUI CardTable()
+        private CardSocketUI CardTable()
         {
-            CardSocketUI cd = new CardSocketUI(X=>true);
+            CardSocketUI cd = new CardSocketUI();
             return cd;
         }
     }

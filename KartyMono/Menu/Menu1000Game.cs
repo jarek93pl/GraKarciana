@@ -13,6 +13,8 @@ using GraKarciana;
 using KartyMono.Game1000;
 using KartyMono.Common.UI;
 using KartyMono.Common.UI.Activity;
+using ClientSerwis;
+using System.ServiceModel;
 
 namespace KartyMono.Menu
 {
@@ -25,13 +27,44 @@ namespace KartyMono.Menu
         List<CardSocketUI> ListSocketTable = new List<CardSocketUI>();
         MonitorDropAndDrag<CardUI> monitorDropAndDrag;
         Texture2D tx;
+        TysiocClient client;
+        public Func<CardUI, CardSocketUI, bool> ConditonSetCardToTable
+        {
+            set
+            {
+                ListSocketTable.ForEach(X => X.InitalizeCondition(Y => value(Y, X)));
+            }
+        }
+        public  event EventHandler<CardUI> TookCard
+        {
+            add
+            {
+                ListSocketTable.ForEach(X => X.OnTookCard += value);
+            }
+            remove
+            {
+                ListSocketTable.ForEach(X => X.OnTookCard -= value);
+            }
+        }
         public Menu1000Game(ContentManager content):base(Game1.Cursor)
         {
             PreperTableM();
+            PreperProxyToConection();
             AddCard(new CardUI(Karta.Dama, ListSocket));
             monitorDropAndDrag = new MonitorDropAndDrag<CardUI>(ListCard, AceptanceGet);
             AddKomponet(monitorDropAndDrag);
             AddKomponet(new GameState());
+        }
+
+        private void PreperProxyToConection()
+        {
+           // Urzytkownik.DoKontaClient uk = new Urzytkownik.DoKontaClient();
+            var kontroler = new KontrolerTysioc();
+            InstanceContext instance = new InstanceContext(kontroler);
+            kontroler.Initialize(client = new TysiocClient(instance));
+           // int playerIndex = uk.Rejestruj(new ClientSerwis.Urzytkownik() { Nazwa = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
+           // await client.CzekajNaGraczaAsync(playerIndex);
+
         }
 
         private void PreperTableM()

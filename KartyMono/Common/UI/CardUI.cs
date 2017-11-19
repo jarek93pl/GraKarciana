@@ -78,6 +78,7 @@ namespace KartyMono.Common.UI
                 throw new InvalidOperationException();
             }
             socketUI.InnerCard = card;
+            socketUI.TookCard(card);
         }
 
 

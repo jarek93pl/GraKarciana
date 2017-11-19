@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientSerwis", "ClientSerwis\ClientSerwis.csproj", "{B925F2EF-C8FC-4B54-8931-CE5392303992}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartyMono", "KartyMono\KartyMono.csproj", "{7C8C807B-5FCF-4267-903D-6ACBD09DC5E6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E51D49D7-711F-4D0A-954A-12E31273D56F} = {E51D49D7-711F-4D0A-954A-12E31273D56F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

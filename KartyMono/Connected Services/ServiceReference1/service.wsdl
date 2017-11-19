@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SerwisObsugiKont" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/GraKarciana" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DoKonta_Loguj_InputMessage">
+    <wsdl:part name="parameters" element="tns:Loguj" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Loguj_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogujResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Odświerz_InputMessage">
+    <wsdl:part name="parameters" element="tns:Odświerz" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Pobierz_InputMessage">
+    <wsdl:part name="parameters" element="tns:Pobierz" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Pobierz_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PobierzResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Rejestruj_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rejestruj" />
+  </wsdl:message>
+  <wsdl:message name="DoKonta_Rejestruj_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejestrujResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DoKonta">
+    <wsdl:operation name="Loguj">
+      <wsdl:input wsaw:Action="http://tempuri.org/DoKonta/Loguj" message="tns:DoKonta_Loguj_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DoKonta/LogujResponse" message="tns:DoKonta_Loguj_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Odświerz">
+      <wsdl:input wsaw:Action="http://tempuri.org/DoKonta/Odświerz" message="tns:DoKonta_Odświerz_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Pobierz">
+      <wsdl:input wsaw:Action="http://tempuri.org/DoKonta/Pobierz" message="tns:DoKonta_Pobierz_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DoKonta/PobierzResponse" message="tns:DoKonta_Pobierz_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rejestruj">
+      <wsdl:input wsaw:Action="http://tempuri.org/DoKonta/Rejestruj" message="tns:DoKonta_Rejestruj_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DoKonta/RejestrujResponse" message="tns:DoKonta_Rejestruj_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_DoKonta" type="tns:DoKonta">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Loguj">
+      <soap:operation soapAction="http://tempuri.org/DoKonta/Loguj" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Odświerz">
+      <soap:operation soapAction="http://tempuri.org/DoKonta/Odświerz" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Pobierz">
+      <soap:operation soapAction="http://tempuri.org/DoKonta/Pobierz" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Rejestruj">
+      <soap:operation soapAction="http://tempuri.org/DoKonta/Rejestruj" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SerwisObsugiKont">
+    <wsdl:port name="BasicHttpBinding_DoKonta" binding="tns:BasicHttpBinding_DoKonta">
+      <soap:address location="http://localhost:8734/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

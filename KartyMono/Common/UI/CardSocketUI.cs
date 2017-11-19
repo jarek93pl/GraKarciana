@@ -11,6 +11,8 @@ namespace KartyMono.Common.UI
 {
     class CardSocketUI : XnaKontrolka
     {
+
+        public event EventHandler<CardUI> OnTookCard;
         public Func< CardUI, bool> AceptanceSet;
         public bool BlockedGetCard { get; set; }
         public bool BlockedSetCard { get; set; }
@@ -21,15 +23,21 @@ namespace KartyMono.Common.UI
         {
             return AceptanceSet(cd);
         }
-        public CardSocketUI(Func< CardUI, bool> AceptanceSet) 
+        public CardSocketUI() 
         {
             Zdjecie = Picture.Value;
+        }
+        public void InitalizeCondition(Func<CardUI, bool> AceptanceSet)
+        {
             this.AceptanceSet = AceptanceSet;
         }
-
         public override bool UpDate(EventArgs e)
         {
             return true;
+        }
+        public void TookCard(CardUI cd)
+        {
+            OnTookCard?.Invoke(this,cd);
         }
     }
 }
