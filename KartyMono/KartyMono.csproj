@@ -99,9 +99,10 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Common\UI\CardSocketUI.cs" />
     <Compile Include="Common\UI\CardUI.cs" />
+    <Compile Include="Menu\Menu1000Game.cs" />
     <Compile Include="Game1000\PrepareTable.cs" />
     <Compile Include="Game1000\Proxy1000game.cs" />
-    <Compile Include="Menu\Menu1000Game.cs" />
+    <Compile Include="Common\UI\MenuGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -226,6 +227,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

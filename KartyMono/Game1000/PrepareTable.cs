@@ -61,6 +61,7 @@ namespace KartyMono.Game1000
         private CardSocketUI CardUser()
         {
             CardSocketUI cd = new CardSocketUI();
+            cd.AceptanceSet =new Func<CardUI, bool>( (a) => false);
             cd.BlockedGetCard = false;
             return cd;
         }

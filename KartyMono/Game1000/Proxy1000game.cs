@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KartyMono.Menu;
+using KartyMono.Common.UI;
+
 namespace KartyMono.Game1000
 {
     class Proxy
@@ -22,7 +24,13 @@ namespace KartyMono.Game1000
             controler.TwojaLicytacjaEv += Controler_TwojaLicytacjaEv;
             controler.TwójRuchEv += Controler_TwójRuchEv;
             controler.ZmianaStołu += Controler_ZmianaStołu;
+            mg.ConditonSetCardToTable = ConditonSetCardToTable;
 
+        }
+
+        private bool ConditonSetCardToTable(CardUI arg1, CardSocketUI arg2)
+        {
+            return true;
         }
 
         private void Controler_ZmianaStołu(object sender, EventArgs e)
