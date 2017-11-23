@@ -13,14 +13,16 @@ using KartyMono.Common.UI.Activity;
 using System.Diagnostics;
 namespace KartyMono.Common.UI
 {
-    class CardUI : XnaKontrolka, IDropAndDrag
+    public class CardUI : XnaKontrolka, IDropAndDrag
     {
+        public Karta Card;
         const float MaxDystans = 100;
         public static float Speed = 4;
         public CardSocketUI socketUI;
         List<CardSocketUI> listSocket;
         public CardUI(Karta k,List<CardSocketUI> list)
         {
+            Card = k;
             listSocket = list;
             GetShowDate(k);
             CzyUżywaUpdate = true;

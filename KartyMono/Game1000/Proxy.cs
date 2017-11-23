@@ -35,42 +35,35 @@ namespace KartyMono.Game1000
 
         private void Controler_ZmianaStołu(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void Controler_TwójRuchEv(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_TwojaLicytacjaEv(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_OdbierzMusek(object sender, GraKarciana.Karta[] e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_OdbierzKartęOdGracza(object sender, GraKarciana.Karta[] e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_OdbieranieKart(object sender, GraKarciana.Karta[] e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_KtośZalicytował(object sender, Tuple<Urzytkownik, int> e)
         {
-            throw new NotImplementedException();
         }
 
         private void Controler_KtośWysłałKarte(object sender, Tuple<Urzytkownik, GraKarciana.Karta> e)
         {
-            throw new NotImplementedException();
         }
     }
 }

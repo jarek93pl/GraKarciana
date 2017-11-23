@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using ClientSerwis;
 namespace KartyMono.Menu
 {
-    class Menu1000Game: MenuGame
+    class Menu1000Game: MenuPlayerAndTable
     {
 
 

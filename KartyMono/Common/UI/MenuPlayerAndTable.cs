@@ -18,13 +18,13 @@ using System.ServiceModel;
 
 namespace KartyMono.Common.UI
 {
-     abstract class MenuGame:MenuPodstawa
+     abstract class MenuPlayerAndTable:MenuPodstawa
     {
         public enum KindSlot { Table,UserCard};
         List<CardUI> ListCard = new List<CardUI>();
         List<CardSocketUI> ListSocket = new List<CardSocketUI>();
-        List<CardSocketUI> ListSocketUser = new List<CardSocketUI>();
-        List<CardSocketUI> ListSocketTable = new List<CardSocketUI>();
+        public List<CardSocketUI> ListSocketUser = new List<CardSocketUI>();
+        public List<CardSocketUI> ListSocketTable = new List<CardSocketUI>();
         MonitorDropAndDrag<CardUI> monitorDropAndDrag;
         Texture2D tx;
         public Func<CardUI, CardSocketUI, bool> ConditonSetCardToTable
@@ -45,7 +45,7 @@ namespace KartyMono.Common.UI
                 ListSocketTable.ForEach(X => X.OnTookCard -= value);
             }
         }
-        public MenuGame(ContentManager content):base(Game1.Cursor)
+        public MenuPlayerAndTable(ContentManager content):base(Game1.Cursor)
         {
             Load().Forech(X => X());
             AddCard(new CardUI(Karta.Dama, ListSocket));

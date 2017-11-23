@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace KartyMono.Common.UI
 {
-    class CardSocketUI : XnaKontrolka
+    public class CardSocketUI : XnaKontrolka
     {
 
         public event EventHandler<CardUI> OnTookCard;
