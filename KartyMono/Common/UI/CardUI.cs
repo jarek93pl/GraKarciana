@@ -68,7 +68,7 @@ namespace KartyMono.Common.UI
         }
 
 
-        private static void BindCardToSocket(CardSocketUI socketUI, CardUI card)
+        public static void BindCardToSocket(CardSocketUI socketUI, CardUI card)
         {
             if (card.socketUI!=null)
             {

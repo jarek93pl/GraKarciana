@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KartyMono.Common
 {
-    public class ComparerList<T,L> where L:new() where T:IEquatable<T>
+    public class ComparerList<T,L>  where T:IEquatable<T>
     {
         
         public class Transition
@@ -16,15 +16,9 @@ namespace KartyMono.Common
             public T target;
         }
         public Func<L, IEnumerable<T>> convert;
-        public readonly L Nothing;
-        public ComparerList(Func<L, IEnumerable<T>> con) :this(new L(),con)
-        {
-
-        }
-        public ComparerList(L empty, Func<L, IEnumerable<T>> con)
+        public ComparerList( Func<L, IEnumerable<T>> con)
         {
             convert = con;
-            Nothing=empty;
         }
         public List<Transition> Comparer(IList<L> Base,IList<L> to)
         {
@@ -52,7 +46,7 @@ namespace KartyMono.Common
             }
             foreach (var item in help)
             {
-                returned.Add(new Transition() { From=item.Value,To=Nothing,target=item.Key});
+                returned.Add(new Transition() { From=item.Value,target=item.Key});
             }
         }
 
@@ -65,7 +59,7 @@ namespace KartyMono.Common
                 L ThisBase = Base[i], ThisTo = to[i];
                 HashSet<T> BastToHashet = new HashSet<T>(convert( ThisBase));
                 HashSet<T> toToHashet = new HashSet<T>(convert( ThisTo));
-                returned.AddRange(convert( ThisTo).Where(X => !BastToHashet.Contains(X)).Select(X => new Transition() { From = Nothing, To = ThisTo, target = X }));
+                returned.AddRange(convert( ThisTo).Where(X => !BastToHashet.Contains(X)).Select(X => new Transition() {  To = ThisTo, target = X }));
                 foreach (var item in convert( ThisBase).Where(X => !toToHashet.Contains(X)))
                 {
                     help.Add(item, ThisBase);

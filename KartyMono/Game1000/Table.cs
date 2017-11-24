@@ -22,5 +22,15 @@ namespace KartyMono.Game1000
             CardInTable = AddCardCollection(CardInTableSocket);
             CardUser = AddCardCollection(CardUserSocket);
         }
+
+        public override CardUI GetCard(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override CardSocketUI GetEmptySocket(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
