@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Linq;
+using System.Collections;
 namespace KartyMono
 {
 #if WINDOWS || LINUX
@@ -11,8 +12,14 @@ namespace KartyMono
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
         static void Main()
+        {
+            Run();
+        }
+        
+
+        [STAThread]
+        private static void Run()
         {
             using (var game = new Game1())
                 game.Run();

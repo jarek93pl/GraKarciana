@@ -27,7 +27,9 @@ namespace ClientSerwis
             add => DzienikZdarzeń.AddHandler(KeyZmianaStołu, value);
             remove => DzienikZdarzeń.RemoveHandler(KeyZmianaStołu, value);
         }
-        EventHandlerList DzienikZdarzeń = new EventHandlerList();
+        
+
+        readonly EventHandlerList DzienikZdarzeń = new EventHandlerList();
      
         static readonly object KeyKtośZalicytował = new object();//snipet desing
         public event EventHandler<Tuple<Urzytkownik,int>> KtośZalicytował

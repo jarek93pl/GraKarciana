@@ -11,6 +11,5 @@ namespace KartyMono.Common
     public static class CardHelper
     {
         public static List<Karta> ToListCard(this List<CardSocketUI> list) => list.Where(X => X.InnerCard != null).Select(X => X.InnerCard.Card).ToList();
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using ks= KartyMono.ServiceReference1;
+﻿using ks = KartyMono.ServiceReference1;
 using KartyMono.Common.UI;
 using KartyMono.Game1000;
 using Microsoft.Xna.Framework.Content;
@@ -9,13 +9,12 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using ClientSerwis;
+using Microsoft.Xna.Framework;
+
 namespace KartyMono.Menu
 {
     class Menu1000Game: MenuPlayerAndTable
     {
-
-
-
         public Menu1000Game(ContentManager cm):base(cm)
         {
 
@@ -23,7 +22,14 @@ namespace KartyMono.Menu
         Proxy proxy;
         TysiocClient client;
         int IdConection;
-#region Load
+
+        public Vector2 startPosytionCard { get; internal set; }
+        public CardSocketUI socketEmpty { get; internal set; }
+        public override void UpDate(GameTime GT)
+        {
+            base.UpDate(GT);
+        }
+        #region Load
         private void LoadConection()
         {
             ks.DoKontaClient dk = new ks.DoKontaClient();

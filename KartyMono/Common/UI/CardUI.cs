@@ -19,11 +19,13 @@ namespace KartyMono.Common.UI
         const float MaxDystans = 100;
         public static float Speed = 4;
         public CardSocketUI socketUI;
-        List<CardSocketUI> listSocket;
-        public CardUI(Karta k,List<CardSocketUI> list)
+        /// <summary>
+        /// lista ze wszystkimi soketami do których może leciec karta
+        /// </summary>
+        internal List<CardSocketUI> listSocket;
+        public CardUI(Karta k)
         {
             Card = k;
-            listSocket = list;
             GetShowDate(k);
             CzyUżywaUpdate = true;
 

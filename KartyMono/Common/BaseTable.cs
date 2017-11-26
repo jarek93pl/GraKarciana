@@ -19,17 +19,17 @@ namespace KartyMono.Common
             list.Add(new KeyValuePair<List<Karta>, List<CardSocketUI>>( tmp, cd));
             return tmp;
         }
-        public void Execute(BaseTable date,Vector2 From,CardSocketUI empty)
+        public void Execute(BaseTable date)
         {
             ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>> com = new ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>(X=>X.Key.Cast<byte>());
             var diff = com.Comparer(date.list, list);
             foreach (var item in diff)
             {
-                ExecuteMove(item, From, empty);
+                ExecuteMove(item);
             }
         }
 
-        private void ExecuteMove(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item, Vector2 from, CardSocketUI empty)
+        private void ExecuteMove(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
         {
             if (Object.Equals( item.From,null))
             {
@@ -56,15 +56,17 @@ namespace KartyMono.Common
         private void ToEmpty(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
         {
             var Card = item.From.Value.First(X => X.InnerCard == null).InnerCard;
-            CardUI.BindCardToSocket(GetEmptySocket(item), Card);
+            CardUI.BindCardToSocket(GetEmptySocket(item.From, item.To, (Karta)item.target), Card);
         }
 
-        private void FromEmpty(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
+          private void FromEmpty(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
         {
             var Socket = item.To.Value.First(X => X.InnerCard == null);
-            CardUI.BindCardToSocket(Socket, GetCard(item));
+            CardUI.BindCardToSocket(Socket, GetCard(item.From,item.To,(Karta) item.target));
         }
-        public abstract CardUI GetCard(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item);
-        public abstract CardSocketUI GetEmptySocket(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item);
+        public abstract CardSocketUI GetEmptySocket(KeyValuePair<List<Karta>, List<CardSocketUI>> from, KeyValuePair<List<Karta>, List<CardSocketUI>> to, Karta target);
+
+
+        public abstract CardUI GetCard(KeyValuePair<List<Karta>, List<CardSocketUI>> from, KeyValuePair<List<Karta>, List<CardSocketUI>> to, Karta target);
     }
 }

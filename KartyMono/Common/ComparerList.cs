@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GraKarciana;
+using KartyMono.Common.UI;
 
 namespace KartyMono.Common
 {
@@ -14,6 +16,7 @@ namespace KartyMono.Common
             public L From;
             public L To;
             public T target;
+
         }
         public Func<L, IEnumerable<T>> convert;
         public ComparerList( Func<L, IEnumerable<T>> con)

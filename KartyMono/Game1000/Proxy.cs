@@ -11,6 +11,8 @@ namespace KartyMono.Game1000
 {
     class Proxy
     {
+        Menu1000Game menu;
+        Table LastTable = Table.Empty();
         KontrolerTysioc controler;
         public Proxy(ITysioc comunication,Menu1000Game mg)
         {
@@ -23,8 +25,8 @@ namespace KartyMono.Game1000
             controler.OdbierzMusek += Controler_OdbierzMusek;
             controler.TwojaLicytacjaEv += Controler_TwojaLicytacjaEv;
             controler.TwójRuchEv += Controler_TwójRuchEv;
-            controler.ZmianaStołu += Controler_ZmianaStołu;
             mg.ConditonSetCardToTable = ConditonSetCardToTable;
+            menu = mg;
 
         }
 
@@ -33,9 +35,10 @@ namespace KartyMono.Game1000
             return true;
         }
 
-        private void Controler_ZmianaStołu(object sender, EventArgs e)
+        public void Controler_ZmianaStołu(object sender, EventArgs e)
         {
-
+            Table table = new Table(menu);
+            table.Execute(LastTable);
         }
 
         private void Controler_TwójRuchEv(object sender, EventArgs e)
