@@ -6,17 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using KartyMono.Menu;
 using KartyMono.Common.UI;
+using ks = KartyMono.ServiceReference1;
+using System.ServiceModel;
 
 namespace KartyMono.Game1000
 {
     class Proxy
     {
+        internal ITysioc comunication;
         Menu1000Game menu;
         Table LastTable = Table.Empty();
-        KontrolerTysioc controler;
-        public Proxy(ITysioc comunication,Menu1000Game mg)
+
+        internal KontrolerTysioc controler;
+        public Proxy(ITysioc comunication,Menu1000Game mg, KontrolerTysioc controler)
         {
-            controler = new KontrolerTysioc();
+            this.comunication = comunication;
             controler.Initialize(comunication);
             controler.KtośWysłałKarte += Controler_KtośWysłałKarte;
             controler.KtośZalicytował += Controler_KtośZalicytował;
@@ -25,9 +29,20 @@ namespace KartyMono.Game1000
             controler.OdbierzMusek += Controler_OdbierzMusek;
             controler.TwojaLicytacjaEv += Controler_TwojaLicytacjaEv;
             controler.TwójRuchEv += Controler_TwójRuchEv;
+            controler.ZmianaStołu += Controler_ZmianaStołu;
             mg.ConditonSetCardToTable = ConditonSetCardToTable;
             menu = mg;
 
+        }
+
+        internal static Proxy Activate(Menu1000Game mg)
+        {
+            KontrolerTysioc kontroler = new KontrolerTysioc();
+            InstanceContext instance = new InstanceContext(kontroler);
+            var client = new TysiocClient(instance);
+            kontroler.Initialize(client);
+
+            return new Proxy(client, mg, kontroler) { comunication = client, controler = kontroler };
         }
 
         private bool ConditonSetCardToTable(CardUI arg1, CardSocketUI arg2)
@@ -37,8 +52,9 @@ namespace KartyMono.Game1000
 
         public void Controler_ZmianaStołu(object sender, EventArgs e)
         {
-            Table table = new Table(menu);
+            Table table = new Table(controler,menu);
             table.Execute(LastTable);
+            LastTable = table;
         }
 
         private void Controler_TwójRuchEv(object sender, EventArgs e)

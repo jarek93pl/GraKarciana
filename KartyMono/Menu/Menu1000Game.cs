@@ -32,11 +32,9 @@ namespace KartyMono.Menu
         #region Load
         private void LoadConection()
         {
+            proxy = Proxy.Activate(this);
+            client =(TysiocClient) proxy.comunication;
             ks.DoKontaClient dk = new ks.DoKontaClient();
-            var kontroler = new KontrolerTysioc();
-            InstanceContext instance = new InstanceContext(kontroler);
-            client = new TysiocClient(instance);
-            kontroler.Initialize(client);
             IdConection = dk.Rejestruj(new ks.Urzytkownik() { Nazwa = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
         }
         private void PreperTable()
@@ -44,19 +42,14 @@ namespace KartyMono.Menu
             PrepareTable prepare = new PrepareTable(this);
             prepare.GetTable();
         }
-        private void LoadProxy()
-        {
-            proxy = new Proxy(client,this);
-        }
         private async void Activate()
         {
             await client.CzekajNaGraczaAsync(IdConection);
         }
         public override IEnumerable<Action> Load()
         {
-            yield return LoadConection;
             yield return PreperTable;
-            yield return LoadProxy;
+            yield return LoadConection;
             yield return Activate;
         }
 #endregion

@@ -12,12 +12,24 @@ namespace KartyMono.Common
     abstract class BaseTable
     {
         List<KeyValuePair<List<Karta>, List<CardSocketUI>>> list = new List<KeyValuePair<List<Karta>, List<CardSocketUI>>>();
-       
+       /// <summary>
+       /// Zwróć uwage na kolejnośc dodawania do tej listy
+       /// </summary>
+       /// <param name="cd"></param>
+       /// <returns></returns>
         public List<Karta> AddCardCollection(List<CardSocketUI> cd)
         {
             var tmp = cd.ToListCard();
             list.Add(new KeyValuePair<List<Karta>, List<CardSocketUI>>( tmp, cd));
             return tmp;
+        }
+        /// <summary>
+        /// zwróć uwage na kolejnośc dodawania do tej listy
+        /// </summary>
+        /// <param name="cd"></param>
+        public void AddCardCollection(List<Karta> cd, List<CardSocketUI> cdsocket)
+        {
+            list.Add(new KeyValuePair<List<Karta>, List<CardSocketUI>>(cd, cdsocket));
         }
         public void Execute(BaseTable date)
         {
@@ -31,11 +43,11 @@ namespace KartyMono.Common
 
         private void ExecuteMove(ComparerList<byte, KeyValuePair<List<Karta>, List<CardSocketUI>>>.Transition item)
         {
-            if (Object.Equals( item.From,null))
+            if (Object.Equals( item.From,null)|| Object.Equals(item.From.Key, null))
             {
                 FromEmpty(item);
             }
-            else if (Object.Equals(item.To, null))
+            else if (Object.Equals(item.To, null) || Object.Equals(item.To.Key, null))
             {
                 ToEmpty(item);
             }

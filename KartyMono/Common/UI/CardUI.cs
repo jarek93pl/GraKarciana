@@ -66,7 +66,7 @@ namespace KartyMono.Common.UI
         {
             return !X.BlockedSetCard && (X.InnerCard == null)//carta może być odłożona i soket nie jest pusty
                 && (LenghtToObject(X) < MaxDystans) &&//nie przekracza maksymalnego dystansu
-                X.AceptanceSet(this);//soket może przyjąć tą krte
+              X.AceptanceSet !=null&& X.AceptanceSet(this);//soket może przyjąć tą krte
         }
 
 

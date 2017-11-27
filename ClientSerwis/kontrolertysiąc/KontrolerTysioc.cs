@@ -9,8 +9,8 @@ using static GraKarciana.ObsugaKart;
 using GraKarciana;
 namespace ClientSerwis
 {
-    public enum Stan {CzekajNaGracza, CzekajNaLicytacje,TwojaLicytacja,WysylanieMusku,CzekanieNaMusek,CzekanieNaRuch,TwójRuch};
-    public class KontrolerTysioc: ITysiocCalback
+    public enum Stan { CzekajNaGracza, CzekajNaLicytacje, TwojaLicytacja, WysylanieMusku, CzekanieNaMusek, CzekanieNaRuch, TwójRuch };
+    public class KontrolerTysioc : ITysiocCalback
     {
         readonly int IlośćGraczy;
         public ReadOnlyCollection<Karta> Stół { get => stół?.AsReadOnly(); }
@@ -24,25 +24,28 @@ namespace ClientSerwis
         static readonly object KeyZmianaStołu = new object();//snipet desing
         public event EventHandler ZmianaStołu
         {
-            add => DzienikZdarzeń.AddHandler(KeyZmianaStołu, value);
+            add
+            {
+                DzienikZdarzeń.AddHandler(KeyZmianaStołu, value);
+            }
             remove => DzienikZdarzeń.RemoveHandler(KeyZmianaStołu, value);
         }
-        
+
 
         readonly EventHandlerList DzienikZdarzeń = new EventHandlerList();
-     
+
         static readonly object KeyKtośZalicytował = new object();//snipet desing
-        public event EventHandler<Tuple<Urzytkownik,int>> KtośZalicytował
+        public event EventHandler<Tuple<Urzytkownik, int>> KtośZalicytował
         {
-            
+
             add => DzienikZdarzeń.AddHandler(KeyKtośZalicytował, value);
             remove => DzienikZdarzeń.RemoveHandler(KeyKtośZalicytował, value);
         }
         static readonly object KeyTwójRuch = new object();//snipet desing
         public event EventHandler TwójRuchEv
         {
-            add=>DzienikZdarzeń.AddHandler(KeyTwójRuch, value);
-            remove=> DzienikZdarzeń.RemoveHandler(KeyTwójRuch, value);
+            add => DzienikZdarzeń.AddHandler(KeyTwójRuch, value);
+            remove => DzienikZdarzeń.RemoveHandler(KeyTwójRuch, value);
         }
 
         static readonly object KeyTwojaLicytacja = new object();//snipet desing
@@ -72,21 +75,24 @@ namespace ClientSerwis
             remove => DzienikZdarzeń.RemoveHandler(KeyOdbierzKartęOdGracza, value);
         }
         static readonly object KeyKtośWysłałKarte = new object();//snipet desing
-        public event EventHandler<Tuple<Urzytkownik,Karta>> KtośWysłałKarte
+        public event EventHandler<Tuple<Urzytkownik, Karta>> KtośWysłałKarte
         {
             add => DzienikZdarzeń.AddHandler(KeyKtośWysłałKarte, value);
             remove => DzienikZdarzeń.RemoveHandler(KeyKtośWysłałKarte, value);
         }
-
         static readonly object KeyZmianaStanu = new object();//snipet desing
         public event EventHandler ZmianaStanu
         {
-            add => DzienikZdarzeń.AddHandler(KeyZmianaStanu, value);
+            add
+            {
+                DzienikZdarzeń.AddHandler(KeyZmianaStanu, value);
+            }
             remove => DzienikZdarzeń.RemoveHandler(KeyZmianaStanu, value);
         }
         #endregion
         Stan _stan;
-        public Stan Stan {
+        public Stan Stan
+        {
             get
             {
                 return _stan;
@@ -108,16 +114,16 @@ namespace ClientSerwis
         {
             this.tk = tk;
         }
-        public Task CzekajNaGraczaAync(int nr)=>tk.CzekajNaGraczaAsync(nr);
-        
+        public Task CzekajNaGraczaAync(int nr) => tk.CzekajNaGraczaAsync(nr);
+
 
         public Task LicytujAsync(int pk)
         {
-            if (pk<100)
+            if (pk < 100)
             {
                 throw new Exception("wartość nie może być mniejsza od 100");
             }
-            if (Stan==Stan.TwojaLicytacja)
+            if (Stan == Stan.TwojaLicytacja)
             {
                 Stan = Stan.CzekajNaLicytacje;
                 return tk.LicytujAsync(pk);
@@ -136,10 +142,10 @@ namespace ClientSerwis
 
         public Task WyslijKarteMeldującAsync(Karta k)
         {
-            
-            bool CzyMożnaMeldować = k.PobierzKarte() == Karta.Dama &&ObsugaTysiąc.IstniejeMeldunek(k, twojeKarty)&&stół.Count==0;
 
-            return WyslijKarteAsync(k,CzyMożnaMeldować);
+            bool CzyMożnaMeldować = k.PobierzKarte() == Karta.Dama && ObsugaTysiąc.IstniejeMeldunek(k, twojeKarty) && stół.Count == 0;
+
+            return WyslijKarteAsync(k, CzyMożnaMeldować);
         }
         public ReadOnlyCollection<Karta> DostępneKarty { get; private set; }
         public void ZnalezionoNowychGraczy(Urzytkownik[] gracze) => ListaUrzytkowników = gracze;
@@ -157,20 +163,20 @@ namespace ClientSerwis
             (DzienikZdarzeń[KeyTwójRuch] as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
 
-      
+
 
         public void OdbierzKarty(List<Karta> k)
         {
             var karty = k.ToArray();
-            if (karty.Length>5)//odbieranie kart
+            if (karty.Length > 5)//odbieranie kart
             {
                 Stan = Stan.CzekajNaLicytacje;
                 twojeKarty = karty.ToList();
                 (DzienikZdarzeń[KeyOdbieranieKart] as EventHandler<Karta[]>)?.Invoke(this, karty);
             }
-            else if(karty.Length>1)//odbieranie musku
+            else if (karty.Length > 1)//odbieranie musku
             {
-                Stan= Stan.WysylanieMusku;
+                Stan = Stan.WysylanieMusku;
                 twojeKarty.AddRange(karty);
                 (DzienikZdarzeń[KeyOdbierzMusek] as EventHandler<Karta[]>)?.Invoke(this, karty);
             }
@@ -187,7 +193,7 @@ namespace ClientSerwis
         public void KtosZalicytowal(string Login, int cena)
         {
             MinimalnaWartośćLicytacji = cena;
-            (DzienikZdarzeń[KeyKtośZalicytował] as EventHandler<Tuple<Urzytkownik,int>>)?.Invoke(this, new Tuple<Urzytkownik, int>(WeźUrzytkownika(Login),cena));
+            (DzienikZdarzeń[KeyKtośZalicytował] as EventHandler<Tuple<Urzytkownik, int>>)?.Invoke(this, new Tuple<Urzytkownik, int>(WeźUrzytkownika(Login), cena));
         }
 
         private Urzytkownik WeźUrzytkownika(string login) => ListaUrzytkowników.First(X => X.Nazwa == login);
@@ -200,13 +206,13 @@ namespace ClientSerwis
             return tk.WyslijMusekAsync(KartyDoUsuniecia.ToArray());
         }
         public Karta Kozera { get; private set; }
-        public bool AktywnaKozera { get => aktywnaKozera;  }
+        public bool AktywnaKozera { get => aktywnaKozera; }
 
         bool aktywnaKozera;
-        public void KtosWyslalKarte(Karta k, string s,bool Melduj)
+        public void KtosWyslalKarte(Karta k, string s, bool Melduj)
         {
             stół.Add(k);
-            if (stół.Count==IlośćGraczy)
+            if (stół.Count == IlośćGraczy)
             {
                 stół.Clear();
             }
@@ -231,6 +237,6 @@ namespace ClientSerwis
             stół?.Clear();
             twojeKarty?.Clear();
         }
-        
+
     }
 }

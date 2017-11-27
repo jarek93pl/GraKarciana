@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KartyMono.Common;
 using Microsoft.Xna.Framework;
+using ClientSerwis;
 
 namespace KartyMono.Game1000
 {
@@ -32,7 +33,6 @@ namespace KartyMono.Game1000
             this.menu = menu;
             Load(menu.ListSocketTable, menu.ListSocketUser);
         }
-
         private void Load(List<CardSocketUI> CardInTableSocketU, List<CardSocketUI> ListSocketUserU)
         {
             CardInTableSocket = CardInTableSocketU;
@@ -40,11 +40,25 @@ namespace KartyMono.Game1000
             CardInTable = AddCardCollection(CardInTableSocket);
             CardUser = AddCardCollection(CardUserSocket);
         }
+        public Table(KontrolerTysioc Controler,Menu1000Game menu)
+        {
+            this.menu = menu;
+            CardInTableSocket = menu.ListSocketTable;
+            CardUserSocket = menu.ListSocketUser;
+            CardInTable = Controler.Stół.ToList();
+            CardUser = Controler.TwojeKarty.ToList();
+            AddCardCollection(CardInTable, CardInTableSocket);
+            AddCardCollection(CardUser, CardUserSocket);
+
+        }
+
+      
 
         public override CardUI GetCard(KeyValuePair<List<Karta>, List<CardSocketUI>> from, KeyValuePair<List<Karta>, List<CardSocketUI>> to, Karta target)
         {
             CardUI cd = new CardUI(target);
             cd.Miejsce = menu.startPosytionCard;
+            menu.AddCard(cd);
             return cd;
         }
 
