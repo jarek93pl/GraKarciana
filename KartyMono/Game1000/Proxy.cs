@@ -16,7 +16,6 @@ namespace KartyMono.Game1000
         internal ITysioc comunication;
         Menu1000Game menu;
         Table LastTable = Table.Empty();
-
         internal KontrolerTysioc controler;
         public Proxy(ITysioc comunication,Menu1000Game mg, KontrolerTysioc controler)
         {
@@ -31,6 +30,7 @@ namespace KartyMono.Game1000
             controler.TwójRuchEv += Controler_TwójRuchEv;
             controler.ZmianaStołu += Controler_ZmianaStołu;
             mg.ConditonSetCardToTable = ConditonSetCardToTable;
+            
             menu = mg;
 
         }
@@ -41,13 +41,26 @@ namespace KartyMono.Game1000
             InstanceContext instance = new InstanceContext(kontroler);
             var client = new TysiocClient(instance);
             kontroler.Initialize(client);
-
             return new Proxy(client, mg, kontroler) { comunication = client, controler = kontroler };
         }
-
         private bool ConditonSetCardToTable(CardUI arg1, CardSocketUI arg2)
         {
-            return true;
+            switch (controler.Stan)
+            {
+                case Stan.CzekanieNaRuch:
+                case Stan.CzekajNaGracza:
+                case Stan.CzekajNaLicytacje:
+                case Stan.TwojaLicytacja:
+                case Stan.CzekanieNaMusek:
+                    return false;
+                case Stan.WysylanieMusku:
+                    return true;
+                case Stan.TwójRuch:
+                    return controler.DostępneKarty.Contains(arg1.Card);
+                default:
+                    throw new NotImplementedException();
+                    
+            }
         }
 
         public void Controler_ZmianaStołu(object sender, EventArgs e)
@@ -63,6 +76,7 @@ namespace KartyMono.Game1000
 
         private void Controler_TwojaLicytacjaEv(object sender, EventArgs e)
         {
+            menu.YourAction();
         }
 
         private void Controler_OdbierzMusek(object sender, GraKarciana.Karta[] e)

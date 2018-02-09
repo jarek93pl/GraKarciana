@@ -48,7 +48,6 @@ namespace KartyMono.Common.UI
         public MenuPlayerAndTable(ContentManager content):base(Game1.Cursor)
         {
             Load().Forech(X => X());
-            AddCard(new CardUI(Karta.Dama));
             monitorDropAndDrag = new MonitorDropAndDrag<CardUI>(ListCard, AceptanceGet);
             AddKomponet(monitorDropAndDrag);
             AddKomponet(new GameState());

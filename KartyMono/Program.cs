@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 namespace KartyMono
 {
 #if WINDOWS || LINUX
@@ -12,18 +15,25 @@ namespace KartyMono
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        [STAThread]
+        static void Main(string[] st)
         {
-            Run();
+             Parallel.For(0, 3, (x) => RunDifrent(x));
         }
         
 
         [STAThread]
-        private static void Run()
+        private static void RunDifrent(int i)
         {
+            AppDomain ap = AppDomain.CreateDomain(i.ToString());
+            ap.DoCallBack(() =>
+            {
             using (var game = new Game1())
                 game.Run();
+            }
+            );
         }
+        
     }
 #endif
 }

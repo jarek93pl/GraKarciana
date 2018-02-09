@@ -189,7 +189,7 @@ namespace ClientSerwis
 
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
-        public int MinimalnaWartośćLicytacji { get; protected set; }
+        public int MinimalnaWartośćLicytacji { get; protected set; } = 100;
         public void KtosZalicytowal(string Login, int cena)
         {
             MinimalnaWartośćLicytacji = cena;

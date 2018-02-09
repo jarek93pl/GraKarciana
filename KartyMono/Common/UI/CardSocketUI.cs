@@ -11,7 +11,6 @@ namespace KartyMono.Common.UI
 {
     public class CardSocketUI : XnaKontrolka
     {
-
         public event EventHandler<CardUI> OnTookCard;
         public Func< CardUI, bool> AceptanceSet;
         public bool BlockedGetCard { get; set; }

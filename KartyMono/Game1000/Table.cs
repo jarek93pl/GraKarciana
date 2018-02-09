@@ -64,7 +64,7 @@ namespace KartyMono.Game1000
 
         public override CardSocketUI GetEmptySocket(KeyValuePair<List<Karta>, List<CardSocketUI>> from, KeyValuePair<List<Karta>, List<CardSocketUI>> to, Karta target)
         {
-            return menu.socketEmpty;
+            return menu.SocketEmpty;
 
         }
     }

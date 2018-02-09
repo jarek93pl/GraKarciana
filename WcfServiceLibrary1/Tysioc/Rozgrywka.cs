@@ -81,14 +81,14 @@ namespace GraKarciana
         }
         
         int NajwyżejLicytujący = -1;
-        internal void Licytuj(int pk, int v)
+        internal void Licytuj(int punkty, int v)
         {
             
-            if (pk > WartośćWylicytowana)
+            if (punkty > WartośćWylicytowana)
             {
                 NajwyżejLicytujący = v;
-                RozgłośLicytacje(Gracze[v].Gracz.Nazwa, v);
-                WartośćWylicytowana = pk;
+                RozgłośLicytacje(Gracze[v].Gracz.Nazwa, punkty);
+                WartośćWylicytowana = punkty;
                 GraczWygrajocyLicytacje = Gracze[v];
 
             }
