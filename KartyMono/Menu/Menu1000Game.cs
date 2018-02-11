@@ -25,7 +25,7 @@ namespace KartyMono.Menu
         int IdConection;
 
         public Vector2 startPosytionCard { get; internal set; }
-        public CardSocketUI SocketEmpty { get; internal set; }
+        public CardSocketUI SocketEmpty { get; internal set; } = new CardSocketUI() { Miejsce = new Vector2(-100, -100), IsStack = true };
 
         public override void UpDate(GameTime GT)
         {

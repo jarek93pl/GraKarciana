@@ -21,8 +21,8 @@ namespace KartyMono
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1000;
-            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 300;
             game = this;
             Content.RootDirectory = "Content";
         }

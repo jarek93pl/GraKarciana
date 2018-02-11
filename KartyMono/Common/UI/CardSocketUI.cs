@@ -16,7 +16,9 @@ namespace KartyMono.Common.UI
         public bool BlockedGetCard { get; set; }
         public bool BlockedSetCard { get; set; }
         static Lazy<Texture2D> Picture = GetPicture();
-        public CardUI InnerCard;
+        public CardUI InnerCard { get; set; }
+        public bool IsStack { get; internal set; }
+
         private static Lazy<Texture2D> GetPicture() => new Lazy<Texture2D>(new Func<Texture2D>(()=>Game1.ContentStatic.Load<Texture2D>("table/slot")));
         public bool AceptanceCard(CardUI cd)
         {

@@ -18,16 +18,15 @@ namespace KartyMono.Menu
         public void ConstructorAction()
         {
 
-            AuctionButon = new PrzyciskText(new Vector2(200, 40), GlobalStaticDate.Text) { Miejsce = new Vector2(500, 100) };
+            AuctionButon = new PrzyciskText(new Vector2(200, 40), GlobalStaticDate.Text) { Miejsce = new Vector2(500, 10) };
             AuctionButon.TextFormat = () => $"Licytuj {ValueAuction}";
             AuctionButon.Klikniecie += AuctionButon_Klikniecie;
             SetDateDoButton(AuctionButon);
             
-            MoreValueButon = new PrzyciskText(new Vector2(140, 40), GlobalStaticDate.Text) { Miejsce = new Vector2(350, 100) };
+            MoreValueButon = new PrzyciskText(new Vector2(140, 40), GlobalStaticDate.Text) { Miejsce = new Vector2(350, 10) };
             MoreValueButon.Text = "Wiecej";
             MoreValueButon.Klikniecie += MoreValueButon_Klikniecie;
             SetDateDoButton(MoreValueButon);
-            TookCard += Menu1000Game_TookCard;
             
         }
 
@@ -51,10 +50,6 @@ namespace KartyMono.Menu
             tmp.KolorTrzcionki = Color.Black;
             Add(tmp);
 
-        }
-        private async void Menu1000Game_TookCard(object sender, CardUI e)
-        {
-            await proxy.controler.WyslijKarteMeldującAsync(e.Card);
         }
 
         private void UpdateAuction(GameTime gt)

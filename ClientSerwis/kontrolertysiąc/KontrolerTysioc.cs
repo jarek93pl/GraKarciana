@@ -12,6 +12,7 @@ namespace ClientSerwis
     public enum Stan { CzekajNaGracza, CzekajNaLicytacje, TwojaLicytacja, WysylanieMusku, CzekanieNaMusek, CzekanieNaRuch, TwójRuch };
     public class KontrolerTysioc : ITysiocCalback
     {
+        public bool LisenAboutSelfMove = true;
         readonly int IlośćGraczy;
         public ReadOnlyCollection<Karta> Stół { get => stół?.AsReadOnly(); }
         public ReadOnlyCollection<Karta> TwojeKarty { get => twojeKarty?.AsReadOnly(); }
@@ -135,7 +136,10 @@ namespace ClientSerwis
         {
             Stan = Stan.CzekanieNaRuch;
             twojeKarty.Remove(k);
-            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            if (LisenAboutSelfMove)
+            {
+                (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            }
             return tk.WyslijKarteAsync(k, Melduj);
         }
 

@@ -11,8 +11,5 @@ namespace KartyMono
     public static class GlobalStaticDate
     {
         public static SpriteFont Text;
-        private static Texture2D rect;
-
-       
     }
 }

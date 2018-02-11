@@ -23,13 +23,13 @@ namespace KartyMono.Game1000
         {
             for (int i = 0; i < AmountCardUser; i++)
             {
-                Vector2 v = new Vector2(200 + i * OffsetNextCard, 500);
+                Vector2 v = new Vector2(200 + i * OffsetNextCard, 200);
                 AddCard( v, Menu1000Game.KindSlot.UserCard);
             }
 
             for (int i = 0; i < AmountTable; i++)
             {
-                Vector2 v = new Vector2(400 + i * OffsetNextCard, 200);
+                Vector2 v = new Vector2(400 + i * OffsetNextCard, 80);
                 AddCard( v, Menu1000Game.KindSlot.Table);
             }
         }

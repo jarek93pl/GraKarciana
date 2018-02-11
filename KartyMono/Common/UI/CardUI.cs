@@ -70,19 +70,22 @@ namespace KartyMono.Common.UI
         }
 
 
-        public static void BindCardToSocket(CardSocketUI socketUI, CardUI card)
+        public static void BindCardToSocket(CardSocketUI socketUI, CardUI card,bool InvokeChenge=true)
         {
             if (card.socketUI!=null)
             {
                 card.socketUI.InnerCard = null;
             }
-            card.socketUI = socketUI;
-            if (socketUI.InnerCard!=null)
+            if (socketUI.InnerCard!=null&&!socketUI.IsStack)
             {
                 throw new InvalidOperationException();
             }
+            card.socketUI = socketUI;
             socketUI.InnerCard = card;
-            socketUI.TookCard(card);
+            if (InvokeChenge)
+            {
+                socketUI.TookCard(card);
+            }
         }
 
 
