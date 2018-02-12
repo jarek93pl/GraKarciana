@@ -28,7 +28,7 @@ namespace KartyMono
 
         private static void GetIQClinet()
         {
-           
+
             Task.Factory.StartNew(() =>
             {
                 AppDomain ap = AppDomain.CreateDomain("Serwis");
@@ -39,9 +39,10 @@ namespace KartyMono
                     InstanceContext instance = new InstanceContext(kontroler);
                     var client = new TysiocClient(instance);
                     kontroler.Initialize(client); ks.DoKontaClient dk = new ks.DoKontaClient();
-                    int IdConection = dk.Rejestruj(new ks.Urzytkownik() { Nazwa = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
+                    string tmpName;
+                    int IdConection = dk.Rejestruj(new ks.Urzytkownik() { Nazwa = tmpName = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
 
-                    Iq1000Klient iq = new Iq1000Klient(client, kontroler, 3, "zap",IdConection);
+                    Iq1000Klient iq = new Iq1000Klient(client, kontroler, 3, tmpName , IdConection);
                 });
             });
         }

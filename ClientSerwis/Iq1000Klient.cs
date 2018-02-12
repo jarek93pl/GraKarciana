@@ -47,6 +47,10 @@ namespace ClientSerwis
 
         private void Controler_KtośWysłałKarte(object sender, Tuple<Urzytkownik, Karta> e)
         {
+            if (InGame==null)
+            {
+                InGame = new ConclusionAboutGame(AmountPlaeyr, controler.IndexPlayer(Name), controler.TwojeKarty);
+            }
             InGame.PlayerConclusion[controler.IndexPlayer(e.Item1.Nazwa)].ConclusionAboutBehavior(controler.Stół, controler.AktywnaKozera, controler.Kozera);
         }
 
