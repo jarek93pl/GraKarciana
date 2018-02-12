@@ -46,12 +46,19 @@ namespace KartyMono.Game1000
                 case Stan.CzekanieNaRuch:
                     throw new InvalidOperationException("nie można przyjąć karty w tym stanie");
                 case Stan.TwójRuch:
+                    SendCardToTable(sender, e);
+                    break;
                 case Stan.WysylanieMusku:
                     SendCardToEnemy(sender,e);
                     break;
                 default:
                     break;
             }
+        }
+
+        private async void SendCardToTable(object sender, CardUI e)
+        {
+            await controler.WyslijKarteMeldującAsync(e.Card);
         }
 
         List<Karta> CardToSend = new List<Karta>();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientSerwis
 {
-    class Iq1000Klient
+    public class Iq1000Klient
     {
         public int Tick
         {
@@ -27,23 +27,22 @@ namespace ClientSerwis
         KontrolerTysioc controler;
         ITysioc comunication;
         public int AmountPlayer;
-        public int PlayerIndex;
         ConclusionAboutGame InGame;
         public int BindSum;
         public string Name;
-        public Iq1000Klient(ITysioc comunication,int AmountPlayer,string Name)
+        public Iq1000Klient(ITysioc comunication, KontrolerTysioc kontroler,int AmountPlayer,string Name,int IdPlayer)
         {
-            controler = new KontrolerTysioc();
+            controler = kontroler;
             controler.Initialize(comunication);
             controler.OdbieranieKart += Controler_OdbieranieKart;
             controler.OdbierzMusek += Controler_OdbierzMusek;
             controler.TwojaLicytacjaEv += Controler_TwojaLicytacjaEv;
             controler.KtośWysłałKarte += Controler_KtośWysłałKarte;
             controler.TwójRuchEv += Controler_TwójRuchEv;
+            comunication.CzekajNaGracza(IdPlayer);
             this.comunication = comunication;
             this.AmountPlayer = AmountPlayer;
             this.Name = Name;
-            PlayerIndex = controler.IndexPlayer(Name);
         }
 
         private void Controler_KtośWysłałKarte(object sender, Tuple<Urzytkownik, Karta> e)
@@ -54,7 +53,7 @@ namespace ClientSerwis
         private async void Controler_TwójRuchEv(object sender, EventArgs e)
         {
             IQ1000Game iq = GetIq();
-            InGame.WhoMove = PlayerIndex;
+            InGame.WhoMove = controler.IndexPlayer(Name);
             Move1000 m= iq.CalculateMove(InGame);
             var ConclusionMovingPlaeyr = InGame.PlayerObjectConclusion;
             ConclusionMovingPlaeyr.haveCards = controler.DostępneKarty;
@@ -72,13 +71,13 @@ namespace ClientSerwis
         private async void Controler_OdbierzMusek(object sender, GraKarciana.Karta[] e)
         {
             IQ1000Game iq = GetIq();
-            InGame = new ConclusionAboutGame(AmountPlaeyr, PlayerIndex, controler.TwojeKarty);
+            InGame = new ConclusionAboutGame(AmountPlaeyr, controler.IndexPlayer(Name), controler.TwojeKarty);
             List<Karta> SnedCard = iq.GetWorstCard(controler.TwojeKarty, AmountPlaeyr);
             await controler.WysyłanieMuskuAsync(SnedCard);
             int j = 0;
             for (int i = 0; i < AmountPlaeyr; i++)
             {
-                if (i!=PlayerIndex)
+                if (i!= controler.IndexPlayer(Name))
                 {
                     InGame.TransferedCard(SnedCard[j++], i);
                 }
