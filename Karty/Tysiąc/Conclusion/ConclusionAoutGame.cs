@@ -38,6 +38,22 @@ namespace Karty
             }
         }
         public PlayerConclusion PlayerObjectConclusion =>(PlayerConclusion) PlayerConclusion.First(X => X is PlayerConclusion);
+        public bool WinAction;
+        public void Active(bool WinAction)
+        {
+            this.WinAction = WinAction;
+            if (PlayerConclusion.Count==3)
+            {
+                foreach (var item in PlayerConclusion)
+                {
+                    if (item is ConclusionAbouttUserBehavior ca)
+                    {
+                        ca.AmountCards =WinAction?7: 8;
+                    }
+                }
+            }
+        }
+
         internal int RelateReating(StateGame1000 state)
         {
             return state.RateStates(playerIndex);
@@ -88,7 +104,7 @@ namespace Karty
         private void RandCards()
         {
             List<Karta> dontRandomCards = AvilibeCards.Select(X => X).ToList();
-            PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards, MoveContext));
+            PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards, MoveContext, WinAction));
             swaper.Run(PlayerConclusion);
         }
 

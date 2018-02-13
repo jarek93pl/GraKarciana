@@ -50,6 +50,7 @@ namespace ClientSerwis
             if (InGame==null)
             {
                 InGame = new ConclusionAboutGame(AmountPlaeyr, controler.IndexPlayer(Name), controler.TwojeKarty);
+                InGame.Active(false);
             }
             InGame.PlayerConclusion[controler.IndexPlayer(e.Item1.Nazwa)].ConclusionAboutBehavior(controler.Stół, controler.AktywnaKozera, controler.Kozera);
         }
@@ -58,9 +59,9 @@ namespace ClientSerwis
         {
             IQ1000Game iq = GetIq();
             InGame.WhoMove = controler.IndexPlayer(Name);
-            Move1000 m= iq.CalculateMove(InGame);
             var ConclusionMovingPlaeyr = InGame.PlayerObjectConclusion;
             ConclusionMovingPlaeyr.haveCards = controler.DostępneKarty;
+            Move1000 m= iq.CalculateMove(InGame);
             await controler.WyslijKarteAsync(m.card, m.Marriage);
 
         }
@@ -76,6 +77,7 @@ namespace ClientSerwis
         {
             IQ1000Game iq = GetIq();
             InGame = new ConclusionAboutGame(AmountPlaeyr, controler.IndexPlayer(Name), controler.TwojeKarty);
+            InGame.Active(true);
             List<Karta> SnedCard = iq.GetWorstCard(controler.TwojeKarty, AmountPlaeyr);
             await controler.WysyłanieMuskuAsync(SnedCard);
             int j = 0;
