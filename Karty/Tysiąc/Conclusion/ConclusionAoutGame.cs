@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GraKarciana;
 namespace Karty
 {
-    public enum MoveContext1000 { Action,ChoseCards,Game};
+    public enum MoveContext1000 { Action, ChoseCards, Game };
     public class ConclusionAboutGame
     {
         public int WhoMove;
@@ -17,7 +17,7 @@ namespace Karty
         static readonly Swaper<ConclusionAbouttUserBehavior, Karta> swaper = new Swaper<ConclusionAbouttUserBehavior, Karta>(X => X.UserCards, (X, Y) => X.ValidateCard(Y), maxSwap, maxRandom);
         readonly int playerIndex;
         public List<ConclusionAbouttUserBehavior> PlayerConclusion = new List<ConclusionAbouttUserBehavior>();
-        public ConclusionAboutGame(int AmountPlayers,int PlaeyrNumber,IEnumerable<GraKarciana.Karta> cardsPlayer)
+        public ConclusionAboutGame(int AmountPlayers, int PlaeyrNumber, IEnumerable<GraKarciana.Karta> cardsPlayer)
         {
             playerIndex = PlaeyrNumber;
             AvilibeCards = ObsugaKart.WylousjMałąTalie();
@@ -25,7 +25,7 @@ namespace Karty
             for (int i = 0; i < AmountPlayers; i++)
             {
                 ConclusionAbouttUserBehavior conclusion;
-                if (PlaeyrNumber==i)
+                if (PlaeyrNumber == i)
                 {
                     conclusion = new PlayerConclusion(AmountPlayers, cardsPlayer);
                 }
@@ -37,18 +37,30 @@ namespace Karty
                 PlayerConclusion.Add(conclusion);
             }
         }
-        public PlayerConclusion PlayerObjectConclusion =>(PlayerConclusion) PlayerConclusion.First(X => X is PlayerConclusion);
+        public PlayerConclusion PlayerObjectConclusion => (PlayerConclusion)PlayerConclusion.First(X => X is PlayerConclusion);
         public bool WinAction;
+
+        public void CalculateConclusion(int v,IList<Karta> Table, bool enebleAtute, Karta atute)
+        {
+            PlayerConclusion[v].ConclusionAboutBehavior(Table,enebleAtute,atute);
+#if DEBUG
+            if(!AvilibeCards.Remove(Table.Last()))
+            {
+                throw new InvalidOperationException("nie można usunąć karty której nie ma");
+            }
+#endif
+        }
+
         public void Active(bool WinAction)
         {
             this.WinAction = WinAction;
-            if (PlayerConclusion.Count==3)
+            if (PlayerConclusion.Count == 3)
             {
                 foreach (var item in PlayerConclusion)
                 {
                     if (item is ConclusionAbouttUserBehavior ca)
                     {
-                        ca.AmountCards =WinAction?7: 8;
+                        ca.AmountCards = WinAction ? 7 : 8;
                     }
                 }
             }
@@ -58,7 +70,7 @@ namespace Karty
         {
             return state.RateStates(playerIndex);
         }
-        public void TransferedCard(Karta karta,int numberPlayer)
+        public void TransferedCard(Karta karta, int numberPlayer)
         {
             if (PlayerConclusion[numberPlayer] is ConclusionAbouttUserBehavior c)
             {
@@ -77,7 +89,7 @@ namespace Karty
         {
             PlayerConclusion = z;
         }
-    
+
         public StateGame1000 GetStates()
         {
             StateGame1000 state = new StateGame1000(PlayerConclusion.Count);
@@ -105,6 +117,12 @@ namespace Karty
         {
             List<Karta> dontRandomCards = AvilibeCards.Select(X => X).ToList();
             PlayerConclusion.Forech(X => X.RandomCards(dontRandomCards, MoveContext, WinAction));
+#if DEBUG
+            if (dontRandomCards.Count != 0)
+            {
+                //throw new InvalidOperationException("Pozostały karty nie lozlosowane");
+            }
+#endif
             swaper.Run(PlayerConclusion);
         }
 

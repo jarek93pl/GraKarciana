@@ -216,10 +216,6 @@ namespace ClientSerwis
         public void KtosWyslalKarte(Karta k, string s, bool Melduj)
         {
             stół.Add(k);
-            if (stół.Count == IlośćGraczy)
-            {
-                stół.Clear();
-            }
             if (Melduj)
             {
                 Kozera = k.Kolor();
@@ -227,6 +223,11 @@ namespace ClientSerwis
             }
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
             (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Urzytkownik, Karta>(WeźUrzytkownika(s), k));
+
+            if (stół.Count == IlośćGraczy)
+            {
+                stół.Clear();
+            }
         }
 
         public void KoniecGry(PodsumowanieTysioc pk)

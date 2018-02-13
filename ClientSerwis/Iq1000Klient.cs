@@ -44,7 +44,6 @@ namespace ClientSerwis
             this.AmountPlayer = AmountPlayer;
             this.Name = Name;
         }
-
         private void Controler_KtośWysłałKarte(object sender, Tuple<Urzytkownik, Karta> e)
         {
             if (InGame==null)
@@ -52,7 +51,13 @@ namespace ClientSerwis
                 InGame = new ConclusionAboutGame(AmountPlaeyr, controler.IndexPlayer(Name), controler.TwojeKarty);
                 InGame.Active(false);
             }
-            InGame.PlayerConclusion[controler.IndexPlayer(e.Item1.Nazwa)].ConclusionAboutBehavior(controler.Stół, controler.AktywnaKozera, controler.Kozera);
+            //ConclusionAboutBehavior(controler.Stół, controler.AktywnaKozera, controler.Kozera);
+            if (e.Item1.Nazwa!=Name)
+            {
+                InGame.CalculateConclusion(controler.IndexPlayer(e.Item1.Nazwa), controler.Stół, controler.AktywnaKozera, controler.Kozera);
+
+            }
+
         }
 
         private async void Controler_TwójRuchEv(object sender, EventArgs e)
