@@ -8,6 +8,7 @@ namespace Karty
 {
     public static class BasicTools
     {
+
         public static void SetMax<T,K>(ref T a,T b,ref K aK,K bK) where K:IComparable<K>
         {
             if (aK.CompareTo(bK)<0)
