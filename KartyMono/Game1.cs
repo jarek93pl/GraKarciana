@@ -14,83 +14,64 @@ namespace KartyMono
     {
         public static Game game;
         MenuPodstawa menu;
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static ContentManager ContentStatic;
         public static Texture2D Cursor;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1000;
-            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 300;
             game = this;
             Content.RootDirectory = "Content";
         }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        public static void SetTitle(string s)
+        {
+            game.Window.Title = s;
+        }
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ContentStatic = this.Content;
             Cursor = Content.Load<Texture2D>("table/m");
-            // TODO: use this.Content to load your game content here
+            GlobalStaticDate.Text = Content.Load<SpriteFont>("Font");
             menu = new Menu1000Game(Content);
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+        
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
             menu?.UpDate(gameTime);
             base.Update(gameTime);
         }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Pink);
-
-            // TODO: Add your drawing code here
+            
             spriteBatch.Begin();
             menu.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        private static Texture2D rect;
+        public static void DrawRectangle(Rectangle coords, Color color,SpriteBatch sp)
+        {
+            if (rect == null)
+            {
+                rect = new Texture2D(graphics.GraphicsDevice, 1, 1);
+                rect.SetData(new[] { Color.White });
+            }
+            sp.Draw(rect, coords, color);
         }
     }
 }

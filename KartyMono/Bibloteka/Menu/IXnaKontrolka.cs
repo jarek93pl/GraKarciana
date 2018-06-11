@@ -15,7 +15,7 @@ namespace Komputer.Xna.Menu
 
         public bool PrzynależnośćDoInejFigury = false;
         public string Nazwa = "";
-        float scal=1;
+        float scal = 1;
         public bool CzyUżywaUpdate = false;
         Vector2 Max;
         Vector2 miejsce, wielkość;
@@ -28,9 +28,11 @@ namespace Komputer.Xna.Menu
         public Color Kolor
         {
             get { return kolor; }
-            set { kolor = value;
-            if (ZmianaKoloru != null)
-                ZmianaKoloru(this, EventArgs.Empty);
+            set
+            {
+                kolor = value;
+                if (ZmianaKoloru != null)
+                    ZmianaKoloru(this, EventArgs.Empty);
             }
         }
         FiguraZOdcinków krawedzie;
@@ -60,7 +62,7 @@ namespace Komputer.Xna.Menu
             set
             {
                 this.obraz = value;
-                Wielkość = new Vector2(obraz.Width,obraz.Height );
+                Wielkość = new Vector2(obraz.Width, obraz.Height);
             }
         }
         public Vector2 Wielkość
@@ -71,14 +73,14 @@ namespace Komputer.Xna.Menu
             }
             set
             {
-                Max = value *scal+ miejsce;
-                wielkość = value*scal;
+                Max = value * scal + miejsce;
+                wielkość = value * scal;
                 krawedzie = new FiguraZOdcinków();
                 krawedzie.Add(new Odcinek(miejsce.X, Max.X, miejsce.Y, Miejsce.Y));
                 krawedzie.Add(new Odcinek(miejsce.X, Max.X, Max.Y, Max.Y));
                 krawedzie.Add(new Odcinek(miejsce.X, miejsce.X, miejsce.Y, Max.Y));
                 krawedzie.Add(new Odcinek(Max.X, Max.X, miejsce.Y, Max.Y));
-                if (ZmianaWielkości!=null)
+                if (ZmianaWielkości != null)
                 {
                     ZmianaWielkości(this, EventArgs.Empty);
                 }
@@ -99,11 +101,11 @@ namespace Komputer.Xna.Menu
         public bool Zablokowany = false;
         public bool Kolizja(Vector2 v)
         {
-            return (!Zablokowany&&(v.X < Max.X && v.Y < Max.Y) && (v.X > miejsce.X && v.Y > miejsce.Y))||BezWielkości;
+            return (!Zablokowany && (v.X < Max.X && v.Y < Max.Y) && (v.X > miejsce.X && v.Y > miejsce.Y)) || BezWielkości;
         }
         public bool KolizjaZawsze(Vector2 v)
         {
-            return ((v.X < Max.X && v.Y < Max.Y) && (v.X > miejsce.X && v.Y > miejsce.Y)) ;
+            return ((v.X < Max.X && v.Y < Max.Y) && (v.X > miejsce.X && v.Y > miejsce.Y));
         }
         public bool KolizjaKwadratu(Odcinek o)
         {
@@ -122,14 +124,14 @@ namespace Komputer.Xna.Menu
         public abstract bool UpDate(EventArgs e);
         public virtual void Draw(SpriteBatch pezel)
         {
-            if(obraz!=null)
-            pezel.Draw(obraz, miejsce, null, Kolor, 0, Vector2.Zero, scal, RodzajWyświetlania, 0);
+            if (obraz != null)
+                pezel.Draw(obraz, miejsce, null, Kolor, 0, Vector2.Zero, scal, RodzajWyświetlania, 0);
         }
 
-        public virtual void Draw(SpriteBatch pezel,Vector2 Wzgledne)
+        public virtual void Draw(SpriteBatch pezel, Vector2 Wzgledne)
         {
             if (obraz != null)
-                pezel.Draw(obraz, miejsce+Wzgledne, null, Kolor, 0, Vector2.Zero, scal, RodzajWyświetlania, 0);
+                pezel.Draw(obraz, miejsce + Wzgledne, null, Kolor, 0, Vector2.Zero, scal, RodzajWyświetlania, 0);
         }
         public virtual void UżycieUpdate(GameTime gt)
         {
@@ -139,17 +141,11 @@ namespace Komputer.Xna.Menu
         internal void Puść(Vector2 md)
         {
 
-            if (Puszczony != null)
-            {
-                Puszczony(this, new EventKlikniety(md.X,miejsce.Y));
-            }
+            Puszczony?.Invoke(this, new EventKlikniety(md.X, miejsce.Y));
         }
         internal void PoczotekTrzymanaMyszką(Vector2 md)
         {
-            if (Zaznaczony != null)
-            {
-                Zaznaczony(this, new EventKlikniety(md.X, miejsce.Y));
-            }
+            Zaznaczony?.Invoke(this, new EventKlikniety(md.X, miejsce.Y));
         }
         public virtual void Dodawanie() { }
 

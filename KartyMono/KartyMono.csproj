@@ -102,10 +102,12 @@
     <Compile Include="Common\UI\CardSocketUI.cs" />
     <Compile Include="Common\UI\CardUI.cs" />
     <Compile Include="Game1000\Table.cs" />
+    <Compile Include="GlobalStaticDate.cs" />
     <Compile Include="Menu\Menu1000Game.cs" />
     <Compile Include="Game1000\PrepareTable.cs" />
     <Compile Include="Game1000\Proxy.cs" />
     <Compile Include="Common\UI\MenuPlayerAndTable.cs" />
+    <Compile Include="Menu\Menu1000GameAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

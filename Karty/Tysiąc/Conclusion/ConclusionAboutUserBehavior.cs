@@ -74,7 +74,7 @@ namespace Karty
         /// 
         /// </summary>
         /// <param name="dontRandCards"></param>
-        public void RandomCards(List<Karta> dontRandCards, MoveContext1000 stateGame)
+        public void RandomCards(List<Karta> dontRandCards, MoveContext1000 stateGame,bool WinAction)
         {
             UserCards.Clear();
             switch (PlayerInGame)
@@ -83,7 +83,7 @@ namespace Karty
                     RandomCards2Cards(dontRandCards,stateGame);
                     break;
                 case 3:
-                    RandomCards3Cards(dontRandCards, stateGame);
+                    RandomCards3Cards(dontRandCards, stateGame,WinAction);
                     break;
                 case 4:
                     RandomCards4Cards(dontRandCards, stateGame);
@@ -104,7 +104,7 @@ namespace Karty
             throw new NotImplementedException();
         }
 
-        protected virtual void RandomCards3Cards(List<Karta> dontRandCards, MoveContext1000 stateGame)
+        protected virtual void RandomCards3Cards(List<Karta> dontRandCards, MoveContext1000 stateGame,bool WinAction)
         {
             switch (stateGame)
             {
@@ -115,7 +115,7 @@ namespace Karty
                     RandomCards3CardsChoseCards(dontRandCards);
                     break;
                 case MoveContext1000.Game:
-                    RandomCards3CardsGame(dontRandCards);
+                    RandomCards3CardsGame(dontRandCards,WinAction);
                     break;
                 default:
                     break;
@@ -133,9 +133,9 @@ namespace Karty
             UserCards.AddRange(dontRandCards.RandAndDelete(7));
         }
 
-        private void RandomCards3CardsGame(List<Karta> dontRandCards)
+        private void RandomCards3CardsGame(List<Karta> dontRandCards,bool WinAction)
         {
-            if (usedTransferedCard)
+            if (usedTransferedCard||!WinAction)
             {
                 UserCards.AddRange(dontRandCards.RandAndDelete(AmountCards));
             }

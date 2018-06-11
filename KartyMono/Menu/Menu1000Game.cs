@@ -10,30 +10,35 @@ using System.Text;
 using System.Threading.Tasks;
 using ClientSerwis;
 using Microsoft.Xna.Framework;
+using Komputer.Xna.Menu;
 
 namespace KartyMono.Menu
 {
-    class Menu1000Game: MenuPlayerAndTable
+    partial class Menu1000Game : MenuPlayerAndTable
     {
-        public Menu1000Game(ContentManager cm):base(cm)
+        public Menu1000Game(ContentManager cm) : base(cm)
         {
-
+            ConstructorAction();
         }
         Proxy proxy;
         TysiocClient client;
         int IdConection;
 
         public Vector2 startPosytionCard { get; internal set; }
-        public CardSocketUI socketEmpty { get; internal set; }
+        public CardSocketUI SocketEmpty { get; internal set; } = new CardSocketUI() { Miejsce = new Vector2(-100, -100), IsStack = true };
+
         public override void UpDate(GameTime GT)
         {
+            Game1.SetTitle((proxy?.controler?.Stan ?? Stan.CzekajNaGracza).ToString());
+            UpdateAuction(GT);
             base.UpDate(GT);
         }
+
         #region Load
         private void LoadConection()
         {
             proxy = Proxy.Activate(this);
-            client =(TysiocClient) proxy.comunication;
+            client = (TysiocClient)proxy.comunication;
             ks.DoKontaClient dk = new ks.DoKontaClient();
             IdConection = dk.Rejestruj(new ks.Urzytkownik() { Nazwa = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
         }
@@ -46,12 +51,14 @@ namespace KartyMono.Menu
         {
             await client.CzekajNaGraczaAsync(IdConection);
         }
+
+
         public override IEnumerable<Action> Load()
         {
             yield return PreperTable;
             yield return LoadConection;
             yield return Activate;
         }
-#endregion
+        #endregion
     }
 }

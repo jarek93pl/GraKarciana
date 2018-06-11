@@ -14,7 +14,7 @@ namespace Karty
         {
             this.haveCards = haveCards;
         }
-        protected override void RandomCards3Cards(List<Karta> dontRandCards,MoveContext1000 mp)
+        protected override void RandomCards3Cards(List<Karta> dontRandCards,MoveContext1000 mp,bool WinAction)
         {
             switch (mp)
             {

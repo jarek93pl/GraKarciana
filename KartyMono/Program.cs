@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using ClientSerwis;
+using System.ServiceModel;
+using System.Threading;
+using ks = KartyMono.ServiceReference1;
 namespace KartyMono
 {
 #if WINDOWS || LINUX
@@ -12,18 +18,49 @@ namespace KartyMono
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        [STAThread]
+        static void Main(string[] st)
         {
-            Run();
+            Task.Factory.StartNew(() => RunDifrent(0));
+            GetIQClinet();
+            RunDifrent(2);
         }
-        
+
+        private static void GetIQClinet()
+        {
+
+            Task.Factory.StartNew(() =>
+            {
+                AppDomain ap = AppDomain.CreateDomain("Serwis");
+                ap.DoCallBack(() =>
+                {
+                    KontrolerTysioc kontroler = new KontrolerTysioc();
+                    kontroler.LisenAboutSelfMove = false;
+                    InstanceContext instance = new InstanceContext(kontroler);
+                    var client = new TysiocClient(instance);
+                    kontroler.Initialize(client); ks.DoKontaClient dk = new ks.DoKontaClient();
+                    string tmpName;
+                    int IdConection = dk.Rejestruj(new ks.Urzytkownik() { Nazwa = tmpName = Guid.NewGuid().ToString(), Haslo = "bardzo trudne" });
+
+                    Iq1000Klient iq = new Iq1000Klient(client, kontroler, 3, tmpName , IdConection);
+                });
+            });
+        }
 
         [STAThread]
-        private static void Run()
+        private static void RunDifrent(int i)
         {
-            using (var game = new Game1())
-                game.Run();
+            AppDomain ap = AppDomain.CreateDomain(i.ToString());
+            ap.DoCallBack(() =>
+            {
+
+                using (var game = new Game1())
+                    game.Run();
+
+            }
+            );
         }
+
     }
 #endif
 }

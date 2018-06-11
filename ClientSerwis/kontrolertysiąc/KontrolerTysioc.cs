@@ -12,6 +12,7 @@ namespace ClientSerwis
     public enum Stan { CzekajNaGracza, CzekajNaLicytacje, TwojaLicytacja, WysylanieMusku, CzekanieNaMusek, CzekanieNaRuch, TwójRuch };
     public class KontrolerTysioc : ITysiocCalback
     {
+        public bool LisenAboutSelfMove = true;
         readonly int IlośćGraczy;
         public ReadOnlyCollection<Karta> Stół { get => stół?.AsReadOnly(); }
         public ReadOnlyCollection<Karta> TwojeKarty { get => twojeKarty?.AsReadOnly(); }
@@ -135,7 +136,10 @@ namespace ClientSerwis
         {
             Stan = Stan.CzekanieNaRuch;
             twojeKarty.Remove(k);
-            (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            if (LisenAboutSelfMove)
+            {
+                (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
+            }
             return tk.WyslijKarteAsync(k, Melduj);
         }
 
@@ -189,7 +193,7 @@ namespace ClientSerwis
 
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
-        public int MinimalnaWartośćLicytacji { get; protected set; }
+        public int MinimalnaWartośćLicytacji { get; protected set; } = 100;
         public void KtosZalicytowal(string Login, int cena)
         {
             MinimalnaWartośćLicytacji = cena;
@@ -212,10 +216,6 @@ namespace ClientSerwis
         public void KtosWyslalKarte(Karta k, string s, bool Melduj)
         {
             stół.Add(k);
-            if (stół.Count == IlośćGraczy)
-            {
-                stół.Clear();
-            }
             if (Melduj)
             {
                 Kozera = k.Kolor();
@@ -223,6 +223,11 @@ namespace ClientSerwis
             }
             (DzienikZdarzeń[KeyZmianaStołu] as EventHandler)?.Invoke(this, EventArgs.Empty);
             (DzienikZdarzeń[KeyKtośWysłałKarte] as EventHandler<Tuple<Urzytkownik, Karta>>)?.Invoke(this, new Tuple<Urzytkownik, Karta>(WeźUrzytkownika(s), k));
+
+            if (stół.Count == IlośćGraczy)
+            {
+                stół.Clear();
+            }
         }
 
         public void KoniecGry(PodsumowanieTysioc pk)
